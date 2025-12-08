@@ -45,28 +45,29 @@ const FALLBACK_FONTS: GoogleFont[] = [
 
 export const fetchGoogleFonts = async (): Promise<GoogleFont[]> => {
   try {
-    // Fetch top 100 popular fonts to keep payload light
+    // Note: The Webfonts API does not support 'limit'. We fetch all and slice client-side.
     const response = await fetch(
-      `https://www.googleapis.com/webfonts/v1/webfonts?key=${API_KEY}&sort=popularity&limit=100`
+      `https://www.googleapis.com/webfonts/v1/webfonts?key=${API_KEY}&sort=popularity`
     );
     
     if (!response.ok) {
-        console.warn(`Font API Error: ${response.status} ${response.statusText}. Using fallback list.`);
+        const errorBody = await response.text();
+        console.warn(`Font API Error: ${response.status} ${response.statusText}`, errorBody);
+        console.warn('Falling back to local font list.');
         return FALLBACK_FONTS;
     }
 
     const data = await response.json();
     
-    // Check if items exists (sometimes API returns success but with error object inside if parameters are wrong)
     if (!data.items || !Array.isArray(data.items)) {
-         console.warn('Font API returned malformed data. Using fallback list.');
+         console.warn('Font API returned malformed data:', data);
          return FALLBACK_FONTS;
     }
     
-    return data.items;
+    // Return top 200 popular fonts
+    return data.items.slice(0, 200);
   } catch (error) {
     console.error("Failed to fetch fonts:", error);
-    // Return fallback list so the UI doesn't break
     return FALLBACK_FONTS;
   }
 };
