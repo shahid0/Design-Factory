@@ -1,0 +1,5 @@
+{
+  "name": "Design Spec Factory",
+  "description": "A Google-tier design system generator that creates comprehensive design specs and live HTML artifacts from 60+ curated styles using Gemini.",
+  "requestFramePermissions": []
+}
