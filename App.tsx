@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import JSZip from 'jszip';
 import { DESIGN_PRESETS } from './lib/design-presets';
 import { DesignPreset, GeneratedResult, HistoryItem } from './types';
-import { generateDesignSystem } from './services/geminiService';
+import { generateDesignSystem, refineDesignSystem } from './services/geminiService';
 import { ConfigForm } from './components/ConfigForm';
-import { MarkdownViewer } from './components/MarkdownViewer';
+import { CodeDirector } from './components/CodeDirector';
 import { PreviewFrame } from './components/PreviewFrame';
 import { HistoryDrawer } from './components/HistoryDrawer';
 import { GenerationLoader } from './components/GenerationLoader';
-import { Layers, Terminal, Palette, Zap, Search, History as HistoryIcon, Download } from 'lucide-react';
+import { Terminal, Palette, Zap, Search, History as HistoryIcon, Download, Layers } from 'lucide-react';
 
 export default function App() {
   // State
@@ -16,6 +16,7 @@ export default function App() {
   const [context, setContext] = useState('');
   const [fonts, setFonts] = useState('Default system fonts');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isRefining, setIsRefining] = useState(false);
   const [result, setResult] = useState<GeneratedResult | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -60,7 +61,6 @@ export default function App() {
       const data = await generateDesignSystem(selectedStyle.label, context, fonts);
       setResult(data);
       
-      // Add to history
       saveToHistory({
         id: Date.now().toString(),
         timestamp: Date.now(),
@@ -69,7 +69,6 @@ export default function App() {
         result: data
       });
 
-      // Wait a tick for render then scroll
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
@@ -81,12 +80,29 @@ export default function App() {
     }
   };
 
+  const handleRefine = async (instruction: string) => {
+    if (!result) return;
+    setIsRefining(true);
+    try {
+      const refinedResult = await refineDesignSystem(result, instruction);
+      setResult(refinedResult);
+    } catch (error) {
+      console.error(error);
+      alert('Failed to refine design. Check console.');
+    } finally {
+      setIsRefining(false);
+    }
+  };
+
   const handleDownloadPackage = async () => {
     if (!result || !selectedStyle) return;
     
     const zip = new JSZip();
     zip.file("design-specs.md", result.markdown);
     zip.file("index.html", result.html);
+    zip.file("swiftui-theme.swift", result.swiftui);
+    zip.file("compose-theme.kt", result.compose);
+    zip.file("flutter-theme.dart", result.flutter);
     
     const blob = await zip.generateAsync({ type: "blob" });
     const url = URL.createObjectURL(blob);
@@ -142,8 +158,11 @@ export default function App() {
       <header className="border-b border-zinc-800 bg-[#09090b]/80 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-              <Layers className="text-white w-5 h-5" />
+            <div className="w-9 h-9 relative flex items-center justify-center group">
+              <div className="absolute inset-0 bg-blue-600/30 rounded-lg blur-sm group-hover:bg-blue-600/50 transition-colors"></div>
+              <div className="relative w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-950 border border-zinc-700/50 rounded-lg flex items-center justify-center overflow-hidden">
+                <Layers className="w-5 h-5 text-blue-500" />
+              </div>
             </div>
             <span className="font-bold text-lg tracking-tight">Design Spec Factory</span>
           </div>
@@ -157,7 +176,7 @@ export default function App() {
               <span className="hidden sm:inline">History</span>
             </button>
             <div className="text-xs text-zinc-600 font-mono hidden sm:block border-l border-zinc-800 pl-4">
-              v2.0 • Gemini 3 Pro
+              v3.0 • Director Mode
             </div>
           </div>
         </div>
@@ -167,10 +186,10 @@ export default function App() {
         {/* Hero */}
         <div className="py-12 px-6 text-center border-b border-zinc-800 bg-[#0c0c0e]">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-400 to-zinc-600">
-            Define. Generate. Visualize.
+            Define. Generate. Refine.
           </h1>
           <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
-            Select a style, define your app's purpose, and let AI architect a complete design system and a functional HTML prototype in seconds.
+            Architect a complete design system with AI. Now featuring multi-platform code generation and Director Mode for granular control.
           </p>
         </div>
 
@@ -267,16 +286,17 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[800px]">
-                  {/* Left: Spec */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[850px]">
+                  {/* Left: Code Director */}
                   <div className="flex flex-col h-full min-h-[500px]">
                     <div className="flex items-center gap-2 mb-3 text-zinc-400 text-sm font-medium">
                       <Terminal className="w-4 h-4" />
-                      <span>design-spec.md</span>
+                      <span>The Rosetta Stone</span>
                     </div>
-                    <MarkdownViewer 
-                      content={result.markdown} 
-                      onContentChange={(newMd) => setResult(prev => prev ? {...prev, markdown: newMd} : null)}
+                    <CodeDirector 
+                      result={result} 
+                      onRefine={handleRefine}
+                      isRefining={isRefining}
                     />
                   </div>
 

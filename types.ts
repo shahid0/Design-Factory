@@ -9,6 +9,9 @@ export interface DesignPreset {
 export interface GeneratedResult {
   markdown: string;
   html: string;
+  swiftui: string;
+  compose: string;
+  flutter: string;
 }
 
 export interface GenerationRequest {
@@ -25,4 +28,11 @@ export interface HistoryItem {
   result: GeneratedResult;
 }
 
-export type GenerationStatus = 'idle' | 'generating' | 'complete' | 'error';
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'model';
+  text: string;
+  timestamp: number;
+}
+
+export type GenerationStatus = 'idle' | 'generating' | 'refining' | 'complete' | 'error';
