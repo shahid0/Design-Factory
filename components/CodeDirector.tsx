@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import { Copy, Check, Terminal, Smartphone, Code, Layers, MessageSquare, Send, Sparkles } from 'lucide-react';
+import { Copy, Terminal, Sparkles, Send, FileText } from 'lucide-react';
 import { GeneratedResult, ChatMessage } from '../types';
 
 interface CodeDirectorProps {
@@ -8,10 +9,7 @@ interface CodeDirectorProps {
   isRefining: boolean;
 }
 
-type TabType = 'spec' | 'swiftui' | 'compose' | 'flutter';
-
 export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, isRefining }) => {
-  const [activeTab, setActiveTab] = useState<TabType>('spec');
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const chatScrollRef = useRef<HTMLDivElement>(null);
@@ -22,8 +20,8 @@ export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, is
     }
   }, [messages]);
 
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(result.markdown);
   };
 
   const handleSendChat = () => {
@@ -41,78 +39,52 @@ export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, is
     setChatInput('');
   };
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'spec': return result.markdown;
-      case 'swiftui': return result.swiftui;
-      case 'compose': return result.compose;
-      case 'flutter': return result.flutter;
-      default: return '';
-    }
-  };
-
   return (
     <div className="flex flex-col h-full bg-[#0c0c0e] rounded-xl border border-zinc-800 shadow-inner overflow-hidden">
       
-      {/* Tabs Header */}
-      <div className="flex items-center px-2 pt-2 bg-zinc-900 border-b border-zinc-800 gap-1 overflow-x-auto">
-        <TabButton 
-          active={activeTab === 'spec'} 
-          onClick={() => setActiveTab('spec')} 
-          icon={<Terminal className="w-3.5 h-3.5" />} 
-          label="Design Spec" 
-        />
-        <TabButton 
-          active={activeTab === 'swiftui'} 
-          onClick={() => setActiveTab('swiftui')} 
-          icon={<Smartphone className="w-3.5 h-3.5" />} 
-          label="SwiftUI" 
-        />
-        <TabButton 
-          active={activeTab === 'compose'} 
-          onClick={() => setActiveTab('compose')} 
-          icon={<Layers className="w-3.5 h-3.5" />} 
-          label="Compose" 
-        />
-        <TabButton 
-          active={activeTab === 'flutter'} 
-          onClick={() => setActiveTab('flutter')} 
-          icon={<Code className="w-3.5 h-3.5" />} 
-          label="Flutter" 
-        />
-      </div>
-
-      {/* Code Content */}
-      <div className="flex-grow overflow-hidden relative group">
-        <textarea
-          readOnly
-          value={renderContent()}
-          className="w-full h-full bg-[#0c0c0e] text-zinc-300 font-mono text-xs p-4 resize-none focus:outline-none custom-scrollbar"
-        />
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800">
+        <div className="flex items-center gap-2 text-zinc-200 font-medium">
+          <FileText className="w-4 h-4 text-blue-400" />
+          <span>Master Design Spec.md</span>
+        </div>
         <button
-          onClick={() => handleCopy(renderContent())}
-          className="absolute top-4 right-4 p-2 bg-zinc-800/80 backdrop-blur text-zinc-400 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:text-white"
+          onClick={handleCopy}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 rounded transition-colors"
         >
-          <Copy className="w-4 h-4" />
+          <Copy className="w-3.5 h-3.5" />
+          <span>Copy Markdown</span>
         </button>
       </div>
 
+      {/* Markdown Content (Source of Truth) */}
+      <div className="flex-grow overflow-hidden relative group bg-[#0c0c0e]">
+        <textarea
+          readOnly
+          value={result.markdown}
+          className="w-full h-full bg-[#0c0c0e] text-zinc-300 font-mono text-sm p-6 resize-none focus:outline-none custom-scrollbar leading-relaxed"
+          spellCheck={false}
+        />
+      </div>
+
       {/* Director Mode Chat Interface */}
-      <div className="h-1/3 min-h-[200px] border-t border-zinc-800 bg-[#121214] flex flex-col">
+      <div className="h-1/3 min-h-[250px] border-t border-zinc-800 bg-[#121214] flex flex-col">
         <div className="px-4 py-2 bg-zinc-900/50 border-b border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-bold text-blue-400">
             <Sparkles className="w-3 h-3" />
             <span>Director Mode</span>
           </div>
-          <span className="text-[10px] text-zinc-500">Refine with Gemini</span>
+          <span className="text-[10px] text-zinc-500">Refine the Master Spec</span>
         </div>
 
         {/* Messages Area */}
         <div ref={chatScrollRef} className="flex-grow overflow-y-auto p-4 space-y-3 custom-scrollbar">
           {messages.length === 0 && (
             <div className="text-center text-zinc-600 text-xs mt-4">
-              <p>Ask Gemini to refine the design.</p>
-              <p className="opacity-50">"Make the buttons rounder", "Add a dark mode toggle"...</p>
+              <p className="mb-1">Ask Gemini to refine the specification.</p>
+              <p className="opacity-50 italic">"Darken the semantic surface tokens"</p>
+              <p className="opacity-50 italic">"Add a tertiary button state"</p>
+              <p className="opacity-50 italic">"Make the typography scale more aggressive"</p>
             </div>
           )}
           {messages.map((msg) => (
@@ -129,9 +101,8 @@ export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, is
           {isRefining && (
             <div className="flex justify-start">
               <div className="px-3 py-2 rounded-lg bg-zinc-800 text-zinc-400 text-xs flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce"></div>
-                <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce delay-75"></div>
-                <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce delay-150"></div>
+                <span className="text-[10px] uppercase font-bold tracking-wider">Refining Spec</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
               </div>
             </div>
           )}
@@ -145,7 +116,7 @@ export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, is
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSendChat()}
-              placeholder="Type your refinement instructions..."
+              placeholder="Refine the design system (e.g., 'Change primary color to emerald')..."
               disabled={isRefining}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-lg pl-4 pr-10 py-3 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500/50 transition-colors"
             />
@@ -162,17 +133,3 @@ export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, is
     </div>
   );
 };
-
-const TabButton: React.FC<{ active: boolean; onClick: () => void; icon: React.ReactNode; label: string }> = ({ active, onClick, icon, label }) => (
-  <button
-    onClick={onClick}
-    className={`flex items-center gap-2 px-4 py-2 rounded-t-lg text-xs font-medium transition-colors border-t border-l border-r ${
-      active 
-        ? 'bg-[#0c0c0e] text-blue-400 border-zinc-800 border-b-[#0c0c0e] -mb-px z-10' 
-        : 'bg-transparent text-zinc-500 border-transparent hover:text-zinc-300 hover:bg-zinc-800/50'
-    }`}
-  >
-    {icon}
-    <span>{label}</span>
-  </button>
-);

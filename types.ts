@@ -1,3 +1,4 @@
+
 export interface DesignPreset {
   id: string;
   label: string;
@@ -8,10 +9,7 @@ export interface DesignPreset {
 
 export interface GeneratedResult {
   markdown: string;
-  html: string;
-  swiftui: string;
-  compose: string;
-  flutter: string;
+  html: string | null;
 }
 
 export interface GenerationRequest {
@@ -36,3 +34,4 @@ export interface ChatMessage {
 }
 
 export type GenerationStatus = 'idle' | 'generating' | 'refining' | 'complete' | 'error';
+export type GenerationPhase = 'idle' | 'spec' | 'artifact' | 'refining';

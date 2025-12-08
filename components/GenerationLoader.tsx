@@ -1,35 +1,70 @@
+
 import React, { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { GenerationPhase } from '../types';
 
 interface GenerationLoaderProps {
-  isVisible: boolean;
+  phase: GenerationPhase;
 }
 
-const STEPS = [
-  "Analyzing style aesthetics...",
-  "Defining design tokens & variables...",
+const SPEC_STEPS = [
+  "Analyzing aesthetics & context...",
+  "Defining semantic tokens...",
   "Constructing component architecture...",
-  "Compiling HTML artifact...",
-  "Finalizing physics & interactions..."
+  "Writing documentation...",
+  "Finalizing Master Spec..."
 ];
 
-export const GenerationLoader: React.FC<GenerationLoaderProps> = ({ isVisible }) => {
+const ARTIFACT_STEPS = [
+  "Reading Master Spec...",
+  "Compiling Tailwind config...",
+  "Building Hero components...",
+  "Generating responsive layout...",
+  "Polishing visual interactions..."
+];
+
+const REFINE_STEPS = [
+  "Reading Director instructions...",
+  "Applying delta changes...",
+  "Updating tokens...",
+  "Regenerating Spec..."
+];
+
+export const GenerationLoader: React.FC<GenerationLoaderProps> = ({ phase }) => {
   const [stepIndex, setStepIndex] = useState(0);
 
   useEffect(() => {
-    if (!isVisible) {
+    if (phase === 'idle') {
       setStepIndex(0);
       return;
     }
 
+    setStepIndex(0); // Reset on phase change
     const interval = setInterval(() => {
-      setStepIndex((prev) => (prev < STEPS.length - 1 ? prev + 1 : prev));
-    }, 2500); // Change step every 2.5 seconds
+      setStepIndex((prev) => prev + 1);
+    }, 1500); 
 
     return () => clearInterval(interval);
-  }, [isVisible]);
+  }, [phase]);
 
-  if (!isVisible) return null;
+  if (phase === 'idle') return null;
+
+  let steps: string[] = [];
+  let title = "";
+
+  if (phase === 'spec') {
+    steps = SPEC_STEPS;
+    title = "Architecting Spec";
+  } else if (phase === 'artifact') {
+    steps = ARTIFACT_STEPS;
+    title = "Building Artifact";
+  } else if (phase === 'refining') {
+    steps = REFINE_STEPS;
+    title = "Refining Design";
+  }
+
+  const currentStep = steps[Math.min(stepIndex, steps.length - 1)];
+  const progress = Math.min(((stepIndex + 1) / steps.length) * 100, 100);
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm">
@@ -40,11 +75,11 @@ export const GenerationLoader: React.FC<GenerationLoaderProps> = ({ isVisible })
           <Loader2 className="w-12 h-12 text-blue-500 animate-spin relative z-10" />
         </div>
 
-        <h3 className="text-xl font-bold text-white mb-2">Gemini is Dreaming</h3>
+        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
         
         <div className="h-6 overflow-hidden relative w-full">
            <p className="text-zinc-400 text-sm animate-pulse transition-all duration-500">
-             {STEPS[stepIndex]}
+             {currentStep}
            </p>
         </div>
 
@@ -52,7 +87,7 @@ export const GenerationLoader: React.FC<GenerationLoaderProps> = ({ isVisible })
         <div className="w-full h-1 bg-zinc-800 mt-6 rounded-full overflow-hidden">
           <div 
             className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-out"
-            style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }}
+            style={{ width: `${progress}%` }}
           ></div>
         </div>
 
