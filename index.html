@@ -9,23 +9,74 @@
       window.process = window.process || { env: {} };
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
+              sans: ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
               mono: ['JetBrains Mono', 'monospace'],
             },
             colors: {
-              background: '#09090b',
-              surface: '#18181b',
-              primary: '#3b82f6',
-              accent: '#8b5cf6',
+              // Neutral Scale (Kaolin)
+              kaolin: {
+                50: '#FDFDFE',  // Base Canvas
+                100: '#F4F6F9', // Off-White Wash
+                200: '#E8ECF2', // Unfired Clay
+                300: '#D1D9E3',
+                400: '#B3BCC9',
+                500: '#94A0B2', // Structural Gray
+                600: '#64748B',
+                700: '#475569',
+                800: '#334155', // Primary Text
+                900: '#1E293B', // Display Text
+              },
+              // Primary Scale (Resin Blue)
+              resin: {
+                50: '#F0F5FF',
+                100: '#E0EAFF',
+                200: '#C7D9FE',
+                300: '#A3C1FD',
+                400: '#789FFA',
+                500: '#4F7AF6', // Brand Primary
+                600: '#3658E3',
+                700: '#2843CA',
+                800: '#2437A3',
+                900: '#223182',
+              },
+              // Accents
+              polymer: {
+                500: '#EC4899', // Pink
+              },
+              glaze: {
+                500: '#10B981' // Success
+              },
+              kiln: {
+                500: '#EF4444' // Error
+              },
+              amber: {
+                500: '#F59E0B' // Warning
+              }
+            },
+            boxShadow: {
+              // The Clay Engine Shadows
+              'clay-float': '-10px -10px 20px #FFFFFF, 10px 10px 20px #D1D9E6, inset 0px 0px 0px rgba(255,255,255,0)',
+              'clay-convex': '8px 8px 16px #b8b9be, -8px -8px 16px #ffffff, inset 2px 2px 4px rgba(255,255,255,0.5), inset -2px -2px 4px rgba(0,0,0,0.05)',
+              'clay-pressed': 'inset 6px 6px 12px #b8b9be, inset -6px -6px 12px #ffffff',
+              // Specialized Shadows
+              'clay-btn-primary': '6px 6px 12px #3658E3, -6px -6px 12px #789FFA',
+              'clay-btn-pressed': 'inset 4px 4px 8px #2437A3, inset -4px -4px 8px #789FFA',
+              'clay-panel': '-8px -8px 16px #FFFFFF, 8px 8px 16px #D1D9E6',
             },
             animation: {
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              }
             }
           }
         }
@@ -33,23 +84,28 @@
     </script>
     <style>
       body {
-        background-color: #09090b;
-        color: #fafafa;
+        background-color: #FDFDFE; /* kaolin-50 */
+        color: #334155; /* kaolin-800 */
       }
       /* Custom Scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
       }
       ::-webkit-scrollbar-track {
-        background: #18181b; 
+        background: #E8ECF2; /* kaolin-200 */
+        border-radius: 5px;
       }
       ::-webkit-scrollbar-thumb {
-        background: #3f3f46; 
-        border-radius: 4px;
+        background: #94A0B2; /* kaolin-500 */
+        border-radius: 5px;
+        border: 2px solid #E8ECF2;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #52525b; 
+        background: #64748B; /* kaolin-600 */
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
       }
     </style>
   <script type="importmap">

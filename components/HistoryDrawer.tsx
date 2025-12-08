@@ -22,52 +22,52 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
       {/* Backdrop */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity" 
+          className="fixed inset-0 bg-kaolin-900/20 backdrop-blur-sm z-50 transition-opacity" 
           onClick={onClose}
         />
       )}
       
-      {/* Drawer */}
+      {/* Drawer (Floating Clay Panel) */}
       <div 
-        className={`fixed top-0 right-0 h-full w-80 bg-[#121214] border-l border-zinc-800 shadow-2xl z-50 transform transition-transform duration-300 ease-out flex flex-col
-          ${isOpen ? 'translate-x-0' : 'translate-x-full'}
+        className={`fixed top-4 right-4 bottom-4 w-80 bg-kaolin-50 rounded-3xl shadow-2xl z-50 transform transition-transform duration-300 ease-out flex flex-col border border-white/50
+          ${isOpen ? 'translate-x-0' : 'translate-x-[120%]'}
         `}
       >
-        <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-white font-bold">
-            <Clock className="w-5 h-5 text-blue-500" />
-            <span>Session History</span>
+        <div className="p-6 border-b border-kaolin-200 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-kaolin-900 font-extrabold">
+            <Clock className="w-5 h-5 text-resin-500" />
+            <span>Kiln History</span>
           </div>
           <button 
             onClick={onClose}
-            className="text-zinc-500 hover:text-white transition-colors"
+            className="text-kaolin-400 hover:text-kaolin-800 transition-colors font-medium text-sm"
           >
             Close
           </button>
         </div>
 
-        <div className="flex-grow overflow-y-auto p-4 space-y-3">
+        <div className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
           {history.length === 0 ? (
-            <div className="text-center text-zinc-600 mt-10">
-              <p>No history yet.</p>
-              <p className="text-xs mt-2">Generate something amazing!</p>
+            <div className="text-center text-kaolin-400 mt-10">
+              <p className="font-medium">No artifacts found.</p>
+              <p className="text-xs mt-2 text-kaolin-300">Start the kiln!</p>
             </div>
           ) : (
             history.map((item) => (
               <div 
                 key={item.id}
                 onClick={() => { onSelect(item); onClose(); }}
-                className="group p-4 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-blue-500/50 hover:bg-zinc-800/50 cursor-pointer transition-all"
+                className="group p-4 rounded-2xl bg-white border border-kaolin-100 shadow-sm hover:shadow-clay-float hover:border-resin-200 hover:-translate-y-1 cursor-pointer transition-all duration-300"
               >
                 <div className="flex justify-between items-start mb-2">
-                  <span className="font-bold text-zinc-200 text-sm">{item.style.label}</span>
-                  <span className="text-[10px] text-zinc-500 font-mono">
+                  <span className="font-bold text-kaolin-800 text-sm group-hover:text-resin-600 transition-colors">{item.style.label}</span>
+                  <span className="text-[10px] text-kaolin-400 font-mono">
                     {new Date(item.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                   </span>
                 </div>
-                <p className="text-xs text-zinc-400 line-clamp-2 mb-3">{item.context}</p>
-                <div className="flex items-center text-blue-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  Restore <ArrowRight className="w-3 h-3 ml-1" />
+                <p className="text-xs text-kaolin-500 line-clamp-2 mb-3 leading-relaxed">{item.context}</p>
+                <div className="flex items-center text-resin-500 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
+                  Restore Artifact <ArrowRight className="w-3 h-3 ml-1" />
                 </div>
               </div>
             ))
@@ -75,10 +75,10 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
         </div>
 
         {history.length > 0 && (
-          <div className="p-4 border-t border-zinc-800">
+          <div className="p-4 border-t border-kaolin-200">
             <button 
               onClick={onClear}
-              className="w-full py-2 flex items-center justify-center gap-2 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
+              className="w-full py-3 flex items-center justify-center gap-2 text-xs font-bold text-kiln-500 hover:text-white hover:bg-kiln-500 rounded-xl transition-all shadow-sm hover:shadow-md"
             >
               <Trash2 className="w-3 h-3" />
               Clear History

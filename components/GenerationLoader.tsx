@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { GenerationPhase } from '../types';
@@ -8,25 +7,25 @@ interface GenerationLoaderProps {
 }
 
 const SPEC_STEPS = [
-  "Analyzing aesthetics & context...",
-  "Defining semantic tokens...",
-  "Constructing component architecture...",
-  "Writing documentation...",
-  "Finalizing Master Spec..."
+  "Firing up the kiln...",
+  "Mixing raw aesthetic materials...",
+  "Molding semantic tokens...",
+  "Sculpting component architecture...",
+  "Polishing the Master Spec..."
 ];
 
 const ARTIFACT_STEPS = [
   "Reading Master Spec...",
-  "Compiling Tailwind config...",
-  "Building Hero components...",
-  "Generating responsive layout...",
-  "Polishing visual interactions..."
+  "Preparing HTML canvas...",
+  "Glazing UI components...",
+  "Applying responsive layout...",
+  "Cooling and solidifying artifact..."
 ];
 
 const REFINE_STEPS = [
-  "Reading Director instructions...",
-  "Applying delta changes...",
-  "Updating tokens...",
+  "Analyzing Director instructions...",
+  "Remolding the clay...",
+  "Adjusting token glaze...",
   "Regenerating Spec..."
 ];
 
@@ -54,39 +53,39 @@ export const GenerationLoader: React.FC<GenerationLoaderProps> = ({ phase }) => 
 
   if (phase === 'spec') {
     steps = SPEC_STEPS;
-    title = "Architecting Spec";
+    title = "Molding Specification";
   } else if (phase === 'artifact') {
     steps = ARTIFACT_STEPS;
-    title = "Building Artifact";
+    title = "Manifesting Artifact";
   } else if (phase === 'refining') {
     steps = REFINE_STEPS;
-    title = "Refining Design";
+    title = "Refining Clay";
   }
 
   const currentStep = steps[Math.min(stepIndex, steps.length - 1)];
   const progress = Math.min(((stepIndex + 1) / steps.length) * 100, 100);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="w-full max-w-md p-8 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl flex flex-col items-center text-center">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-kaolin-50/80 backdrop-blur-md">
+      <div className="w-full max-w-md p-10 bg-white rounded-3xl shadow-clay-float flex flex-col items-center text-center border border-kaolin-100">
         
         <div className="relative mb-8">
-          <div className="absolute inset-0 bg-blue-500 blur-xl opacity-20 animate-pulse"></div>
-          <Loader2 className="w-12 h-12 text-blue-500 animate-spin relative z-10" />
+          <div className="absolute inset-0 bg-resin-200 blur-xl opacity-50 animate-pulse rounded-full"></div>
+          <Loader2 className="w-14 h-14 text-resin-500 animate-spin relative z-10" />
         </div>
 
-        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+        <h3 className="text-2xl font-extrabold text-kaolin-900 mb-3 tracking-tight">{title}</h3>
         
-        <div className="h-6 overflow-hidden relative w-full">
-           <p className="text-zinc-400 text-sm animate-pulse transition-all duration-500">
+        <div className="h-6 overflow-hidden relative w-full mb-8">
+           <p className="text-kaolin-500 text-sm font-medium animate-pulse transition-all duration-500">
              {currentStep}
            </p>
         </div>
 
-        {/* Progress Bar */}
-        <div className="w-full h-1 bg-zinc-800 mt-6 rounded-full overflow-hidden">
+        {/* Tactile Progress Bar */}
+        <div className="w-full h-3 bg-kaolin-100 rounded-full overflow-hidden shadow-inner border border-kaolin-200">
           <div 
-            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-out"
+            className="h-full bg-gradient-to-r from-resin-400 to-resin-600 transition-all duration-500 ease-out rounded-full shadow-sm"
             style={{ width: `${progress}%` }}
           ></div>
         </div>

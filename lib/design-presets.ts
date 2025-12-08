@@ -1,3 +1,4 @@
+
 import { DesignPreset } from '../types';
 
 export const DESIGN_PRESETS: DesignPreset[] = [
@@ -17,6 +18,9 @@ export const DESIGN_PRESETS: DesignPreset[] = [
   { id: 'fluent', label: 'Fluent Design', description: 'Acrylic material, connected animations, light and depth.', category: 'Modern/Tech', tags: ['Microsoft', 'Light', 'Depth'] },
   { id: 'skeuomorphic-redux', label: 'Skeuomorphic Redux', description: 'Hyper-realistic textures (leather, wood) specifically for high-res displays.', category: 'Modern/Tech', tags: ['Texture', 'Realism', 'Tactile'] },
   { id: 'hud', label: 'Sci-Fi HUD', description: 'Thin lines, target reticles, monospace data streams, purely functional.', category: 'Modern/Tech', tags: ['Space', 'Data', 'Interface'] },
+  { id: 'anime-dreams', label: 'Anime Dreams', description: 'Bright pastel palette, dramatic shadows, and dreamy design layouts.', category: 'Modern/Tech', tags: ['Anime', 'Pastel', 'Dreamy'] },
+  { id: 'industrial-futurism', label: 'Industrial Futurism', description: 'Modern, high-tech minimalism with precise grid systems.', category: 'Modern/Tech', tags: ['Industrial', 'Minimal', 'Precision'] },
+  { id: 'silicon-valley-minimal', label: 'Silicon Valley Minimal', description: 'Tech industry-inspired designs with approachable color balance.', category: 'Modern/Tech', tags: ['Tech', 'Clean', 'Minimal'] },
 
   // --- Retro ---
   { id: '8bit', label: '8-Bit Pixel', description: 'Blocky fonts, restricted color palette, scanlines, NES nostalgia.', category: 'Retro', tags: ['Pixel', 'Game', 'Fun'] },
@@ -34,6 +38,11 @@ export const DESIGN_PRESETS: DesignPreset[] = [
   { id: 'mid-century', label: 'Mid-Century Modern', description: 'Muted pastels, organic curves, atomic age motifs.', category: 'Retro', tags: ['50s', 'Clean', 'Warm'] },
   { id: 'teletext', label: 'Teletext', description: 'Strict grid, 8 colors, block graphics, TV information service.', category: 'Retro', tags: ['TV', 'Blocky', 'Info'] },
   { id: 'blueprint', label: 'Blueprint', description: 'Cyan background, white lines, technical diagrams, handwritten notes.', category: 'Retro', tags: ['Technical', 'Sketch', 'Blue'] },
+  { id: 'steampunk-vintage', label: 'Steampunk Vintage', description: 'Antique gears, bold metallic tones, and intricate designs from the industrial era.', category: 'Retro', tags: ['Steampunk', 'Vintage', 'Industrial'] },
+  { id: 'vaporwave-90s', label: '90s Vaporwave', description: 'Gradient sunsets, palm trees, and retro artifacts driven by nostalgia.', category: 'Retro', tags: ['Vaporwave', 'Nostalgia', '1990s'] },
+  { id: 'cheerful-kids', label: 'Cheerful Kids', description: 'Bright, cheerful, and vibrant colors with playful, kid-focused layouts.', category: 'Retro', tags: ['Cheerful', 'Bright', 'Kids'] },
+  { id: 'classic-elegance', label: 'Classic Elegance', description: 'Timeless serif fonts, monochrome palettes, and a sense of historic opulence.', category: 'Retro', tags: ['Classic', 'Elegant', 'Timeless'] },
+  { id: 'arabesque-vibrance', label: 'Arabesque Vibrance', description: 'Exotic intricate patterns blended into quirky motifs and modern storytelling.', category: 'Retro', tags: ['Ornate', 'Exotic', 'Bold'] },
 
   // --- Minimal ---
   { id: 'monochrome', label: 'Strict Monochrome', description: 'Pure black and white. No grays. Reliance on spacing and size.', category: 'Minimal', tags: ['Stark', 'Clean', 'Bold'] },
@@ -51,6 +60,12 @@ export const DESIGN_PRESETS: DesignPreset[] = [
   { id: 'desert', label: 'Desert Modern', description: 'Terracotta, sage, sand, expansive spacing, heat.', category: 'Minimal', tags: ['Warm', 'Nature', 'Dry'] },
   { id: 'polar', label: 'Polar', description: 'Icy blues, whites, sharp edges, cold precision.', category: 'Minimal', tags: ['Cold', 'Clean', 'Sharp'] },
   { id: 'print', label: 'High-End Print', description: 'Looks like a magazine. Drop caps, justified text, gutters.', category: 'Minimal', tags: ['Editorial', 'Classy', 'Paper'] },
+  { id: 'pastel-plains', label: 'Pastel Plains', description: 'Soft palettes with an entirely calm and gentle visual experience.', category: 'Minimal', tags: ['Pastel', 'Calm', 'Minimal'] },
+  { id: 'arctic-mist', label: 'Arctic Mist', description: 'Cool blues and whites combined with transparency effects for a frosty feel.', category: 'Minimal', tags: ['Frosty', 'Transparent', 'Cool'] },
+  { id: 'golden-luxury', label: 'Golden Luxury', description: 'Refined aesthetics with rich gold hues, bold typography, and minimal layouts.', category: 'Minimal', tags: ['Gold', 'Elegant', 'Luxury'] },
+  { id: 'rustic-earth', label: 'Rustic Earth', description: 'Natural earthy tones, rustic finishes, and textured backgrounds.', category: 'Minimal', tags: ['Rustic', 'Earthy', 'Natural'] },
+  { id: 'forest-zen', label: 'Forest Zen', description: 'Lush greens, earthy tones, and tranquil Zen-inspired designs.', category: 'Minimal', tags: ['Forest', 'Zen', 'Natural'] },
+  { id: 'meditative-light', label: 'Meditative Light', description: 'Soft and serene designs targeting peaceful mindfulness with subtle typography.', category: 'Minimal', tags: ['Meditative', 'Soft', 'Peaceful'] },
 
   // --- Experimental ---
   { id: 'glitch', label: 'Glitch Art', description: 'Corrupted data, RGB splitting, noise, intentional errors.', category: 'Experimental', tags: ['Chaos', 'Digital', 'Noise'] },
@@ -68,4 +83,15 @@ export const DESIGN_PRESETS: DesignPreset[] = [
   { id: 'abstract', label: 'Abstract Geom', description: 'Kandinsky-esque shapes, lines, and colors interacting.', category: 'Experimental', tags: ['Art', 'Shape', 'Color'] },
   { id: 'noise', label: 'Static Noise', description: 'Heavy grain overlays, signal loss, hidden information.', category: 'Experimental', tags: ['Texture', 'Rough', 'Dark'] },
   { id: 'rave', label: 'Acid Rave', description: 'Smileys, yellow and black, distortion, repetitive patterns.', category: 'Experimental', tags: ['Party', 'Loud', 'Bold'] },
+  { id: 'neon-future', label: 'Neon Future', description: 'Bright glowing neon colors, dark backgrounds, futuristic appearances.', category: 'Experimental', tags: ['Neon', 'Cyber', 'Futuristic'] },
+  { id: 'cyberpunk-city', label: 'Cyberpunk City', description: 'Dystopian vibes with glowing signs, gritty textures, and retro-modern style.', category: 'Experimental', tags: ['Cyberpunk', 'Cityscape', 'Retro'] },
+  { id: 'geometricsplash', label: 'Geometric Splash', description: 'Bold and vibrant geometric patterns blended with soft gradients.', category: 'Experimental', tags: ['Shapes', 'Patterns', 'Abstract'] },
+  { id: 'bold-street-art', label: 'Bold Street Art', description: 'Street art-inspired graffiti designs, vivid expressive storytelling by streetstyle.', category: 'Experimental', tags: ['Street Art', 'Graffiti'] },
+  { id: 'kaleidoscope', label: 'Kaleidoscope', description: 'Intricate color reflections and symmetrical layouts like glass.', category: 'Experimental', tags: ['Reflective', 'Symmetry', 'Abstract'] },
+  { id: 'digital-matrix', label: 'Digital Matrix', description: 'Abstract digital rain effects, inspired by matrix-style visuals.', category: 'Experimental', tags: ['Matrix', 'Digital', 'Abstract'] },
+  { id: 'galactic-space', label: 'Galactic Space', description: 'Cosmic themes, vivid nebulae, galaxy patterns, and starry palettes.', category: 'Experimental', tags: ['Galaxy', 'Space', 'Cosmic'] },
+  { id: 'psychedelic-dreams', label: 'Psychedelic Dreams', description: 'Swirling colors, bright contrasts, and a trippy fluidity to design.', category: 'Experimental', tags: ['Psychedelic', 'Trippy', 'Colorful'] },
+  { id: 'retro-future-optimism', label: 'Retro Future Optimism', description: 'Futuristic layouts with a vintage tech-flavored charm.', category: 'Experimental', tags: ['Retro', 'Futuristic', 'Tech'] },
+  { id: 'electric-vibe', label: 'Electric Vibrance', description: 'Energetic electric color schemes with high-tech gradient flashes.', category: 'Experimental', tags: ['Electric', 'Gradient', 'Vibrant'] },
+  { id: 'punk-chaos', label: 'Punk Chaos', description: 'Clashing colors, busy patterns, and rebellious anti-design elements.', category: 'Experimental', tags: ['Punk', 'Rebellious', 'Chaotic'] },
 ];
