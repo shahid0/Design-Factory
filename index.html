@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Design Spec Factory</title>
+    <script>
+      // Polyfill process for browser environment to prevent ReferenceErrors
+      window.process = window.process || { env: {} };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script>
@@ -19,6 +23,9 @@
               surface: '#18181b',
               primary: '#3b82f6',
               accent: '#8b5cf6',
+            },
+            animation: {
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             }
           }
         }
@@ -52,7 +59,10 @@
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
     "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1"
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "jszip": "https://ga.jspm.io/npm:jszip@3.10.1/dist/jszip.min.js",
+    "process": "https://ga.jspm.io/npm:process@0.11.10/browser.js",
+    "buffer": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/buffer.js"
   }
 }
 </script>

@@ -17,4 +17,12 @@ export interface GenerationRequest {
   fonts: string;
 }
 
+export interface HistoryItem {
+  id: string;
+  timestamp: number;
+  style: DesignPreset;
+  context: string;
+  result: GeneratedResult;
+}
+
 export type GenerationStatus = 'idle' | 'generating' | 'complete' | 'error';
