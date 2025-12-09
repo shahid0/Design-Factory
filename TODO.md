@@ -36,63 +36,69 @@ Each style must be implemented in `lib/styles/catalog/` and registered in `lib/s
 - [x] Pop Art
 - [x] Art Deco
 - [x] Victorian
-- [ ] Synthwave
-- [ ] Mid-Century Modern
-- [ ] Teletext
-- [ ] Blueprint
-- [ ] Steampunk Vintage
-- [ ] 90s Vaporwave
-- [ ] Cheerful Kids
-- [ ] Classic Elegance
-- [ ] Arabesque Vibrance
+- [x] Synthwave
+- [x] Mid-Century Modern
+- [x] Teletext
+- [x] Blueprint
+- [x] Steampunk Vintage
+- [x] 90s Vaporwave
+- [x] Cheerful Kids
+- [x] Classic Elegance
+- [x] Arabesque Vibrance
 
 ## Minimal
-- [ ] Strict Monochrome
-- [ ] Swiss Style
-- [ ] Scandinavian
-- [ ] Wabi-Sabi
-- [ ] E-Ink
-- [ ] Lo-Fi Wireframe
-- [ ] Darkroom
-- [ ] Laboratory
-- [ ] Kinetic Typography
-- [ ] High Luxury
-- [ ] Institutional
-- [ ] Architectural
-- [ ] Desert Modern
-- [ ] Polar
-- [ ] High-End Print
-- [ ] Pastel Plains
-- [ ] Arctic Mist
-- [ ] Golden Luxury
-- [ ] Rustic Earth
-- [ ] Forest Zen
-- [ ] Meditative Light
+- [x] Strict Monochrome
+- [x] Swiss Style
+- [x] Scandinavian
+- [x] Wabi-Sabi
+- [x] E-Ink
+- [x] Lo-Fi Wireframe
+- [x] Darkroom
+- [x] Laboratory
+- [x] Kinetic Typography
+- [x] High Luxury
+- [x] Institutional
+- [x] Architectural
+- [x] Desert Modern
+- [x] Polar
+- [x] High-End Print
+- [x] Pastel Plains
+- [x] Arctic Mist
+- [x] Golden Luxury
+- [x] Rustic Earth
+- [x] Forest Zen
+- [x] Meditative Light
 
 ## Experimental
-- [ ] Glitch Art
-- [ ] Anti-Design
-- [ ] Maximalism
-- [ ] 90s Grunge
-- [ ] Bio-Digital
-- [ ] Psychedelic
-- [ ] Mixed Media Collage
-- [ ] Deconstructivism
-- [ ] ASCII Art
-- [ ] Dreamcore
-- [ ] Frutiger Aero
-- [ ] Corporate Memphis
-- [ ] Abstract Geom
-- [ ] Static Noise
-- [ ] Acid Rave
-- [ ] Neon Future
-- [ ] Cyberpunk City
-- [ ] Geometric Splash
-- [ ] Bold Street Art
-- [ ] Kaleidoscope
-- [ ] Digital Matrix
-- [ ] Galactic Space
-- [ ] Psychedelic Dreams
-- [ ] Retro Future Optimism
-- [ ] Electric Vibrance
-- [ ] Punk Chaos
+- [x] Glitch Art
+- [x] Anti-Design
+- [x] Maximalism
+- [x] 90s Grunge
+- [x] Bio-Digital
+- [x] Psychedelic
+- [x] Mixed Media Collage
+- [x] Deconstructivism
+- [x] ASCII Art
+- [x] Dreamcore
+- [x] Frutiger Aero
+- [x] Corporate Memphis
+- [x] Abstract Geom
+- [x] Static Noise
+- [x] Acid Rave
+- [x] Neon Future
+- [x] Cyberpunk City
+- [x] Geometric Splash
+- [x] Bold Street Art
+- [x] Kaleidoscope
+- [x] Digital Matrix
+- [x] Galactic Space
+- [x] Psychedelic Dreams
+- [x] Retro Future Optimism
+- [x] Electric Vibrance
+- [x] Punk Chaos
+- [x] Liquid Metal
+- [x] Cyber Sigilism
+- [x] Risograph
+- [x] Acid Graphix
+- [x] Neo-Noir
+- [x] Ethereal Angel

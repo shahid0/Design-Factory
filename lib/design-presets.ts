@@ -94,4 +94,10 @@ export const DESIGN_PRESETS: DesignPreset[] = [
   { id: 'retro-future-optimism', label: 'Retro Future Optimism', description: 'Futuristic layouts with a vintage tech-flavored charm.', category: 'Experimental', tags: ['Retro', 'Futuristic', 'Tech'] },
   { id: 'electric-vibe', label: 'Electric Vibrance', description: 'Energetic electric color schemes with high-tech gradient flashes.', category: 'Experimental', tags: ['Electric', 'Gradient', 'Vibrant'] },
   { id: 'punk-chaos', label: 'Punk Chaos', description: 'Clashing colors, busy patterns, and rebellious anti-design elements.', category: 'Experimental', tags: ['Punk', 'Rebellious', 'Chaotic'] },
+  { id: 'liquid-metal', label: 'Liquid Metal', description: 'Molten chrome, fluid distortions, metallic gradients.', category: 'Experimental', tags: ['Chrome', '3D', 'Fluid'] },
+  { id: 'cyber-sigil', label: 'Cyber Sigilism', description: 'Tribal Y2K sharp lines, gothic tech fonts, high contrast.', category: 'Experimental', tags: ['Gothic', 'Sharp', 'Y2K'] },
+  { id: 'risograph', label: 'Risograph', description: 'Print misalignment, multiply blends, grain, vibrant ink.', category: 'Experimental', tags: ['Print', 'Grain', 'Colorful'] },
+  { id: 'acid-graphix', label: 'Acid Graphix', description: 'Distorted type, chrome, anti-gravity layouts, rave culture.', category: 'Experimental', tags: ['Acid', 'Distorted', 'Trippy'] },
+  { id: 'neo-noir', label: 'Neo-Noir', description: 'High contrast B&W, rain, shadows, venetian blinds, detective vibes.', category: 'Experimental', tags: ['Dark', 'Cinema', 'Mystery'] },
+  { id: 'ethereal', label: 'Ethereal Angel', description: 'Soft lens flares, heavenly glows, delicate gradients, dreamlike.', category: 'Experimental', tags: ['Soft', 'Glow', 'Light'] },
 ];
