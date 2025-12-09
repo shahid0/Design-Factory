@@ -29,71 +29,75 @@ export const swiss: StyleCartridge = {
     injectCss: `
       /* --- SWISS STYLE ENGINE (International Typographic Style) --- */
 
-      /* 1. GRID & ORDER */
       .swiss-stage {
         background-color: #F5F5F5;
         color: #111;
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
 
-      /* Alignment Guides (Visual only) */
+      /* VISIBLE GRID SYSTEM OVERLAY */
       .ds-deco-layer::before {
         content: "";
         position: fixed;
-        left: 50px; top: 0; bottom: 0; width: 1px;
-        background: rgba(0,0,0,0.1);
-        z-index: 0;
+        left: 60px; top: 0; bottom: 0; width: 1px;
+        background: rgba(255, 59, 48, 0.2); /* Red Guide Line */
+        z-index: 999;
+        pointer-events: none;
       }
       .ds-deco-layer::after {
         content: "";
         position: fixed;
-        right: 50px; top: 0; bottom: 0; width: 1px;
-        background: rgba(0,0,0,0.1);
-        z-index: 0;
+        top: 100px; left: 0; right: 0; height: 1px;
+        background: rgba(0,0,0,0.05);
+        z-index: 999;
+        pointer-events: none;
       }
 
-      /* 2. PANELS (Clean white space) */
+      /* 2. PANELS (White Space) */
       .swiss-panel, .ds-panel, .ds-card, .swiss-nav {
         background: #FFFFFF;
         border: none;
         box-shadow: none;
         border-radius: 0;
-        padding: 40px; /* Generous padding */
+        padding: 40px; /* Massive padding */
+        margin-bottom: 20px;
       }
       
+      /* Hover: Accent Line */
       .ds-panel:hover, .ds-card:hover {
-        /* No movement, perhaps a subtle red line */
         border-left: 4px solid var(--accent-color);
-        padding-left: 36px; /* Adjust for border */
+        padding-left: 36px;
       }
 
       /* 3. TYPOGRAPHY (Hierarchy) */
       .ds-hero-title {
         font-weight: 700;
-        font-size: 4rem;
+        font-size: 5rem;
         letter-spacing: -2px;
         line-height: 0.9;
         text-align: left;
+        margin-left: 20px; /* Align with content */
       }
       .ds-hero-title span {
         color: var(--accent-color);
         background: transparent;
         -webkit-text-fill-color: initial;
-        display: block; /* Break line for impact */
+        display: block; /* Break line */
       }
       .ds-hero-text {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         line-height: 1.4;
-        max-width: 700px;
+        max-width: 600px;
         font-weight: 400;
         color: #333;
-        margin-top: 30px;
+        margin-top: 40px;
+        margin-left: 20px;
       }
       
       .ds-hero {
-         align-items: flex-start; /* Left align everything */
+         align-items: flex-start;
          text-align: left;
-         padding-left: 50px; /* Align with guide */
+         padding-left: 40px;
       }
 
       /* 4. BUTTONS (Functional) */
@@ -102,7 +106,7 @@ export const swiss: StyleCartridge = {
         color: white !important;
         border-radius: 0 !important;
         font-weight: 700 !important;
-        padding: 15px 40px !important;
+        padding: 16px 40px !important;
         font-size: 1rem !important;
         border: none !important;
         transition: opacity 0.2s !important;
@@ -119,6 +123,7 @@ export const swiss: StyleCartridge = {
         border: 2px solid #111 !important;
         border-radius: 0 !important;
         font-weight: 700 !important;
+        padding: 14px 38px !important;
       }
       .swiss-btn-secondary:hover, .ds-btn-secondary:hover {
         background: #111 !important;
@@ -130,7 +135,8 @@ export const swiss: StyleCartridge = {
         background: #FFFFFF;
         margin: 0 !important;
         width: 100% !important;
-        padding: 20px 50px; /* Align with guide */
+        padding: 30px 60px; /* Align with grid */
+        border-bottom: 1px solid #F0F0F0;
       }
       .ds-logo {
         font-weight: 700;
@@ -153,7 +159,7 @@ export const swiss: StyleCartridge = {
         background: #F5F5F5 !important;
         border: none !important;
         border-radius: 0 !important;
-        padding: 20px !important;
+        padding: 24px !important;
         font-weight: 700;
         font-size: 1rem;
       }
@@ -165,11 +171,12 @@ export const swiss: StyleCartridge = {
         display: none;
       }
 
-      /* 7. STATS */
+      /* 7. STATS (Grid Layout) */
       .ds-stats {
         background: #FFFFFF !important;
-        border-top: 10px solid #F5F5F5;
-        border-bottom: 10px solid #F5F5F5;
+        border-top: 20px solid #F5F5F5;
+        border-bottom: 20px solid #F5F5F5;
+        margin: 0 !important;
       }
       .ds-stats > div > div {
         background: transparent;
@@ -184,19 +191,24 @@ export const swiss: StyleCartridge = {
         font-weight: 700;
         color: #999;
         text-transform: lowercase;
+        display: block;
+        margin-bottom: 10px;
       }
 
       /* 8. TABLE */
       .ds-table-container {
         border-radius: 0 !important;
         border-top: 4px solid var(--accent-color) !important;
+        box-shadow: none !important;
       }
       .ds-table-container > div {
         border-bottom: 1px solid #EEE !important;
+        padding: 20px !important;
       }
       .ds-table-container > div:first-child {
         background: #FFFFFF;
         font-weight: 700;
+        font-size: 0.8rem;
       }
       .ds-table-container > div:not(:first-child):hover {
         background: #F9F9F9 !important;
@@ -207,22 +219,26 @@ export const swiss: StyleCartridge = {
         color: white !important;
         border-radius: 0;
         font-weight: 700;
-        padding: 2px 8px;
+        padding: 4px 10px;
+        font-size: 0.75rem;
       }
 
       /* 9. PRICING */
       .ds-card {
         background: #F5F5F5 !important;
+        padding: 60px !important;
       }
       /* Popular */
       .ds-card:nth-child(2) {
         background: #FFFFFF !important;
         border: 4px solid var(--accent-color) !important;
         z-index: 10;
-        transform: scale(1.05);
+        transform: scale(1.02);
       }
       .ds-card:nth-child(2) .ds-card-title {
         color: var(--accent-color);
+        font-weight: 700;
+        font-size: 2rem;
       }
       .ds-card:nth-child(2) .absolute {
         background: var(--accent-color);
@@ -230,7 +246,9 @@ export const swiss: StyleCartridge = {
         border-radius: 0;
         font-weight: 700;
         top: 0; left: 0;
-        padding: 5px 15px;
+        padding: 10px 20px;
+        width: 100%;
+        text-align: center;
       }
 
       /* 10. BADGE */
@@ -240,6 +258,7 @@ export const swiss: StyleCartridge = {
         border-radius: 0;
         font-weight: 700;
         padding: 5px 10px;
+        font-size: 0.75rem;
       }
 
       /* 11. FOOTER */
@@ -247,7 +266,7 @@ export const swiss: StyleCartridge = {
         background: #111 !important;
         color: white !important;
         margin-top: 100px;
-        padding-left: 50px;
+        padding: 80px 60px;
       }
       .ds-footer * { color: white !important; }
     `

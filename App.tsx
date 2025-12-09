@@ -226,7 +226,7 @@ export default function App() {
       <main className="flex-1 flex flex-col min-w-0 bg-kaolin-50 relative overflow-hidden transition-all duration-300">
         
         {/* Top Navigation Bar */}
-        <div className="h-16 px-4 md:px-8 flex items-center justify-between border-b border-kaolin-200 bg-white/50 backdrop-blur-sm z-10 shrink-0">
+        <div className="h-16 px-4 md:px-8 flex items-center justify-between border-b border-kaolin-200 bg-white/80 backdrop-blur-md z-20 shrink-0 sticky top-0">
           <div className="flex items-center gap-3">
              {/* Mobile Menu Toggle */}
              <button 
@@ -239,17 +239,29 @@ export default function App() {
              {viewMode === 'inspect' ? (
                <button 
                  onClick={() => setViewMode('browse')}
-                 className="flex items-center gap-2 text-xs font-bold text-kaolin-500 hover:text-resin-600 px-2 py-1.5 rounded-lg hover:bg-kaolin-100 transition-colors"
+                 className="flex items-center gap-2 text-xs font-bold text-kaolin-500 hover:text-resin-600 px-3 py-1.5 rounded-lg hover:bg-kaolin-100 transition-colors group"
                >
-                 <ArrowLeft className="w-4 h-4" />
-                 <span className="hidden sm:inline">BACK</span>
+                 <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+                 <span className="hidden sm:inline">WAREHOUSE</span>
                </button>
              ) : (
                 <div className="w-4 h-4" /> /* Spacer if needed */
              )}
              
-             <h1 className="text-lg md:text-xl font-extrabold text-kaolin-900 tracking-tight truncate max-w-[200px] md:max-w-none">
-               {viewMode === 'browse' ? 'Material Warehouse' : 'Inspection Chamber'}
+             <div className="h-6 w-px bg-kaolin-200 mx-2"></div>
+
+             <h1 className="text-lg md:text-xl font-extrabold text-kaolin-900 tracking-tight truncate max-w-[200px] md:max-w-none flex items-center gap-2">
+               {viewMode === 'browse' ? (
+                 <>
+                   <Grid className="w-5 h-5 text-kaolin-400" />
+                   <span>Material Warehouse</span>
+                 </>
+               ) : (
+                 <>
+                   <Zap className="w-5 h-5 text-resin-500" />
+                   <span>Fabrication Chamber</span>
+                 </>
+               )}
              </h1>
           </div>
 
@@ -257,7 +269,7 @@ export default function App() {
              {viewMode === 'inspect' && result && (
                 <button 
                   onClick={handleDownloadPackage}
-                  className="flex items-center gap-2 px-3 py-2 bg-kaolin-100 hover:bg-white text-kaolin-700 hover:text-resin-600 rounded-xl text-xs font-bold shadow-sm hover:shadow-clay-float transition-all"
+                  className="flex items-center gap-2 px-3 py-2 bg-kaolin-100 hover:bg-white text-kaolin-700 hover:text-resin-600 rounded-xl text-xs font-bold shadow-sm hover:shadow-clay-float transition-all border border-transparent hover:border-kaolin-200"
                 >
                   <Download className="w-4 h-4" />
                   <span className="hidden sm:inline">EXPORT</span>
@@ -267,13 +279,13 @@ export default function App() {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 scroll-smooth">
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 scroll-smooth relative">
           
           {/* VIEW: BROWSE (Grid) */}
-          <div className={`transition-all duration-500 ease-out ${viewMode === 'browse' ? 'opacity-100 translate-y-0' : 'hidden opacity-0 translate-y-10'}`}>
+          <div className={`transition-all duration-500 ease-out absolute inset-0 p-4 md:p-8 overflow-y-auto custom-scrollbar ${viewMode === 'browse' ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-95 z-0 pointer-events-none'}`}>
              
              {/* Filters Toolbar */}
-             <div className="flex flex-col gap-4 mb-8 sticky top-0 bg-kaolin-50/95 backdrop-blur-sm p-4 -mx-4 md:mx-0 md:rounded-2xl shadow-sm z-20 border-b md:border border-kaolin-100">
+             <div className="flex flex-col gap-4 mb-8 sticky top-0 bg-kaolin-50/95 backdrop-blur-sm p-4 -mx-4 md:mx-0 md:rounded-2xl shadow-sm z-20 border-b md:border border-kaolin-100 transition-all">
                 <div className="flex flex-wrap gap-2">
                   {categories.map(cat => (
                     <button
@@ -290,7 +302,7 @@ export default function App() {
                   ))}
                 </div>
                 <div className="w-full relative group">
-                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-kaolin-400" />
+                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-kaolin-400 group-focus-within:text-resin-500 transition-colors" />
                    <input 
                       type="text"
                       placeholder="Search textures..."
@@ -304,13 +316,13 @@ export default function App() {
              {/* The Grid */}
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6 pb-20">
                {filteredPresets.map((preset) => (
-                 <button
+                 <div
                   key={preset.id}
                   onClick={() => {
                     setSelectedStyle(preset);
                     if (window.innerWidth < 1024) setIsMobileMenuOpen(true);
                   }}
-                  className={`group relative p-6 rounded-3xl text-left transition-all duration-300 flex flex-col h-64
+                  className={`group relative p-6 rounded-3xl text-left transition-all duration-300 flex flex-col h-64 cursor-pointer
                     ${selectedStyle?.id === preset.id 
                       ? 'bg-white ring-4 ring-resin-200 shadow-clay-convex scale-[1.02] z-10' 
                       : 'bg-white shadow-clay-float hover:-translate-y-2 hover:shadow-xl border border-kaolin-100'
@@ -323,39 +335,39 @@ export default function App() {
                      </div>
                      
                      {/* INSPECT BUTTON (The "Eye") */}
-                     <div 
+                     <button 
                         onClick={(e) => handleInspect(preset, e)}
                         className="p-2 rounded-full bg-kaolin-100 text-kaolin-400 hover:bg-resin-500 hover:text-white transition-all transform hover:scale-110 shadow-sm z-20"
                         title="Inspect Style"
                      >
                        <Eye className="w-4 h-4" />
-                     </div>
+                     </button>
                    </div>
                    
-                   <h3 className="font-bold text-lg text-kaolin-800 mb-2">{preset.label}</h3>
+                   <h3 className="font-bold text-lg text-kaolin-800 mb-2 group-hover:text-resin-600 transition-colors">{preset.label}</h3>
                    <p className="text-xs text-kaolin-500 font-medium leading-relaxed mb-auto line-clamp-3">
                      {preset.description}
                    </p>
                    
                    <div className="flex flex-wrap gap-2 pt-4 mt-2 border-t border-kaolin-100">
                       {preset.tags.slice(0, 2).map(tag => (
-                        <span key={tag} className="text-[10px] font-bold uppercase text-kaolin-400 bg-kaolin-50 px-2 py-1 rounded-md">
+                        <span key={tag} className="text-[10px] font-bold uppercase text-kaolin-400 bg-kaolin-50 px-2 py-1 rounded-md border border-kaolin-100">
                           {tag}
                         </span>
                       ))}
                    </div>
-                 </button>
+                 </div>
                ))}
              </div>
           </div>
 
           {/* VIEW: INSPECT (Result) */}
-          <div className={`h-full flex flex-col transition-all duration-500 ${viewMode === 'inspect' ? 'opacity-100 translate-x-0' : 'hidden opacity-0 translate-x-10'}`}>
+          <div className={`absolute inset-0 p-4 md:p-8 overflow-hidden flex flex-col transition-all duration-500 ${viewMode === 'inspect' ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-10 z-0 pointer-events-none'}`}>
             {result ? (
                <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-8 h-full">
                   
                   {/* Spec Column */}
-                  <div className="flex flex-col h-[500px] xl:h-full bg-white rounded-3xl shadow-clay-panel overflow-hidden border border-kaolin-100">
+                  <div className="flex flex-col h-[500px] xl:h-full bg-white rounded-3xl shadow-clay-panel overflow-hidden border border-kaolin-100 transition-all duration-500">
                     <div className="p-3 bg-kaolin-50 border-b border-kaolin-100 flex items-center gap-2 text-kaolin-500 text-xs font-bold uppercase tracking-wider">
                        <BookOpen className="w-4 h-4" /> Specification
                     </div>
@@ -369,7 +381,7 @@ export default function App() {
                   </div>
 
                   {/* Artifact Column */}
-                  <div className="flex flex-col h-[600px] xl:h-full bg-kaolin-200/50 rounded-3xl shadow-clay-pressed overflow-hidden p-2 border border-kaolin-200 mb-20 xl:mb-0">
+                  <div className="flex flex-col h-[600px] xl:h-full bg-kaolin-200/50 rounded-3xl shadow-clay-pressed overflow-hidden p-2 border border-kaolin-200 mb-20 xl:mb-0 transition-all duration-500 delay-100">
                      {result.html ? (
                         <PreviewFrame htmlContent={result.html} />
                      ) : (

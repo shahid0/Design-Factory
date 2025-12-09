@@ -18,7 +18,7 @@ export const cyberpunk: StyleCartridge = {
       '--font-display': '"JetBrains Mono", monospace',
     },
     elementClasses: {
-      stage: 'bg-black relative overflow-hidden', 
+      stage: 'bg-black relative overflow-hidden selection:bg-[#FCEE0A] selection:text-black', 
       navbar: 'bg-[#050505]/95 border-b border-[#FCEE0A]/20',
       container: 'cyber-panel',
       buttonPrimary: 'cyber-btn-primary',
@@ -27,183 +27,156 @@ export const cyberpunk: StyleCartridge = {
       badge: 'cyber-badge'
     },
     injectCss: `
-      /* --- CYBERPUNK V3: SYSTEM FAILURE --- */
+      /* --- CYBERPUNK V4: ARASAKA PROTOCOL --- */
 
-      /* 1. GLOBAL CRT SCANLINE OVERLAY */
-      .ds-page-root::after {
+      /* 1. CRT MONITOR DISTORTION */
+      .ds-page-root {
+        animation: crt-flicker 0.1s infinite;
+      }
+      
+      @keyframes crt-flicker {
+        0% { opacity: 0.99; }
+        100% { opacity: 1; }
+      }
+
+      .ds-page-root::before {
         content: " ";
         display: block;
         position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background: 
-          linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-          linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        top: 0; left: 0; bottom: 0; right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
         z-index: 999;
         background-size: 100% 2px, 3px 100%;
         pointer-events: none;
       }
 
-      /* 2. THE "SHATTERED" BUTTON */
+      /* 2. GLITCH BUTTONS */
       .cyber-btn-primary {
-        --slice-0: inset(50% 50% 50% 50%);
-        --slice-1: inset(80% -6px 0 0);
-        --slice-2: inset(50% -6px 30% 0);
-        --slice-3: inset(10% -6px 85% 0);
-        --slice-4: inset(40% -6px 43% 0);
-        --slice-5: inset(80% -6px 5% 0);
-        
+        --clip: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         position: relative;
         background: var(--text-primary);
-        color: black;
+        color: #000;
         font-weight: 900;
         text-transform: uppercase;
         border: 0;
         letter-spacing: 2px;
-        clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-        box-shadow: 6px 0px 0px #00F0FF;
-        transition: all 0.1s;
-      }
-      
-      /* The Glitch Ghost */
-      .cyber-btn-primary::after {
-        content: 'INITIALIZE';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, transparent 3%, #00F0FF 3%, #00F0FF 5%, var(--accent-color) 5%);
-        text-shadow: -3px -3px 0px #FCEE0A, 3px 3px 0px #00F0FF;
-        clip-path: var(--slice-0);
-        transform: translate(-20px, 10px);
-      }
-
-      .cyber-btn-primary:hover::after {
-        animation: 1s glitch;
-        animation-timing-function: steps(2, end);
+        clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
       }
       
       .cyber-btn-primary:hover {
-         transform: translate(-5px, -5px);
-         box-shadow: 10px 10px 0px var(--accent-color);
-         background: white;
+        transform: translate(-2px, -2px);
+        box-shadow: 4px 4px 0 var(--text-secondary);
+        background: #fff;
+        text-shadow: -1px -1px 0 rgba(0,240,255,0.5), 1px 1px 0 rgba(255,0,60,0.5);
       }
 
-      @keyframes glitch {
-        0% { clip-path: var(--slice-1); transform: translate(-20px, -10px); }
-        10% { clip-path: var(--slice-3); transform: translate(10px, 10px); }
-        20% { clip-path: var(--slice-1); transform: translate(-10px, 10px); }
-        30% { clip-path: var(--slice-3); transform: translate(0px, 5px); }
-        40% { clip-path: var(--slice-2); transform: translate(-5px, 0px); }
-        50% { clip-path: var(--slice-3); transform: translate(5px, 0px); }
-        60% { clip-path: var(--slice-4); transform: translate(5px, 10px); }
-        70% { clip-path: var(--slice-2); transform: translate(-10px, 10px); }
-        80% { clip-path: var(--slice-5); transform: translate(20px, -10px); }
-        90% { clip-path: var(--slice-1); transform: translate(-10px, 0px); }
-        100% { clip-path: var(--slice-1); transform: translate(0); }
+      .cyber-btn-primary::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: var(--accent-color);
+        mix-blend-mode: hard-light;
+        opacity: 0;
+        z-index: 1;
+      }
+      .cyber-btn-primary:active::after {
+        opacity: 0.5;
       }
 
-      /* 3. HERO TYPOGRAPHY VIOLENCE */
+      /* 3. HERO TYPOGRAPHY (DECODING EFFECT) */
       .ds-hero-title {
-        text-shadow: 3px 0px 0px rgba(255,0,60,0.8), -3px 0px 0px rgba(0,240,255,0.8);
-        position: relative;
+        text-shadow: 2px 0 0 rgba(255,0,60,0.8), -2px 0 0 rgba(0,240,255,0.8);
+        animation: text-glitch 3s infinite alternate;
       }
+      @keyframes text-glitch {
+        0% { text-shadow: 2px 0 0 rgba(255,0,60,0.8), -2px 0 0 rgba(0,240,255,0.8); }
+        98% { text-shadow: 2px 0 0 rgba(255,0,60,0.8), -2px 0 0 rgba(0,240,255,0.8); }
+        99% { text-shadow: -2px 0 0 rgba(255,0,60,0.8), 2px 0 0 rgba(0,240,255,0.8); transform: skewX(10deg); }
+        100% { text-shadow: 2px 0 0 rgba(255,0,60,0.8), -2px 0 0 rgba(0,240,255,0.8); transform: skewX(0deg); }
+      }
+
       .ds-hero-title span {
         background: var(--text-primary);
-        color: black;
+        color: #000;
         padding: 0 10px;
-        box-decoration-break: clone;
       }
 
-      /* 4. BREACH PROTOCOL TABLE */
-      .ds-table-container {
-        border: 1px solid var(--text-secondary);
-        background: repeating-linear-gradient(
-          0deg,
-          rgba(0, 240, 255, 0.05),
-          rgba(0, 240, 255, 0.05) 1px,
-          transparent 1px,
-          transparent 2px
-        );
-      }
-      .ds-table-container > div:first-child {
-        background: var(--text-secondary);
-        color: black !important;
-      }
-      .ds-table-container > div:not(:first-child):hover {
-        background: var(--accent-color);
-        color: black;
-        cursor: crosshair;
-      }
-      .ds-table-container > div:not(:first-child):hover * {
-        color: black !important;
-      }
-
-      /* 5. DECORATIVE WARNINGS */
+      /* 4. DATA PANELS */
       .cyber-panel {
+        background: #080808;
         border: 1px solid #333;
         position: relative;
-        background: #080808;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
       }
+      /* Corner brackets */
       .cyber-panel::before {
-        content: "WARNING";
+        content: "";
         position: absolute;
-        top: -1px;
-        right: 10px;
-        background: var(--accent-color);
-        color: black;
-        font-size: 8px;
-        padding: 2px 6px;
-        font-weight: 900;
-        transform: translateY(-50%);
+        top: -1px; left: -1px; width: 20px; height: 20px;
+        border-top: 2px solid var(--text-primary);
+        border-left: 2px solid var(--text-primary);
       }
       .cyber-panel::after {
         content: "";
         position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 20px;
-        height: 20px;
-        background: linear-gradient(135deg, transparent 50%, var(--text-secondary) 50%);
-      }
-
-      /* 6. INPUT TERMINAL */
-      .cyber-input {
-        background: #000;
-        border: 1px solid #333;
-        border-left: 4px solid var(--text-primary);
-        font-family: monospace;
-        color: var(--text-primary);
-      }
-      .cyber-input:focus {
-        border-color: var(--text-secondary);
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        bottom: -1px; right: -1px; width: 20px; height: 20px;
+        border-bottom: 2px solid var(--text-primary);
+        border-right: 2px solid var(--text-primary);
       }
       
-      /* 7. NAVIGATION */
-      .ds-navbar {
-        border-bottom: 1px solid #333;
-      }
-      .ds-navbar .ds-logo {
-        text-transform: uppercase;
-        letter-spacing: -2px;
+      .cyber-panel:hover {
+        border-color: var(--text-secondary);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
       }
 
-      /* 8. BADGE */
-      .cyber-badge {
-        border: 1px solid var(--accent-color);
-        background: transparent;
-        color: var(--accent-color);
-        animation: blink 2s infinite;
+      /* 5. INPUT TERMINAL */
+      .cyber-input {
+        background: #050505;
+        border: 1px solid #333;
+        border-left: 4px solid var(--text-primary);
+        font-family: var(--font-display);
+        color: var(--text-primary);
+        transition: all 0.3s;
+      }
+      .cyber-input:focus {
+        background: #000;
+        border-color: var(--text-secondary);
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        outline: none;
       }
 
-      @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
+      /* 6. STATS & TABLES */
+      .ds-table-container {
+        border: 1px solid #222;
+        background: repeating-linear-gradient(0deg, #0a0a0a, #0a0a0a 2px, #0f0f0f 2px, #0f0f0f 4px);
+      }
+      .ds-table-container > div:first-child {
+        background: var(--accent-color);
+        color: #000;
+        font-weight: 900;
+      }
+      .ds-table-container > div:not(:first-child):hover {
+        background: var(--text-secondary) !important;
+        color: #000 !important;
+        cursor: crosshair;
+      }
+      /* Force children to black on hover */
+      .ds-table-container > div:not(:first-child):hover * {
+        color: #000 !important;
+      }
+
+      /* 7. SCROLLBAR */
+      ::-webkit-scrollbar {
+        width: 8px;
+        background: #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border: 1px solid #000;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-primary);
       }
     `
   }

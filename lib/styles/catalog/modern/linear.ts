@@ -9,16 +9,16 @@ export const linear: StyleCartridge = {
   meta,
   previewConfig: {
     theme: {
-      '--bg-layer-1': '#08090A', // Linear Background
-      '--bg-layer-2': '#141518', // Panel Background
-      '--text-primary': '#F7F8F8', // High Contrast Text
-      '--text-secondary': '#8A8F98', // Muted Text
-      '--accent-color': '#5E6AD2', // Linear Purple/Blue
-      '--border-radius': '6px', // Tight, precise corners
+      '--bg-layer-1': '#0B0C0E', // Darker background
+      '--bg-layer-2': '#131418', // Panel background
+      '--text-primary': '#EEEEF0',
+      '--text-secondary': '#8A8F98',
+      '--accent-color': '#5E6AD2', // Linear Purple
+      '--border-radius': '6px', 
       '--font-display': '"Inter", -apple-system, sans-serif',
     },
     elementClasses: {
-      stage: 'bg-[#08090A]',
+      stage: 'bg-[#0B0C0E]',
       navbar: 'linear-nav',
       container: 'linear-panel',
       buttonPrimary: 'linear-btn-primary',
@@ -27,236 +27,163 @@ export const linear: StyleCartridge = {
       badge: 'linear-badge'
     },
     injectCss: `
-      /* --- LINEAR AESTHETIC ENGINE --- */
+      /* --- LINEAR PRESTIGE ENGINE --- */
 
-      /* 1. GLOBAL COSMOS */
       .ds-page-root {
-        background-color: #08090A;
-        /* Subtle Grid */
-        background-image: 
-          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        background-size: 40px 40px;
+        background-color: var(--bg-layer-1);
+        background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120,119,198,0.15), transparent);
       }
 
-      /* Starfield & Glow */
-      .ds-deco-layer::before {
-        content: "";
-        position: absolute;
-        top: -20%;
-        left: 20%;
-        width: 60%;
-        height: 60%;
-        background: radial-gradient(circle, rgba(94, 106, 210, 0.15) 0%, transparent 60%);
-        filter: blur(80px);
-        z-index: -1;
-        opacity: 0.6;
-        animation: pulse-glow 10s infinite alternate;
-      }
-
-      @keyframes pulse-glow {
-        0% { opacity: 0.4; transform: scale(0.9); }
-        100% { opacity: 0.7; transform: scale(1.1); }
-      }
-
-      /* 2. MAGIC BORDER PANELS (The "Linear" Look) */
+      /* 1. MAGIC BORDERS (Masked Gradient) */
       .linear-panel, .ds-panel, .ds-card, .linear-nav {
-        background: rgba(20, 21, 24, 0.6);
-        backdrop-filter: blur(12px);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.0));
         border-radius: var(--border-radius);
         position: relative;
-        /* The base border is barely visible */
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        /* The base border */
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
       }
-      
-      /* The "Shine" on top border */
-      .linear-panel::after, .ds-panel::after, .ds-card::after {
+
+      /* Top Highlight Border */
+      .linear-panel::before, .ds-panel::before, .ds-card::before {
         content: "";
         position: absolute;
-        inset: 0;
+        inset: -1px;
         border-radius: inherit;
-        padding: 1px; /* border width */
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+        padding: 1px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
         pointer-events: none;
       }
 
-      /* 3. TYPOGRAPHY */
-      .ds-hero-title {
-        font-weight: 600;
-        letter-spacing: -0.02em;
-        background: linear-gradient(180deg, #FFFFFF 0%, #B4B9C4 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .ds-hero-title span {
-        background: linear-gradient(90deg, #5E6AD2, #949EF7);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .ds-nav-links span {
-        font-size: 13px;
-        color: var(--text-secondary);
-        transition: color 0.2s;
-      }
-      .ds-nav-links span:hover {
-        color: var(--text-primary);
+      .ds-panel:hover, .ds-card:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
       }
 
-      /* 4. BUTTONS (Specular Highlight) */
+      /* 2. GLOWING BUTTONS */
       .linear-btn-primary, .ds-btn-primary {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%), #5E6AD2 !important;
-        color: white !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
-        border-radius: 4px !important; /* Slightly more rounded than square */
-        font-size: 13px !important;
+        position: relative;
+        background: #5E6AD2 !important;
+        color: #fff !important;
         font-weight: 500 !important;
-        padding: 0 16px !important;
+        font-size: 13px !important;
         height: 32px;
-        box-shadow: 
-          0px 1px 2px rgba(0, 0, 0, 0.4), 
-          inset 0px 1px 0px rgba(255, 255, 255, 0.2) !important; /* Top Inner Highlight */
-        transition: all 0.2s ease !important;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        padding: 0 16px !important;
+        border-radius: 4px !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        /* Top inner glow */
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.3) !important;
+        transition: all 0.2s !important;
+        overflow: hidden;
       }
       .linear-btn-primary:hover, .ds-btn-primary:hover {
-        filter: brightness(1.1);
-        box-shadow: 
-          0px 0px 12px rgba(94, 106, 210, 0.5),
-          inset 0px 1px 0px rgba(255, 255, 255, 0.3) !important;
+        background: #6e79d6 !important;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 0 15px rgba(94, 106, 210, 0.6) !important;
+      }
+      /* Shine Sweep */
+      .linear-btn-primary::after, .ds-btn-primary::after {
+        content: "";
+        position: absolute;
+        top: 0; left: -100%; width: 50%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transform: skewX(-20deg);
+        animation: shimmer 3s infinite;
+      }
+      @keyframes shimmer {
+        0% { left: -100%; }
+        20% { left: 200%; }
+        100% { left: 200%; }
       }
 
       .linear-btn-ghost, .ds-btn-secondary {
         background: rgba(255,255,255,0.05) !important;
-        color: var(--text-secondary) !important;
-        border: 1px solid rgba(255,255,255,0.05) !important;
-        border-radius: 4px !important;
+        color: #ccc !important;
+        border: 1px solid transparent !important;
         font-size: 13px !important;
         height: 32px;
-        font-weight: 500 !important;
+        border-radius: 4px !important;
+        transition: all 0.2s;
       }
       .linear-btn-ghost:hover, .ds-btn-secondary:hover {
         background: rgba(255,255,255,0.1) !important;
-        color: var(--text-primary) !important;
-        border-color: rgba(255,255,255,0.1) !important;
+        color: #fff !important;
       }
 
-      /* 5. INPUTS (Dark Field) */
+      /* 3. INPUTS (Deep Field) */
       .linear-input, .ds-input {
-        background: #0B0B0E !important;
+        background: #08080A !important;
         border: 1px solid rgba(255,255,255,0.1) !important;
+        color: #fff !important;
+        font-size: 13px !important;
         border-radius: 6px !important;
-        color: var(--text-primary) !important;
-        font-size: 14px !important;
-        padding: 10px 12px 10px 36px !important; /* Icon space */
+        padding-left: 36px !important;
         transition: border-color 0.2s, box-shadow 0.2s;
       }
       .ds-input:focus {
         border-color: #5E6AD2 !important;
-        box-shadow: 0 0 0 1px #5E6AD2 !important;
+        box-shadow: 0 0 0 4px rgba(94, 106, 210, 0.15) !important;
       }
       .ds-input-decorator {
+        background: #5E6AD2 !important;
+        border-radius: 2px !important;
         left: 10px !important;
-        background: var(--text-secondary) !important;
-        width: 8px !important;
-        height: 8px !important;
-        border-radius: 2px !important; /* Square-ish dot */
+        width: 6px !important; height: 6px !important;
+        box-shadow: 0 0 8px #5E6AD2;
       }
 
-      /* 6. STATS */
-      .ds-stats {
-        border-top: 1px solid rgba(255,255,255,0.08);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        background: transparent !important;
+      /* 4. TYPOGRAPHY */
+      .ds-hero-title {
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        background: linear-gradient(to bottom, #fff, #8a8f98);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
-      .ds-stats > div > div {
-         background: transparent;
-         border-right: 1px solid rgba(255,255,255,0.08);
-      }
-      .ds-stats > div > div:last-child {
-         border-right: none;
-      }
-      .ds-stats .text-3xl {
-         color: var(--text-primary);
-         font-weight: 500;
-         font-family: 'Inter', monospace; /* Tech feel */
+      .ds-hero-title span {
+        background: linear-gradient(to right, #5E6AD2, #A0A6F0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
-      /* 7. DATA TABLE (List View) */
+      /* 5. TABLE / LISTS */
       .ds-table-container {
-         background: #141518 !important;
-         border: 1px solid rgba(255,255,255,0.08) !important;
-         border-radius: 8px !important;
-      }
-      .ds-table-container > div {
-         border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-         font-size: 13px;
+        border: 1px solid rgba(255,255,255,0.08) !important;
+        background: #131418 !important;
       }
       .ds-table-container > div:first-child {
-         background: rgba(255,255,255,0.03);
-         color: var(--text-secondary);
-         text-transform: uppercase;
-         font-size: 11px;
-         letter-spacing: 0.05em;
+        background: rgba(255,255,255,0.02);
+        color: #8A8F98;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
-      /* Hover Row */
       .ds-table-container > div:not(:first-child):hover {
-         background: rgba(255,255,255,0.04) !important;
+        background: rgba(255,255,255,0.04) !important;
       }
-      /* Status Badge */
+      
+      /* Status Pill */
       .ds-table-container span {
-         background: rgba(94, 106, 210, 0.2) !important;
-         color: #949EF7 !important;
-         border: 1px solid rgba(94, 106, 210, 0.3);
-         border-radius: 4px;
-         padding: 2px 6px;
-         font-size: 11px;
+        background: rgba(94, 106, 210, 0.15) !important;
+        color: #949EF7 !important;
+        border: 1px solid rgba(94, 106, 210, 0.2);
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 4px;
       }
 
-      /* 8. PRICING CARDS */
-      .ds-card {
-        background: linear-gradient(180deg, #18191D 0%, #141518 100%) !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
-      }
-      .ds-card:hover {
-         transform: translateY(-4px);
-         box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-         border-color: rgba(255,255,255,0.15) !important;
-      }
-      /* Popular Card */
+      /* 6. POPULAR CARD */
       .ds-card:nth-child(2) {
-         background: #18191D !important;
-         box-shadow: 0 0 0 1px #5E6AD2 !important; /* Glowing Border */
+        background: radial-gradient(circle at 50% 0%, rgba(94, 106, 210, 0.1), transparent 60%), #131418 !important;
+        border: 1px solid #5E6AD2 !important;
+        box-shadow: 0 0 30px rgba(94, 106, 210, 0.15) !important;
       }
       .ds-card:nth-child(2) .ds-card-title {
-         color: #949EF7;
-      }
-
-      /* 9. NAVIGATION */
-      .linear-nav {
-         border-bottom: 1px solid rgba(255,255,255,0.08);
-      }
-
-      /* 10. BADGE */
-      .linear-badge, .ds-badge {
-        background: rgba(255,255,255,0.1) !important;
-        color: var(--text-primary) !important;
-        border: 1px solid rgba(255,255,255,0.1);
-        font-size: 11px !important;
-        border-radius: 4px !important;
-        padding: 4px 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-family: monospace;
-      }
-
-      /* 11. FOOTER */
-      .ds-footer {
-        border-top: 1px solid rgba(255,255,255,0.08) !important;
-        background: #08090A !important;
+        color: #fff;
       }
     `
   }

@@ -36,7 +36,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
       {/* Mobile Backdrop */}
       {isOpenMobile && (
         <div 
-          className="fixed inset-0 bg-kaolin-900/20 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 bg-kaolin-900/40 backdrop-blur-sm z-30 lg:hidden transition-opacity"
           onClick={onCloseMobile}
         />
       )}
@@ -45,17 +45,17 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
       <aside 
         className={`
           fixed inset-y-0 left-0 z-40 w-80 lg:relative lg:translate-x-0 lg:w-80 flex-shrink-0
-          bg-kaolin-100/95 border-r border-kaolin-200 flex flex-col h-full shadow-clay-panel 
-          overflow-hidden backdrop-blur-md transition-transform duration-300 ease-out
+          bg-white/80 border-r border-kaolin-200 flex flex-col h-full shadow-2xl lg:shadow-none 
+          overflow-hidden backdrop-blur-xl transition-transform duration-300 ease-out
           ${isOpenMobile ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         
         {/* 1. Branding Header */}
-        <div className="p-6 border-b border-kaolin-200 bg-kaolin-50/50 flex flex-col gap-4">
+        <div className="p-6 border-b border-kaolin-100 flex flex-col gap-4 bg-white/50">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 group select-none cursor-default">
-              <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-white to-kaolin-100 rounded-xl shadow-clay-convex text-resin-600 border border-white transition-all duration-300 group-hover:shadow-clay-btn-primary group-hover:scale-105">
+              <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-white to-kaolin-50 rounded-xl shadow-clay-convex text-resin-600 border border-white transition-all duration-300 group-hover:shadow-clay-btn-primary group-hover:scale-105">
                 <DraftingCompass className="w-5 h-5 transition-transform duration-700 group-hover:rotate-180" strokeWidth={2.5} />
               </div>
               <div className="flex flex-col">
@@ -69,23 +69,24 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
             </div>
             <button 
               onClick={onCloseMobile}
-              className="lg:hidden p-2 text-kaolin-400 hover:text-kiln-500 rounded-lg hover:bg-kaolin-200"
+              className="lg:hidden p-2 text-kaolin-400 hover:text-kiln-500 rounded-lg hover:bg-kaolin-200 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           <div className="flex items-center justify-between">
-             <span className="text-[10px] uppercase font-bold text-kaolin-400 tracking-widest pl-1">v4.1 Architecture</span>
+             <span className="text-[10px] uppercase font-bold text-kaolin-400 tracking-widest pl-1">v4.2 Architecture</span>
              <button 
                onClick={() => {
                  onOpenHistory();
                  onCloseMobile();
                }}
-               className="p-1.5 text-kaolin-400 hover:text-resin-600 hover:bg-kaolin-200 rounded-md transition-colors"
+               className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-kaolin-500 hover:text-resin-600 bg-kaolin-50 hover:bg-kaolin-100 rounded-lg transition-all"
                title="Open History"
              >
-               <HistoryIcon className="w-4 h-4" />
+               <HistoryIcon className="w-3.5 h-3.5" />
+               <span>HISTORY</span>
              </button>
           </div>
         </div>
@@ -101,32 +102,32 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
             </label>
             <div className={`p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden group
               ${selectedStyle 
-                ? 'bg-kaolin-50 border-resin-200 shadow-clay-float' 
-                : 'bg-kaolin-200/50 border-dashed border-kaolin-300'
+                ? 'bg-gradient-to-br from-white to-kaolin-50 border-resin-200 shadow-clay-float' 
+                : 'bg-kaolin-50 border-dashed border-kaolin-300'
               }
             `}>
               {selectedStyle ? (
                 <>
                   <div className="font-bold text-kaolin-900 text-sm mb-1">{selectedStyle.label}</div>
                   <div className="text-xs text-kaolin-500 leading-snug">{selectedStyle.description}</div>
-                  <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                     <div className="w-2 h-2 rounded-full bg-resin-500 shadow-[0_0_8px_rgba(79,122,246,0.6)]"></div>
+                  <div className="absolute top-2 right-2">
+                     <div className="w-2 h-2 rounded-full bg-resin-500 shadow-[0_0_8px_rgba(79,122,246,0.6)] animate-pulse"></div>
                   </div>
                 </>
               ) : (
-                <div className="text-xs text-kaolin-400 text-center py-2 flex flex-col items-center gap-2">
-                  <AlertCircle className="w-4 h-4 opacity-50" />
-                  <span>Select a preset from the grid to begin.</span>
+                <div className="text-xs text-kaolin-400 text-center py-4 flex flex-col items-center gap-2">
+                  <AlertCircle className="w-5 h-5 opacity-30" />
+                  <span>Select a preset from the grid</span>
                 </div>
               )}
             </div>
           </div>
 
           {/* Mode Selection */}
-          <div className="p-1 bg-kaolin-200 rounded-xl flex shadow-inner">
+          <div className="p-1 bg-kaolin-100 rounded-xl flex shadow-inner">
               <button 
                 onClick={() => setMode('tailored')}
-                className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-2.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                   mode === 'tailored' 
                     ? 'bg-white text-resin-600 shadow-sm' 
                     : 'text-kaolin-500 hover:text-kaolin-700'
@@ -137,7 +138,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
               </button>
               <button 
                 onClick={() => setMode('standard')}
-                className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-2.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                   mode === 'standard' 
                     ? 'bg-white text-resin-600 shadow-sm' 
                     : 'text-kaolin-500 hover:text-kaolin-700'
@@ -159,7 +160,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
                 value={context}
                 onChange={(e) => setContext(e.target.value)}
                 placeholder="e.g. A meditation app for sleep, or a brutalist crypto exchange..."
-                className="w-full h-32 p-4 rounded-2xl bg-kaolin-200 text-sm text-kaolin-800 placeholder-kaolin-400 font-medium focus:outline-none shadow-clay-pressed focus:ring-2 focus:ring-resin-200 resize-none transition-shadow"
+                className="w-full h-32 p-4 rounded-2xl bg-kaolin-50 border border-transparent focus:border-resin-300 text-sm text-kaolin-800 placeholder-kaolin-400 font-medium focus:outline-none shadow-inner focus:ring-4 focus:ring-resin-50 resize-none transition-all"
               />
             </div>
           ) : (
@@ -176,17 +177,17 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
         </div>
 
         {/* 3. Action Footer */}
-        <div className="p-6 pt-0 bg-gradient-to-t from-kaolin-100 to-transparent">
+        <div className="p-6 bg-gradient-to-t from-white to-transparent">
           <button
             onClick={() => {
               onGenerate(mode);
               if (window.innerWidth < 1024) onCloseMobile();
             }}
             disabled={!selectedStyle || isGenerating || (mode === 'tailored' && !context)}
-            className={`w-full py-4 rounded-2xl font-bold text-sm tracking-wide transition-all flex items-center justify-center gap-2 shadow-clay-btn-primary
+            className={`w-full py-4 rounded-2xl font-bold text-sm tracking-wide transition-all flex items-center justify-center gap-2 shadow-lg
               ${(!selectedStyle || (mode === 'tailored' && !context))
-                ? 'bg-kaolin-300 text-kaolin-500 cursor-not-allowed shadow-none opacity-50' 
-                : 'bg-resin-500 text-white hover:bg-resin-400 hover:-translate-y-1 active:translate-y-0 active:shadow-clay-btn-pressed'
+                ? 'bg-kaolin-200 text-kaolin-400 cursor-not-allowed shadow-none' 
+                : 'bg-resin-500 text-white hover:bg-resin-400 hover:-translate-y-1 hover:shadow-resin-500/30 active:translate-y-0 active:scale-95'
               }
             `}
           >
