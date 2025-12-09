@@ -25,17 +25,17 @@ Each style must be implemented in `lib/styles/catalog/` and registered in `lib/s
 - [x] Silicon Valley Minimal
 
 ## Retro
-- [ ] 8-Bit Pixel
-- [ ] Vaporwave
-- [ ] Bauhaus
-- [ ] Neo-Brutalism
-- [ ] New York Newsprint
-- [ ] Y2K Aesthetic
-- [ ] Windows 95
-- [ ] DOS Terminal
-- [ ] Pop Art
-- [ ] Art Deco
-- [ ] Victorian
+- [x] 8-Bit Pixel
+- [x] Vaporwave
+- [x] Bauhaus
+- [x] Neo-Brutalism
+- [x] New York Newsprint
+- [x] Y2K Aesthetic
+- [x] Windows 95
+- [x] DOS Terminal
+- [x] Pop Art
+- [x] Art Deco
+- [x] Victorian
 - [ ] Synthwave
 - [ ] Mid-Century Modern
 - [ ] Teletext
