@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { DesignPreset } from '../types';
-import { Sparkles, FileText, Layers, History as HistoryIcon, Play, AlertCircle, X } from 'lucide-react';
+import { Sparkles, FileText, DraftingCompass, History as HistoryIcon, Play, AlertCircle, X, Layers, Box } from 'lucide-react';
 import { FontPicker } from './FontPicker';
 
 interface ConfigFormProps {
@@ -10,7 +10,7 @@ interface ConfigFormProps {
   setContext: (val: string) => void;
   fonts: string;
   setFonts: (val: string) => void;
-  onGenerate: () => void;
+  onGenerate: (mode: 'tailored' | 'standard') => void;
   isGenerating: boolean;
   onOpenHistory: () => void;
   isOpenMobile: boolean;
@@ -29,6 +29,8 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
   isOpenMobile,
   onCloseMobile,
 }) => {
+  const [mode, setMode] = useState<'tailored' | 'standard'>('tailored');
+
   return (
     <>
       {/* Mobile Backdrop */}
@@ -52,15 +54,19 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
         {/* 1. Branding Header */}
         <div className="p-6 border-b border-kaolin-200 bg-kaolin-50/50 flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 flex items-center justify-center bg-kaolin-100 rounded-lg shadow-clay-convex text-resin-600">
-                <Layers className="w-5 h-5" />
+            <div className="flex items-center gap-3 group select-none cursor-default">
+              <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-white to-kaolin-100 rounded-xl shadow-clay-convex text-resin-600 border border-white transition-all duration-300 group-hover:shadow-clay-btn-primary group-hover:scale-105">
+                <DraftingCompass className="w-5 h-5 transition-transform duration-700 group-hover:rotate-180" strokeWidth={2.5} />
               </div>
-              <div>
-                <span className="font-extrabold text-lg tracking-tight text-kaolin-900 block leading-none">MOLD & MANIFEST</span>
+              <div className="flex flex-col">
+                <span className="font-black text-xl tracking-tighter text-kaolin-900 leading-none">
+                  SPEC<span className="text-resin-500">.</span>FACTORY
+                </span>
+                <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-kaolin-400 mt-0.5">
+                  Design System AI
+                </span>
               </div>
             </div>
-            {/* Mobile Close Button */}
             <button 
               onClick={onCloseMobile}
               className="lg:hidden p-2 text-kaolin-400 hover:text-kiln-500 rounded-lg hover:bg-kaolin-200"
@@ -70,7 +76,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
           </div>
 
           <div className="flex items-center justify-between">
-             <span className="text-[10px] uppercase font-bold text-kaolin-400 tracking-widest pl-11">v4.1 Factory</span>
+             <span className="text-[10px] uppercase font-bold text-kaolin-400 tracking-widest pl-1">v4.1 Architecture</span>
              <button 
                onClick={() => {
                  onOpenHistory();
@@ -116,19 +122,53 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
             </div>
           </div>
 
-          {/* Context Input */}
-          <div className="space-y-2">
-            <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
-              <FileText className="w-3 h-3" />
-              Product Context
-            </label>
-            <textarea
-              value={context}
-              onChange={(e) => setContext(e.target.value)}
-              placeholder="e.g. A meditation app for sleep, or a brutalist crypto exchange..."
-              className="w-full h-32 p-4 rounded-2xl bg-kaolin-200 text-sm text-kaolin-800 placeholder-kaolin-400 font-medium focus:outline-none shadow-clay-pressed focus:ring-2 focus:ring-resin-200 resize-none transition-shadow"
-            />
+          {/* Mode Selection */}
+          <div className="p-1 bg-kaolin-200 rounded-xl flex shadow-inner">
+              <button 
+                onClick={() => setMode('tailored')}
+                className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                  mode === 'tailored' 
+                    ? 'bg-white text-resin-600 shadow-sm' 
+                    : 'text-kaolin-500 hover:text-kaolin-700'
+                }`}
+              >
+                <Layers className="w-3 h-3" />
+                Tailored
+              </button>
+              <button 
+                onClick={() => setMode('standard')}
+                className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                  mode === 'standard' 
+                    ? 'bg-white text-resin-600 shadow-sm' 
+                    : 'text-kaolin-500 hover:text-kaolin-700'
+                }`}
+              >
+                <Box className="w-3 h-3" />
+                Standard
+              </button>
           </div>
+
+          {/* Context Input (Tailored Only) */}
+          {mode === 'tailored' ? (
+            <div className="space-y-2 animate-in fade-in slide-in-from-right-4 duration-300">
+              <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
+                <FileText className="w-3 h-3" />
+                Product Context
+              </label>
+              <textarea
+                value={context}
+                onChange={(e) => setContext(e.target.value)}
+                placeholder="e.g. A meditation app for sleep, or a brutalist crypto exchange..."
+                className="w-full h-32 p-4 rounded-2xl bg-kaolin-200 text-sm text-kaolin-800 placeholder-kaolin-400 font-medium focus:outline-none shadow-clay-pressed focus:ring-2 focus:ring-resin-200 resize-none transition-shadow"
+              />
+            </div>
+          ) : (
+            <div className="p-4 bg-kaolin-50 rounded-2xl border border-kaolin-200 text-center animate-in fade-in slide-in-from-left-4 duration-300">
+              <p className="text-xs text-kaolin-500 leading-relaxed">
+                Generating a universal component library (Buttons, Inputs, Cards) optimized for <strong>{selectedStyle?.label || 'this style'}</strong>.
+              </p>
+            </div>
+          )}
 
           {/* Fonts Picker */}
           <FontPicker selectedFont={fonts} onChange={setFonts} />
@@ -139,12 +179,12 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
         <div className="p-6 pt-0 bg-gradient-to-t from-kaolin-100 to-transparent">
           <button
             onClick={() => {
-              onGenerate();
+              onGenerate(mode);
               if (window.innerWidth < 1024) onCloseMobile();
             }}
-            disabled={!selectedStyle || isGenerating || !context}
+            disabled={!selectedStyle || isGenerating || (mode === 'tailored' && !context)}
             className={`w-full py-4 rounded-2xl font-bold text-sm tracking-wide transition-all flex items-center justify-center gap-2 shadow-clay-btn-primary
-              ${!selectedStyle || !context 
+              ${(!selectedStyle || (mode === 'tailored' && !context))
                 ? 'bg-kaolin-300 text-kaolin-500 cursor-not-allowed shadow-none opacity-50' 
                 : 'bg-resin-500 text-white hover:bg-resin-400 hover:-translate-y-1 active:translate-y-0 active:shadow-clay-btn-pressed'
               }
@@ -161,7 +201,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
             ) : (
               <>
                 <Play className="w-4 h-4 fill-current" />
-                IGNITE KILN
+                {mode === 'tailored' ? 'IGNITE KILN' : 'GENERATE LIB'}
               </>
             )}
           </button>

@@ -1,7 +1,9 @@
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import JSZip from 'jszip';
 import { DESIGN_PRESETS } from './lib/design-presets';
+import { getStyleCartridge } from './lib/styles/registry';
+import { StyleCartridge } from './lib/styles/types';
 import { DesignPreset, GeneratedResult, HistoryItem, GenerationPhase } from './types';
 import { generateDesignSpec, generateArtifact, refineDesignSpec } from './services/geminiService';
 import { ConfigForm } from './components/ConfigForm';
@@ -9,7 +11,8 @@ import { CodeDirector } from './components/CodeDirector';
 import { PreviewFrame } from './components/PreviewFrame';
 import { HistoryDrawer } from './components/HistoryDrawer';
 import { GenerationLoader } from './components/GenerationLoader';
-import { Palette, Zap, Search, Download, BookOpen, Play, ChevronRight, Hammer, Grid, ArrowLeft, LayoutTemplate, Menu } from 'lucide-react';
+import { StyleInspectorModal } from './components/StyleInspectorModal';
+import { Palette, Zap, Search, Download, BookOpen, Play, ChevronRight, Hammer, Grid, ArrowLeft, LayoutTemplate, Menu, Eye } from 'lucide-react';
 
 export default function App() {
   // State
@@ -30,6 +33,10 @@ export default function App() {
 
   // Mobile Menu State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Inspector Modal State
+  const [inspectorOpen, setInspectorOpen] = useState(false);
+  const [inspectedCartridge, setInspectedCartridge] = useState<StyleCartridge | null>(null);
 
   // Load History on Mount
   useEffect(() => {
@@ -55,16 +62,29 @@ export default function App() {
     localStorage.removeItem('dsf_history');
   };
 
+  // Handle Inspection Open
+  const handleInspect = (preset: DesignPreset, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card selection
+    const cartridge = getStyleCartridge(preset.id);
+    setInspectedCartridge(cartridge);
+    setInspectorOpen(true);
+  };
+
   // Step 1: Generate Spec
-  const handleGenerateSpec = async () => {
+  const handleGenerateSpec = async (mode: 'tailored' | 'standard') => {
     if (!selectedStyle) return;
     
     setPhase('spec');
     setResult(null);
     setViewMode('inspect'); // Switch to inspection view
     
+    // Determine context based on mode
+    const effectiveContext = mode === 'standard' 
+      ? `A universal, general-purpose UI component library for ${selectedStyle.label}. Create a comprehensive system including Buttons, Inputs, Cards, and Navigation without assuming a specific product niche.` 
+      : context;
+
     try {
-      const data = await generateDesignSpec(selectedStyle.label, context, fonts);
+      const data = await generateDesignSpec(selectedStyle.label, effectiveContext, fonts);
       setResult({ markdown: data.markdown, html: null });
     } catch (error) {
       console.error(error);
@@ -82,7 +102,7 @@ export default function App() {
     setPhase('artifact');
     
     try {
-      const data = await generateArtifact(result.markdown);
+      const data = await generateArtifact(result.markdown, fonts);
       const newResult = { ...result, html: data.html };
       setResult(newResult);
       
@@ -174,6 +194,19 @@ export default function App() {
         onSelect={handleRestore}
         onClear={clearHistory}
       />
+
+      {/* Inspector Modal (Visualizer Only) */}
+      {inspectedCartridge && (
+        <StyleInspectorModal 
+          isOpen={inspectorOpen}
+          onClose={() => setInspectorOpen(false)}
+          cartridge={inspectedCartridge}
+          onSelect={() => {
+            setSelectedStyle(inspectedCartridge.meta);
+            if (window.innerWidth < 1024) setIsMobileMenuOpen(true);
+          }}
+        />
+      )}
 
       {/* LEFT: THE OPERATOR CONSOLE (Sidebar / Mobile Drawer) */}
       <ConfigForm 
@@ -288,9 +321,15 @@ export default function App() {
                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${selectedStyle?.id === preset.id ? 'bg-resin-100 text-resin-600' : 'bg-kaolin-100 text-kaolin-400 group-hover:bg-resin-50 group-hover:text-resin-500'}`}>
                         {selectedStyle?.id === preset.id ? <Zap className="w-5 h-5 fill-current" /> : <Grid className="w-5 h-5" />}
                      </div>
-                     {selectedStyle?.id === preset.id && (
-                       <span className="px-2 py-1 bg-resin-500 text-white text-[10px] font-bold rounded-full">SELECTED</span>
-                     )}
+                     
+                     {/* INSPECT BUTTON (The "Eye") */}
+                     <div 
+                        onClick={(e) => handleInspect(preset, e)}
+                        className="p-2 rounded-full bg-kaolin-100 text-kaolin-400 hover:bg-resin-500 hover:text-white transition-all transform hover:scale-110 shadow-sm z-20"
+                        title="Inspect Style"
+                     >
+                       <Eye className="w-4 h-4" />
+                     </div>
                    </div>
                    
                    <h3 className="font-bold text-lg text-kaolin-800 mb-2">{preset.label}</h3>
@@ -315,7 +354,7 @@ export default function App() {
             {result ? (
                <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-8 h-full">
                   
-                  {/* Spec Column (Hidden on mobile initially? No, stack them) */}
+                  {/* Spec Column */}
                   <div className="flex flex-col h-[500px] xl:h-full bg-white rounded-3xl shadow-clay-panel overflow-hidden border border-kaolin-100">
                     <div className="p-3 bg-kaolin-50 border-b border-kaolin-100 flex items-center gap-2 text-kaolin-500 text-xs font-bold uppercase tracking-wider">
                        <BookOpen className="w-4 h-4" /> Specification

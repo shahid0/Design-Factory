@@ -43,10 +43,12 @@ Your task is to implement a provided Design Specification into a SINGLE-FILE HTM
 
 **INPUT:**
 - A detailed Markdown Design Specification.
+- A required Font Family.
 
 **OUTPUT:**
 - A single HTML file containing the implementation.
 - **NO EXTERNAL CSS/JS** (except Tailwind via CDN).
+- You MUST include the Google Fonts <link> tag for the requested font.
 - You MUST write custom CSS variables in a <style> block that match the Semantic Tokens from the Spec.
 - The UI must visually demonstrate the Spec.
 
@@ -98,7 +100,8 @@ export const generateDesignSpec = async (
 };
 
 export const generateArtifact = async (
-  markdownSpec: string
+  markdownSpec: string,
+  selectedFont: string
 ): Promise<{ html: string }> => {
   if (!process.env.API_KEY) {
     throw new Error("API Key is missing in process.env");
@@ -110,7 +113,12 @@ export const generateArtifact = async (
   **DESIGN SPECIFICATION:**
   ${markdownSpec}
   
+  **REQUIRED FONT:**
+  "${selectedFont}"
+  
+  **INSTRUCTION:**
   Generate the High-Fidelity HTML Artifact based on this spec.
+  CRITICAL: You MUST include a Google Fonts <link> tag for '${selectedFont}' in the <head> and apply it to the body font-family.
   `;
 
   try {
