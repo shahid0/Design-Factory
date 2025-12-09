@@ -230,6 +230,24 @@ export const electricVibrance: StyleCartridge = {
         padding: 5px 20px;
         font-size: 1.2rem;
       }
+      
+      /* 10. TOGGLES (Arc) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 2px solid #FF00FF;
+        border-radius: 0;
+        box-shadow: 0 0 10px #FF00FF;
+      }
+      .mannequin-toggle-track.active {
+        background: #00FFFF;
+        border-color: #00FFFF;
+        box-shadow: 0 0 20px #00FFFF;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 0;
+        box-shadow: none;
+      }
 
       /* 10. BADGE */
       .electric-badge, .ds-badge {

@@ -238,6 +238,26 @@ export const kaleidoscope: StyleCartridge = {
         top: -15px; right: 20px;
         font-weight: 700;
       }
+      
+      /* 11. TOGGLES (Gem) */
+      .mannequin-toggle-track {
+        background: rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50px;
+      }
+      .mannequin-toggle-track.active {
+        background: rgba(0, 255, 255, 0.3);
+        border-color: #00FFFF;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #FFF;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         background: #00FFFF;
+         box-shadow: 0 0 15px #00FFFF;
+      }
 
       /* 10. BADGE */
       .kal-badge, .ds-badge {

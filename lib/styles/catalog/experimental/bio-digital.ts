@@ -230,7 +230,13 @@ export const bioDigital: StyleCartridge = {
       .ds-card:nth-child(2) {
         border: 1px solid var(--accent-color) !important;
         box-shadow: 0 0 20px rgba(46, 160, 67, 0.1) !important;
+        animation: breathe 4s infinite alternate;
       }
+      @keyframes breathe {
+         0% { box-shadow: 0 0 20px rgba(46, 160, 67, 0.1); }
+         100% { box-shadow: 0 0 30px rgba(46, 160, 67, 0.3); }
+      }
+      
       .ds-card:nth-child(2) .ds-card-title {
         color: var(--accent-color);
       }
@@ -243,8 +249,28 @@ export const bioDigital: StyleCartridge = {
         top: 0; right: 20px;
         padding: 4px 12px;
       }
+      
+      /* 10. TOGGLES (Organism) */
+      .mannequin-toggle-track {
+        background: #21262D;
+        border: 1px solid #30363D;
+        border-radius: 50px;
+      }
+      .mannequin-toggle-track.active {
+        background: rgba(46, 160, 67, 0.3);
+        border-color: #2EA043;
+      }
+      .mannequin-toggle-thumb {
+        background: #E6EDF3;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255,255,255,0.2);
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         background: #2EA043;
+         box-shadow: 0 0 15px #2EA043;
+      }
 
-      /* 10. BADGE */
+      /* 11. BADGE */
       .bio-badge, .ds-badge {
         background: rgba(46, 160, 67, 0.15) !important;
         color: #3FB950 !important;
@@ -254,7 +280,7 @@ export const bioDigital: StyleCartridge = {
         font-family: 'Space Mono', monospace;
       }
 
-      /* 11. FOOTER */
+      /* 12. FOOTER */
       .ds-footer {
         background: #161B22 !important;
         border-top: 1px solid #30363D !important;

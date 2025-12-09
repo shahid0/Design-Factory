@@ -80,6 +80,11 @@ export const cyberpunkCity: StyleCartridge = {
         border-color: #ff2a6d;
         box-shadow: 0 0 25px rgba(255, 42, 109, 0.4);
         z-index: 10;
+        animation: flicker 4s infinite;
+      }
+      @keyframes flicker {
+         0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+         20%, 24%, 55% { opacity: 0.8; }
       }
 
       /* 3. TYPOGRAPHY */
@@ -238,6 +243,27 @@ export const cyberpunkCity: StyleCartridge = {
         font-weight: 700;
         top: 0; right: 0;
         padding: 5px 15px;
+      }
+      
+      /* 10. TOGGLES (Neon Switch) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 2px solid #05d9e8;
+        border-radius: 0;
+        box-shadow: 0 0 5px #05d9e8;
+      }
+      .mannequin-toggle-track.active {
+        background: #ff2a6d;
+        border-color: #ff2a6d;
+        box-shadow: 0 0 10px #ff2a6d;
+      }
+      .mannequin-toggle-thumb {
+        background: #fff;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        background: #000;
       }
 
       /* 10. BADGE */

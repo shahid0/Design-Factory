@@ -223,6 +223,24 @@ export const abstractGeom: StyleCartridge = {
         font-weight: 700;
         border-radius: 0;
       }
+      
+      /* 10. TOGGLES (Geometric) */
+      .mannequin-toggle-track {
+        background: #FFF;
+        border: 2px solid #000;
+        border-radius: 0;
+      }
+      .mannequin-toggle-track.active {
+        background: #000;
+      }
+      .mannequin-toggle-thumb {
+        background: #000;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        background: #FF3300;
+      }
 
       /* 10. BADGE */
       .geom-badge, .ds-badge {

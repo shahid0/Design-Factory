@@ -111,6 +111,20 @@ export const claymorphism: StyleCartridge = {
         text-shadow: 1px 1px 0px rgba(255,255,255,1);
       }
       
+      /* Tabs */
+      .ds-nav-links span {
+         padding: 8px 16px;
+         border-radius: 20px;
+         font-weight: 800;
+         color: var(--text-secondary);
+         transition: all 0.3s ease;
+      }
+      .ds-nav-links span:hover, .ds-nav-links span.active {
+         background: #e0e7ff;
+         color: var(--accent-color);
+         box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05);
+      }
+      
       /* 5. BUTTONS (Inflated) */
       .clay-btn-primary, .ds-btn-primary {
         background: var(--accent-color) !important;
@@ -271,12 +285,12 @@ export const claymorphism: StyleCartridge = {
       }
       
       /* Popular Card (Middle) */
-      .ds-card:nth-child(2) {
+      .ds-card.selected, .ds-card:nth-child(2) {
         border-color: var(--accent-color) !important;
         transform: scale(1.05);
         z-index: 10;
       }
-      .ds-card:nth-child(2):hover {
+      .ds-card.selected:hover, .ds-card:nth-child(2):hover {
         transform: scale(1.05) translateY(-10px);
       }
       
@@ -311,6 +325,31 @@ export const claymorphism: StyleCartridge = {
          border-top: none !important;
          box-shadow: 0 -10px 40px rgba(0,0,0,0.03);
          border-radius: 40px 40px 0 0;
+      }
+
+      /* 12. TOGGLES (Puffy) */
+      .mannequin-toggle-track {
+        background: #f0f4f8;
+        box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        border-radius: 99px;
+      }
+      .mannequin-toggle-track.active {
+        background: #e0e7ff;
+        box-shadow: inset 2px 2px 5px rgba(99, 102, 241, 0.2);
+      }
+      .mannequin-toggle-thumb {
+        background: white;
+        box-shadow: 4px 4px 8px #d1d9e6, -4px -4px 8px #ffffff;
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        width: calc(1.5rem - 4px);
+        height: calc(1.5rem - 4px);
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         left: calc(100% - 1.5rem + 2px);
+         background: var(--accent-color);
+         color: white;
       }
     `
   }

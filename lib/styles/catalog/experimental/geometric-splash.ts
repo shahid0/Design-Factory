@@ -250,6 +250,23 @@ export const geometricSplash: StyleCartridge = {
         top: -15px; right: -15px;
         box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
       }
+      
+      /* 10. TOGGLES (Shard) */
+      .mannequin-toggle-track {
+        background: #F0F0F0;
+        border: 2px solid #222;
+        border-radius: 0;
+        clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+      }
+      .mannequin-toggle-track.active {
+        background: #00BFFF;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 0;
+        border: 2px solid #222;
+        transform: rotate(45deg);
+      }
 
       /* 10. BADGE */
       .splash-badge, .ds-badge {

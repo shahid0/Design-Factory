@@ -251,6 +251,24 @@ export const boldStreetArt: StyleCartridge = {
         padding: 5px 15px;
         border: 2px solid #000;
       }
+      
+      /* 10. TOGGLES (Sticker) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 3px solid #FFF;
+        border-radius: 0;
+        transform: rotate(2deg);
+      }
+      .mannequin-toggle-track.active {
+        background: #FCEE09;
+        border-color: #FCEE09;
+        transform: rotate(-2deg);
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 0;
+        box-shadow: 2px 2px 0 #000;
+      }
 
       /* 10. BADGE */
       .street-badge, .ds-badge {

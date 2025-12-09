@@ -230,6 +230,25 @@ export const staticNoise: StyleCartridge = {
         top: 0; right: 0;
         padding: 5px;
       }
+      
+      /* 10. TOGGLES (Static) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 1px solid #333;
+        border-radius: 0;
+      }
+      .mannequin-toggle-track.active {
+        background: #FFF;
+        border-color: #FFF;
+      }
+      .mannequin-toggle-thumb {
+        background: #333;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        background: #000;
+      }
 
       /* 10. BADGE */
       .noise-badge, .ds-badge {

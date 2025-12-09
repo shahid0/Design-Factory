@@ -180,6 +180,23 @@ export const liquidMetal: StyleCartridge = {
         color: #000;
         font-weight: 700;
       }
+      
+      /* 10. TOGGLES (Droplet) */
+      .mannequin-toggle-track {
+        background: #333;
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
+        border: 1px solid #555;
+        border-radius: 50px;
+      }
+      .mannequin-toggle-track.active {
+        background: #666;
+        box-shadow: inset 0 0 10px rgba(255,255,255,0.2);
+        border-color: #AAA;
+      }
+      .mannequin-toggle-thumb {
+        background: radial-gradient(circle at 30% 30%, #FFF, #AAA);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      }
 
       /* Footer */
       .ds-footer {

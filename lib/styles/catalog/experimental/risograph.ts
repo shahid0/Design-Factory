@@ -165,6 +165,22 @@ export const risograph: StyleCartridge = {
         padding: 5px 15px;
         border: 2px solid #1E1E96;
       }
+      
+      /* 10. TOGGLES (Misregistered) */
+      .mannequin-toggle-track {
+        background: #FFE800;
+        border: 2px solid #1E1E96;
+        border-radius: 99px;
+      }
+      .mannequin-toggle-track.active {
+        background: #FF48B0;
+        box-shadow: 2px 2px 0 #1E1E96;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border: 2px solid #1E1E96;
+        box-shadow: none;
+      }
 
       /* Footer */
       .ds-footer {

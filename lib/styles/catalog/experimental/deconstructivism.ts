@@ -268,8 +268,27 @@ export const deconstruct: StyleCartridge = {
         transform: rotate(-5deg);
         font-weight: 900;
       }
+      
+      /* 11. TOGGLES (Skewed) */
+      .mannequin-toggle-track {
+        background: #EAEAEA;
+        border: 2px solid #000;
+        border-radius: 0;
+        transform: skewX(-15deg);
+      }
+      .mannequin-toggle-track.active {
+        background: #000;
+      }
+      .mannequin-toggle-thumb {
+        background: #000;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         background: #FFF;
+      }
 
-      /* 11. FOOTER */
+      /* 12. FOOTER */
       .ds-footer {
         background: #333 !important;
         color: #FFF !important;

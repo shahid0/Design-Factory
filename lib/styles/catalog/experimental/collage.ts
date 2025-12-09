@@ -47,9 +47,6 @@ export const collage: StyleCartridge = {
         mix-blend-mode: multiply;
         z-index: -1;
       }
-      
-      /* Torn Paper Edges simulation via clip-path/mask (simplified) or jagged borders */
-      /* Here we use rotation and shadows to simulate cutouts */
 
       /* 2. CONTAINERS (Cutouts) */
       .collage-panel, .ds-panel, .ds-card, .collage-nav {
@@ -277,8 +274,26 @@ export const collage: StyleCartridge = {
         transform: rotate(-3deg);
         box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
       }
+      
+      /* 11. TOGGLES (Cutout) */
+      .mannequin-toggle-track {
+        background: #DDD;
+        border: 2px solid #000;
+        border-radius: 0;
+        transform: rotate(1deg);
+      }
+      .mannequin-toggle-track.active {
+        background: #D92B2B;
+        transform: rotate(-1deg);
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 0;
+        border: 2px solid #000;
+        box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+      }
 
-      /* 11. FOOTER */
+      /* 12. FOOTER */
       .ds-footer {
         background: #222 !important;
         color: #FFF !important;

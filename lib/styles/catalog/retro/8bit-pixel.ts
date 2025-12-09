@@ -294,7 +294,7 @@ export const eightBitPixel: StyleCartridge = {
       }
       
       /* Popular Card (The "Selected" one - Inverted) */
-      .ds-card:nth-child(2) {
+      .ds-card.selected, .ds-card:nth-child(2) {
         background: #000 !important;
         border: 4px solid var(--accent-color) !important;
         box-shadow: 8px 8px 0px #fff !important;
@@ -389,6 +389,29 @@ export const eightBitPixel: StyleCartridge = {
       .ds-footer .ds-logo {
         color: #fff;
         text-shadow: none;
+      }
+
+      /* 12. TOGGLES (8-Bit Switch) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 4px solid #fff;
+        border-radius: 0;
+        box-shadow: 4px 4px 0 #000;
+      }
+      .mannequin-toggle-track.active {
+        background: var(--accent-color);
+        border-color: #fff;
+      }
+      .mannequin-toggle-thumb {
+        background: #fff;
+        border-radius: 0;
+        box-shadow: none;
+        width: calc(1.5rem - 8px);
+        height: calc(1.5rem - 8px);
+        top: 0; left: 0;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         left: calc(100% - 1.5rem + 8px);
       }
     `
   }

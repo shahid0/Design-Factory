@@ -157,6 +157,35 @@ export const neoNoir: StyleCartridge = {
         top: 0; right: 0;
         padding: 5px 15px;
       }
+      
+      /* 10. TOGGLES (Light Switch) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 1px solid #333;
+        border-radius: 0;
+      }
+      .mannequin-toggle-track.active {
+        background: #FFF;
+        border-color: #FFF;
+      }
+      .mannequin-toggle-thumb {
+        background: #333;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        background: #000;
+      }
+      
+      /* 11. TABS */
+      .ds-nav-links span {
+         font-family: 'Playfair Display', serif;
+         font-style: italic;
+      }
+      .ds-nav-links span.active, .ds-nav-links span:hover {
+         color: #FFF;
+         border-bottom: 1px solid #FFF;
+      }
 
       /* Footer */
       .ds-footer {

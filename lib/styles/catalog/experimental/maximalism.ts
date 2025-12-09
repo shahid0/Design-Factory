@@ -299,6 +299,29 @@ export const maximalism: StyleCartridge = {
          font-family: 'Archivo Black', sans-serif;
          font-size: 2rem;
       }
+      
+      /* 12. TOGGLES (Giant) */
+      .mannequin-toggle-track {
+        background: #FFF;
+        border: 5px solid #000;
+        border-radius: 0;
+        height: 40px;
+      }
+      .mannequin-toggle-track.active {
+        background: #3D00B8;
+        border-color: #FF00FF;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFE600;
+        border-radius: 0;
+        width: 25px; height: 25px;
+        top: 2px; left: 2px;
+        border: 3px solid #000;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         left: calc(100% - 32px);
+         background: #00FF9D;
+      }
     `
   }
 };

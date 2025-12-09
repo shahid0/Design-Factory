@@ -259,8 +259,29 @@ export const psychedelic: StyleCartridge = {
         font-weight: 700;
         box-shadow: 0 0 10px #9400D3;
       }
+      
+      /* 11. TOGGLES (Melting) */
+      .mannequin-toggle-track {
+        background: rgba(255,255,255,0.2);
+        border: 2px solid #FFF;
+        border-radius: 30px;
+      }
+      .mannequin-toggle-track.active {
+        background: #00FFFF;
+        border-color: #FF00FF;
+        animation: hue-cycle 2s infinite linear;
+      }
+      @keyframes hue-cycle {
+         0% { filter: hue-rotate(0deg); }
+         100% { filter: hue-rotate(360deg); }
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #FFF;
+      }
 
-      /* 11. FOOTER */
+      /* 12. FOOTER */
       .ds-footer {
         background: rgba(0,0,0,0.8) !important;
         margin-top: 60px;

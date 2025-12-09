@@ -269,8 +269,27 @@ export const grunge: StyleCartridge = {
         padding: 2px 8px;
         transform: rotate(-2deg);
       }
+      
+      /* 11. TOGGLES (Tape) */
+      .mannequin-toggle-track {
+        background: #555;
+        border: none;
+        border-radius: 0;
+        transform: skewX(-10deg);
+        opacity: 0.8;
+      }
+      .mannequin-toggle-track.active {
+        background: #8B0000;
+        opacity: 1;
+      }
+      .mannequin-toggle-thumb {
+        background: #D9D9D6;
+        border-radius: 0;
+        box-shadow: 2px 2px 0 #000;
+        transform: rotate(5deg);
+      }
 
-      /* 11. FOOTER */
+      /* 12. FOOTER */
       .ds-footer {
         background: #111 !important;
         border-top: 1px solid #444 !important;

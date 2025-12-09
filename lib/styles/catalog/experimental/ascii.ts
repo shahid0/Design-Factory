@@ -269,8 +269,41 @@ export const ascii: StyleCartridge = {
         border-radius: 0;
         padding: 2px 8px;
       }
+      
+      /* 11. TOGGLES (Text) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 1px solid #FFF;
+        border-radius: 0;
+        width: 60px;
+        position: relative;
+      }
+      .mannequin-toggle-track::before {
+        content: "[OFF]";
+        color: #FFF;
+        font-size: 10px;
+        position: absolute;
+        right: 2px; top: 2px;
+      }
+      .mannequin-toggle-track.active {
+        background: #000;
+      }
+      .mannequin-toggle-track.active::before {
+        content: "[ON]";
+        left: 2px;
+        color: #FFF;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 0;
+        width: 15px;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        left: calc(100% - 15px - 2px);
+      }
 
-      /* 11. FOOTER */
+      /* 12. FOOTER */
       .ds-footer {
         background: #000 !important;
         border-top: 1px dashed #FFF !important;

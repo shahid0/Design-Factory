@@ -245,6 +245,26 @@ export const acidRave: StyleCartridge = {
         top: 0; right: 0;
         padding: 5px 10px;
       }
+      
+      /* 10. TOGGLES (Acid) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 4px solid #FF00FF;
+        border-radius: 0;
+        box-shadow: 4px 4px 0 #000;
+      }
+      .mannequin-toggle-track.active {
+        background: #CCFF00;
+        border-color: #CCFF00;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        background: #000;
+      }
 
       /* 10. BADGE */
       .rave-badge, .ds-badge {

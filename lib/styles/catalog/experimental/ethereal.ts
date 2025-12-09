@@ -63,6 +63,7 @@ export const ethereal: StyleCartridge = {
         border-radius: 40px;
         box-shadow: 0 20px 40px rgba(200, 200, 255, 0.15);
         padding: 40px;
+        transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
       }
       
       .ds-panel:hover, .ds-card:hover {
@@ -154,6 +155,27 @@ export const ethereal: StyleCartridge = {
         border-radius: 0 0 20px 20px;
         padding: 8px 24px;
         font-family: 'Cormorant Garamond', serif;
+      }
+      
+      /* 10. TOGGLES (Glowing Orb) */
+      .mannequin-toggle-track {
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: inset 0 0 10px rgba(200, 200, 255, 0.1);
+      }
+      .mannequin-toggle-track.active {
+        background: rgba(224, 176, 255, 0.3);
+        box-shadow: 0 0 20px rgba(224, 176, 255, 0.4);
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      }
+      
+      /* 11. TABS (Underline Glow) */
+      .ds-nav-links span.active, .ds-nav-links span:hover {
+         color: #E0B0FF;
+         text-shadow: 0 0 10px rgba(224, 176, 255, 0.6);
       }
 
       /* Footer */

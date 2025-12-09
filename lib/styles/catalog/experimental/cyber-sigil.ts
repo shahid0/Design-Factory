@@ -161,6 +161,27 @@ export const cyberSigil: StyleCartridge = {
         padding: 5px 20px;
         clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
       }
+      
+      /* 10. TOGGLES (Spikes) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 1px solid #444;
+        border-radius: 0;
+        transform: rotate(45deg) scale(0.8);
+      }
+      .mannequin-toggle-track.active {
+        border-color: #FFF;
+        background: #000;
+      }
+      .mannequin-toggle-thumb {
+        background: #888;
+        border-radius: 0;
+        transform: rotate(45deg);
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        background: #FFF;
+      }
 
       /* Footer */
       .ds-footer {

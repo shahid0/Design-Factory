@@ -255,6 +255,24 @@ export const digitalMatrix: StyleCartridge = {
         top: 0; right: 0;
         padding: 5px;
       }
+      
+      /* 10. TOGGLES (Terminal) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 1px solid #008F11;
+        border-radius: 0;
+      }
+      .mannequin-toggle-track.active {
+        background: #00FF41;
+        box-shadow: 0 0 10px #00FF41;
+        border-color: #00FF41;
+      }
+      .mannequin-toggle-thumb {
+        background: #000;
+        border: 1px solid #00FF41;
+        border-radius: 0;
+        box-shadow: none;
+      }
 
       /* 10. BADGE */
       .matrix-badge, .ds-badge {

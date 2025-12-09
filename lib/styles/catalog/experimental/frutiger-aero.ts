@@ -256,8 +256,25 @@ export const frutigerAero: StyleCartridge = {
         font-weight: 700;
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
       }
+      
+      /* 11. TOGGLES (Water Droplet) */
+      .mannequin-toggle-track {
+        background: linear-gradient(to bottom, #E0E0E0, #FFF);
+        border: 1px solid #CCC;
+        border-radius: 50px;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .mannequin-toggle-track.active {
+        background: linear-gradient(to bottom, #76D300, #58A300);
+        border-color: #4C8E00;
+      }
+      .mannequin-toggle-thumb {
+        background: radial-gradient(circle at 30% 30%, #FFF, #E0E0E0);
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      }
 
-      /* 11. FOOTER */
+      /* 12. FOOTER */
       .ds-footer {
         background: linear-gradient(to bottom, #F0F0F0 0%, #E0E0E0 100%) !important;
         border-top: 1px solid #CCC !important;

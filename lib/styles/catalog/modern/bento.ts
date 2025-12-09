@@ -87,6 +87,18 @@ export const bento: StyleCartridge = {
          justify-content: center;
          gap: 40px;
       }
+      
+      /* Tabs */
+      .ds-nav-links span {
+         color: var(--text-secondary);
+         transition: color 0.2s;
+      }
+      .ds-nav-links span:hover, .ds-nav-links span.active {
+         color: var(--text-primary);
+         background: rgba(0,0,0,0.05);
+         padding: 6px 12px;
+         border-radius: 99px;
+      }
 
       /* 3. TYPOGRAPHY */
       .ds-hero-title {
@@ -138,7 +150,7 @@ export const bento: StyleCartridge = {
         border: none !important;
       }
       .bento-btn-secondary:hover, .ds-btn-secondary:hover {
-        background: #DCDCDE !important;
+        background: #DDCDE !important;
       }
 
       /* 5. INPUTS (Soft) */
@@ -229,9 +241,10 @@ export const bento: StyleCartridge = {
       }
 
       /* 8. POPULAR CARD */
-      .ds-card:nth-child(2) {
+      .ds-card.selected, .ds-card:nth-child(2) {
         border: 2px solid #0071E3 !important;
         box-shadow: 0 20px 40px -10px rgba(0, 113, 227, 0.2) !important;
+        transform: scale(1.02);
       }
       .ds-card:nth-child(2) .ds-card-title {
         color: #0071E3;
@@ -261,6 +274,25 @@ export const bento: StyleCartridge = {
         background: #FFFFFF !important;
         margin-top: 60px;
         border-top: 1px solid #F5F5F7;
+      }
+
+      /* 11. TOGGLES */
+      .mannequin-toggle-track {
+        background: #E9E9EA;
+        border-radius: 99px;
+      }
+      .mannequin-toggle-track.active {
+        background: #34C759;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFFFFF;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        top: 2px; left: 2px;
+        width: calc(1.5rem - 4px); height: calc(1.5rem - 4px);
+        border-radius: 50%;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         left: calc(100% - 1.5rem + 2px);
       }
     `
   }

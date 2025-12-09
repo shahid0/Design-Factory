@@ -251,6 +251,27 @@ export const neonFuture: StyleCartridge = {
         border-bottom-left-radius: 4px;
         padding: 5px 15px;
       }
+      
+      /* 10. TOGGLES (Laser) */
+      .mannequin-toggle-track {
+        background: rgba(0,0,0,0.5);
+        border: 1px solid #333;
+        border-radius: 4px;
+      }
+      .mannequin-toggle-track.active {
+        background: rgba(0, 229, 255, 0.2);
+        border-color: #00E5FF;
+        box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 2px;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         background: #00E5FF;
+         box-shadow: 0 0 10px #00E5FF;
+      }
 
       /* 10. BADGE */
       .neon-badge, .ds-badge {

@@ -119,9 +119,9 @@ export const glassmorphism: StyleCartridge = {
         letter-spacing: -2px;
       }
       .ds-hero-title span {
-         background: linear-gradient(to right, #fff, #a5f3fc);
-         -webkit-background-clip: text;
-         -webkit-text-fill-color: transparent;
+        background: linear-gradient(to right, #fff, #a5f3fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       /* 4. BUTTONS (Luminous) */
@@ -230,12 +230,12 @@ export const glassmorphism: StyleCartridge = {
          border-color: rgba(255,255,255,0.3);
       }
       /* Popular Card */
-      .ds-card:nth-child(2) {
+      .ds-card.selected, .ds-card:nth-child(2) {
          background: rgba(255,255,255,0.08);
          border: 1px solid rgba(255,255,255,0.3);
          box-shadow: 0 20px 50px rgba(0,0,0,0.5);
       }
-      .ds-card:nth-child(2)::after {
+      .ds-card.selected::after, .ds-card:nth-child(2)::after {
          content: '';
          position: absolute;
          top: 0; left: 0; right: 0; height: 1px;
@@ -258,14 +258,14 @@ export const glassmorphism: StyleCartridge = {
       }
       
       /* Popular Button (Middle) */
-      .ds-card:nth-child(2) button {
+      .ds-card.selected button, .ds-card:nth-child(2) button {
          background: var(--accent-color) !important;
          color: #000000 !important; /* Force black for contrast against Cyan */
          font-weight: 900;
          box-shadow: 0 0 15px rgba(165, 243, 252, 0.4);
          border: none !important;
       }
-      .ds-card:nth-child(2) button:hover {
+      .ds-card.selected button:hover, .ds-card:nth-child(2) button:hover {
          background: #fff !important;
          box-shadow: 0 0 25px rgba(255,255,255,0.6);
          color: #000 !important;
@@ -282,6 +282,36 @@ export const glassmorphism: StyleCartridge = {
       .ds-footer {
          border-top: 1px solid rgba(255,255,255,0.1);
          background: rgba(0,0,0,0.4);
+      }
+
+      /* 11. TOGGLES (Frosted Switch) */
+      .mannequin-toggle-track {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+      }
+      .mannequin-toggle-track.active {
+        background: rgba(165, 243, 252, 0.2);
+        border-color: #a5f3fc;
+        box-shadow: 0 0 15px rgba(165, 243, 252, 0.3);
+      }
+      .mannequin-toggle-thumb {
+        background: #fff;
+        box-shadow: 0 0 10px rgba(255,255,255,0.5);
+      }
+      
+      /* 12. TABS */
+      .ds-nav-links span {
+         color: rgba(255,255,255,0.6);
+         transition: all 0.3s;
+         padding: 8px 16px;
+         border-radius: 99px;
+      }
+      .ds-nav-links span:hover, .ds-nav-links span.active {
+         color: white;
+         background: rgba(255,255,255,0.1);
+         box-shadow: 0 0 15px rgba(255,255,255,0.1);
+         text-shadow: 0 0 10px white;
       }
     `
   }

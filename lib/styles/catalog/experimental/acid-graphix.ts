@@ -151,6 +151,25 @@ export const acidGraphix: StyleCartridge = {
         top: 20px; right: -20px;
         padding: 5px 20px;
       }
+      
+      /* 10. TOGGLES (Biohazard/Acid) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 1px solid #CCFF00;
+        border-radius: 50px;
+      }
+      .mannequin-toggle-track.active {
+        background: #CCFF00;
+        box-shadow: 0 0 15px #CCFF00;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 0;
+        transform: rotate(45deg);
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        background: #000;
+      }
 
       /* Footer */
       .ds-footer {

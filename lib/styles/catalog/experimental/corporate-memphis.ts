@@ -223,6 +223,25 @@ export const corporateMemphis: StyleCartridge = {
         top: 0; right: 20px;
         padding: 5px 20px;
       }
+      
+      /* 10. TOGGLES (Big Pill) */
+      .mannequin-toggle-track {
+        background: #DFE6E9;
+        border-radius: 99px;
+      }
+      .mannequin-toggle-track.active {
+        background: #6C5CE7;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFFFFF;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        width: 1.5rem; height: 1.5rem;
+        top: 2px; left: 2px;
+        border-radius: 50%;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        left: calc(100% - 1.5rem - 2px);
+      }
 
       /* 10. BADGE */
       .corp-badge, .ds-badge {

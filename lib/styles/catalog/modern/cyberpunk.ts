@@ -103,21 +103,21 @@ export const cyberpunk: StyleCartridge = {
       }
 
       /* 4. DATA PANELS */
-      .cyber-panel {
+      .cyber-panel, .ds-panel, .ds-card {
         background: #080808;
         border: 1px solid #333;
         position: relative;
         box-shadow: 0 0 20px rgba(0,0,0,0.5);
       }
       /* Corner brackets */
-      .cyber-panel::before {
+      .cyber-panel::before, .ds-panel::before, .ds-card::before {
         content: "";
         position: absolute;
         top: -1px; left: -1px; width: 20px; height: 20px;
         border-top: 2px solid var(--text-primary);
         border-left: 2px solid var(--text-primary);
       }
-      .cyber-panel::after {
+      .cyber-panel::after, .ds-panel::after, .ds-card::after {
         content: "";
         position: absolute;
         bottom: -1px; right: -1px; width: 20px; height: 20px;
@@ -125,7 +125,7 @@ export const cyberpunk: StyleCartridge = {
         border-right: 2px solid var(--text-primary);
       }
       
-      .cyber-panel:hover {
+      .cyber-panel:hover, .ds-panel:hover, .ds-card:hover {
         border-color: var(--text-secondary);
         box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
       }
@@ -177,6 +177,45 @@ export const cyberpunk: StyleCartridge = {
       }
       ::-webkit-scrollbar-thumb:hover {
         background: var(--text-primary);
+      }
+
+      /* 8. INTERACTIVE TOGGLES (Cyber Switch) */
+      .mannequin-toggle-track {
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 0;
+      }
+      .mannequin-toggle-track.active {
+        background: var(--text-primary); /* Yellow */
+        box-shadow: 0 0 10px var(--text-primary);
+        border-color: var(--text-primary);
+      }
+      .mannequin-toggle-thumb {
+        background: #000;
+        border-radius: 0;
+        border: 1px solid #333;
+      }
+      
+      /* 9. TABS (Glitch Tabs) */
+      .ds-nav-links span {
+         position: relative;
+         text-transform: uppercase;
+      }
+      .ds-nav-links span:hover {
+         color: var(--accent-color); /* Red */
+         text-shadow: 2px 0 var(--text-secondary);
+      }
+      
+      /* 10. SELECTED CARD */
+      .ds-card.selected {
+         border: 1px solid var(--accent-color);
+         box-shadow: 0 0 30px rgba(255, 0, 60, 0.2);
+         animation: border-pulse 2s infinite;
+      }
+      @keyframes border-pulse {
+         0% { border-color: var(--accent-color); }
+         50% { border-color: var(--text-secondary); }
+         100% { border-color: var(--accent-color); }
       }
     `
   }

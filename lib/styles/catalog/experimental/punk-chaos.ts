@@ -251,6 +251,23 @@ export const punkChaos: StyleCartridge = {
         padding: 10px;
         transform: rotate(10deg);
       }
+      
+      /* 10. TOGGLES (Scrap) */
+      .mannequin-toggle-track {
+        background: #FFF;
+        border: 3px solid #000;
+        border-radius: 0;
+        transform: rotate(-5deg);
+      }
+      .mannequin-toggle-track.active {
+        background: #FF0099;
+        transform: rotate(5deg);
+      }
+      .mannequin-toggle-thumb {
+        background: #000;
+        border-radius: 0;
+        box-shadow: none;
+      }
 
       /* 10. BADGE */
       .punk-badge, .ds-badge {

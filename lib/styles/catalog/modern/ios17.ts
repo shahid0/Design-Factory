@@ -133,7 +133,7 @@ export const ios17: StyleCartridge = {
       }
 
       /* 5. CARDS (Inset Grouped) */
-      .ios-card, .ds-panel {
+      .ios-card, .ds-panel, .ds-card {
         background: #FFFFFF;
         border-radius: 12px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Very subtle shadow */
@@ -271,8 +271,9 @@ export const ios17: StyleCartridge = {
          box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
       }
       /* Popular Card */
-      .ds-card:nth-child(2) {
+      .ds-card.selected, .ds-card:nth-child(2) {
          border: 2px solid var(--accent-color) !important;
+         transform: none; /* iOS doesn't do much movement */
       }
       .ds-card:nth-child(2) .absolute {
          background: var(--accent-color);
@@ -305,6 +306,29 @@ export const ios17: StyleCartridge = {
       .ds-footer {
          background: #F2F2F7 !important;
          border-top: 0.5px solid #C6C6C8 !important;
+      }
+
+      /* 12. TOGGLES (Apple Switch) */
+      .mannequin-toggle-track {
+        background: #E9E9EA;
+        border-radius: 99px;
+        transition: background 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .mannequin-toggle-track.active {
+        background: #34C759; /* System Green for toggles */
+        opacity: 1;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFFFFF;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15), 0 3px 1px rgba(0,0,0,0.06);
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        width: calc(1.5rem - 4px);
+        height: calc(1.5rem - 4px);
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         left: calc(100% - 1.5rem + 2px);
       }
     `
   }

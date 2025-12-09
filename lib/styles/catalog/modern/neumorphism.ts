@@ -71,8 +71,9 @@ export const neumorphism: StyleCartridge = {
          border-radius: 20px;
          transition: all 0.3s ease;
          font-weight: 700;
+         color: var(--text-secondary);
       }
-      .ds-nav-links span:hover {
+      .ds-nav-links span:hover, .ds-nav-links span.active {
          background: var(--neu-bg);
          box-shadow: 5px 5px 10px var(--neu-dark), -5px -5px 10px var(--neu-light);
          color: var(--accent-color);
@@ -214,11 +215,12 @@ export const neumorphism: StyleCartridge = {
          padding: 32px !important;
       }
       /* "Popular" Card is Recessed (Pressed In) */
-      .ds-card:nth-child(2) {
+      .ds-card.selected, .ds-card:nth-child(2) {
          box-shadow: inset 9px 9px 16px var(--neu-dark), inset -9px -9px 16px var(--neu-light) !important;
          border: 1px solid transparent !important;
+         transform: none;
       }
-      .ds-card:nth-child(2) .ds-card-title {
+      .ds-card.selected .ds-card-title, .ds-card:nth-child(2) .ds-card-title {
          color: var(--accent-color);
       }
       
@@ -245,6 +247,29 @@ export const neumorphism: StyleCartridge = {
          /* Reverse Shadow for Top Edge */
          box-shadow: 0 -10px 20px -10px var(--neu-dark);
          margin-top: 40px;
+      }
+
+      /* 10. TOGGLES (Soft Plastic Switch) */
+      .mannequin-toggle-track {
+        background: var(--neu-bg);
+        box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+        border-radius: 20px;
+      }
+      .mannequin-toggle-track.active {
+        box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+        background: var(--neu-bg); /* Keep bg same, thumb indicates state */
+      }
+      .mannequin-toggle-thumb {
+        background: var(--accent-color);
+        box-shadow: 3px 3px 6px var(--neu-dark), -3px -3px 6px var(--neu-light);
+        border-radius: 50%;
+        top: 3px; left: 3px;
+        width: calc(1.5rem - 6px); height: calc(1.5rem - 6px);
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         left: calc(100% - 1.5rem + 3px);
+         background: var(--accent-color);
+         box-shadow: 0 0 10px var(--accent-color), 3px 3px 6px var(--neu-dark);
       }
     `
   }

@@ -126,9 +126,11 @@ export const monochrome: StyleCartridge = {
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1px;
+        border-bottom: 2px solid transparent;
       }
-      .ds-nav-links span:hover {
-        text-decoration: line-through;
+      .ds-nav-links span:hover, .ds-nav-links span.active {
+        border-bottom-color: #000;
+        text-decoration: none;
       }
 
       /* 6. INPUTS */
@@ -230,6 +232,24 @@ export const monochrome: StyleCartridge = {
       .ds-card:nth-child(2) button:hover {
          background: #333 !important;
          color: #FFF !important;
+      }
+      
+      /* 10. TOGGLES (Binary) */
+      .mannequin-toggle-track {
+        background: #FFF;
+        border: 2px solid #000;
+        border-radius: 0;
+      }
+      .mannequin-toggle-track.active {
+        background: #000;
+      }
+      .mannequin-toggle-thumb {
+        background: #000;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+        background: #FFF;
       }
 
       /* 10. BADGE */

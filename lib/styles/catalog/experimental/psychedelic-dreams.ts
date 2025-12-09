@@ -230,6 +230,21 @@ export const psychedelicDreams: StyleCartridge = {
         top: 0; right: 20px;
         padding: 5px 15px;
       }
+      
+      /* 11. TOGGLES (Psychedelic) */
+      .mannequin-toggle-track {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50px;
+      }
+      .mannequin-toggle-track.active {
+        background: linear-gradient(90deg, #FF00CC, #00FFCC);
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 50%;
+        box-shadow: 0 0 5px rgba(255,255,255,0.5);
+      }
 
       /* 10. BADGE */
       .dream-psy-badge, .ds-badge {

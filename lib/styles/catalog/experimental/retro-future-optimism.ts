@@ -244,6 +244,20 @@ export const retroFutureOptimism: StyleCartridge = {
         top: 0; right: 40px;
         padding: 10px 20px;
       }
+      
+      /* 10. TOGGLES (Atomic) */
+      .mannequin-toggle-track {
+        background: #B2EBF2;
+        border-radius: 99px;
+      }
+      .mannequin-toggle-track.active {
+        background: #FF5722;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
 
       /* 10. BADGE */
       .rfo-badge, .ds-badge {

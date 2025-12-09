@@ -242,6 +242,26 @@ export const galacticSpace: StyleCartridge = {
         border-radius: 0 0 0 12px;
         padding: 5px 15px;
       }
+      
+      /* 11. TOGGLES (Planet) */
+      .mannequin-toggle-track {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50px;
+      }
+      .mannequin-toggle-track.active {
+        background: rgba(127, 0, 255, 0.4);
+        border-color: #7F00FF;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #FFF;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         background: #D8BFFF;
+         box-shadow: 0 0 15px #7F00FF;
+      }
 
       /* 10. BADGE */
       .space-badge, .ds-badge {

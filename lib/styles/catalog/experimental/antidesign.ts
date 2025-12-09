@@ -287,6 +287,30 @@ export const antiDesign: StyleCartridge = {
         padding: 50px;
       }
       .ds-footer * { color: #FFFF00 !important; }
+      
+      /* 12. TOGGLES (Broken Switch) */
+      .mannequin-toggle-track {
+        background: #000;
+        border: 4px solid #FFFF00;
+        border-radius: 0;
+        height: 40px;
+      }
+      .mannequin-toggle-track.active {
+        background: #0000FF;
+        border-color: #FF00FF;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFF;
+        border-radius: 0;
+        width: 30px; height: 30px;
+        top: 1px; left: 1px;
+        border: 2px solid #000;
+        box-shadow: 4px 4px 0 #000;
+      }
+      .mannequin-toggle-track.active .mannequin-toggle-thumb {
+         left: calc(100% - 31px);
+         background: #FF0000;
+      }
     `
   }
 };

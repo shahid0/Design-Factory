@@ -242,8 +242,23 @@ export const dreamcore: StyleCartridge = {
         padding: 5px 15px;
         font-weight: 700;
       }
+      
+      /* 11. TOGGLES (Cloud) */
+      .mannequin-toggle-track {
+        background: #FFF;
+        border-radius: 50px;
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+      }
+      .mannequin-toggle-track.active {
+        background: #E6E6FA;
+      }
+      .mannequin-toggle-thumb {
+        background: #FFB7B2;
+        border-radius: 50%;
+        box-shadow: 0 5px 15px rgba(255, 183, 178, 0.6);
+      }
 
-      /* 11. FOOTER */
+      /* 12. FOOTER */
       .ds-footer {
         background: rgba(255,255,255,0.5) !important;
         margin-top: 80px;
