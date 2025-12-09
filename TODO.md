@@ -19,10 +19,10 @@ Each style must be implemented in `lib/styles/catalog/` and registered in `lib/s
 - [x] Windows Aero
 - [x] Fluent Design
 - [x] Skeuomorphic Redux
-- [ ] Sci-Fi HUD
-- [ ] Anime Dreams
-- [ ] Industrial Futurism
-- [ ] Silicon Valley Minimal
+- [x] Sci-Fi HUD
+- [x] Anime Dreams
+- [x] Industrial Futurism
+- [x] Silicon Valley Minimal
 
 ## Retro
 - [ ] 8-Bit Pixel

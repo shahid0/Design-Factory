@@ -17,6 +17,10 @@ import { spatial } from './catalog/modern/spatial';
 import { aero } from './catalog/modern/aero';
 import { fluent } from './catalog/modern/fluent';
 import { skeuomorphic } from './catalog/modern/skeuomorphic';
+import { scifiHud } from './catalog/modern/scifi-hud';
+import { animeDreams } from './catalog/modern/anime-dreams';
+import { industrialFuturism } from './catalog/modern/industrial-futurism';
+import { siliconValleyMinimal } from './catalog/modern/silicon-valley-minimal';
 
 // Default "Kaolin" Base Theme (The Fallback/Placeholder)
 const DEFAULT_THEME: StylePreviewConfig = {
@@ -63,6 +67,10 @@ registry['spatial'] = spatial;
 registry['aero'] = aero;
 registry['fluent'] = fluent;
 registry['skeuomorphic-redux'] = skeuomorphic;
+registry['hud'] = scifiHud;
+registry['anime-dreams'] = animeDreams;
+registry['industrial-futurism'] = industrialFuturism;
+registry['silicon-valley-minimal'] = siliconValleyMinimal;
 
 /**
  * Retrieves a Style Cartridge by ID.
