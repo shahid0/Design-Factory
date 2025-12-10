@@ -1,15 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Copy, Sparkles, Send, FileText } from 'lucide-react';
-import { GeneratedResult, ChatMessage } from '../types';
+import { useGenerationStore } from '../store/useGenerationStore';
+import { Copy, Sparkles, Send } from 'lucide-react';
+import { ChatMessage } from '../types';
 
-interface CodeDirectorProps {
-  result: GeneratedResult;
-  onRefine: (instruction: string) => void;
-  isRefining: boolean;
-}
-
-export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, isRefining }) => {
+export const CodeDirector: React.FC = () => {
+  const { result, refineSpec, phase } = useGenerationStore();
+  const isRefining = phase === 'refining';
+  
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const chatScrollRef = useRef<HTMLDivElement>(null);
@@ -19,6 +17,9 @@ export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, is
       chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // If no result, this component shouldn't really be visible or usable, but handle safely
+  if (!result) return null;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(result.markdown);
@@ -35,7 +36,7 @@ export const CodeDirector: React.FC<CodeDirectorProps> = ({ result, onRefine, is
     };
     
     setMessages(prev => [...prev, newMessage]);
-    onRefine(chatInput);
+    refineSpec(chatInput);
     setChatInput('');
   };
 

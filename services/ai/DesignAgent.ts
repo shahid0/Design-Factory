@@ -1,0 +1,144 @@
+
+import { GoogleGenAI } from "@google/genai";
+import { SPEC_SYSTEM_INSTRUCTION, ARTIFACT_SYSTEM_INSTRUCTION } from "./prompts";
+
+export interface SpecResult {
+  markdown: string;
+}
+
+export interface ArtifactResult {
+  html: string;
+}
+
+/**
+ * The Service Layer (The Brains)
+ * Encapsulates all AI generation logic.
+ * 
+ * ARCHITECTURAL NOTE:
+ * Uses Lazy Initialization for the GoogleGenAI client.
+ * This prevents the app from crashing at startup if process.env is not immediately ready.
+ */
+export class DesignAgent {
+  private client: GoogleGenAI | null = null;
+
+  private getClient(): GoogleGenAI {
+    if (!this.client) {
+      if (!process.env.API_KEY) {
+        throw new Error("API Key is missing in process.env");
+      }
+      this.client = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    }
+    return this.client;
+  }
+
+  /**
+   * Generates a technical design specification based on a style and context.
+   */
+  async generateSpec(style: string, context: string, fonts: string): Promise<SpecResult> {
+    const ai = this.getClient();
+    
+    const prompt = `
+    **PROJECT BRIEF:**
+    - Visual Style: "${style}"
+    - App Context (Product Type): "${context}"
+    - Font Preference: "${fonts}"
+    
+    Generate the Master Design Specification (Markdown).
+    `;
+
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-3-pro-preview",
+        contents: prompt,
+        config: {
+          systemInstruction: SPEC_SYSTEM_INSTRUCTION,
+          temperature: 0.7, 
+          thinkingConfig: { thinkingBudget: 2048 }
+        }
+      });
+
+      return { markdown: response.text || "# Error: Could not generate spec." };
+    } catch (error) {
+      console.error("DesignAgent: Spec Generation Error:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Transforms a markdown spec into a functional HTML artifact.
+   */
+  async generateArtifact(markdownSpec: string, selectedFont: string): Promise<ArtifactResult> {
+    const ai = this.getClient();
+
+    const prompt = `
+    **DESIGN SPECIFICATION:**
+    ${markdownSpec}
+    
+    **REQUIRED FONT:**
+    "${selectedFont}"
+    
+    **INSTRUCTION:**
+    Generate the High-Fidelity HTML Artifact based on this spec.
+    CRITICAL: You MUST include a Google Fonts <link> tag for '${selectedFont}' in the <head> and apply it to the body font-family.
+    `;
+
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-3-pro-preview",
+        contents: prompt,
+        config: {
+          systemInstruction: ARTIFACT_SYSTEM_INSTRUCTION,
+          temperature: 0.5, 
+        }
+      });
+
+      const text = response.text || "";
+      const match = text.match(/<HTML_OUTPUT>([\s\S]*?)<\/HTML_OUTPUT>/);
+      
+      return { html: match ? match[1].trim() : text }; 
+
+    } catch (error) {
+      console.error("DesignAgent: Artifact Generation Error:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Refines an existing spec based on natural language instructions.
+   */
+  async refineSpec(currentMarkdown: string, instruction: string): Promise<SpecResult> {
+    const ai = this.getClient();
+
+    const prompt = `
+    **CURRENT SPEC:**
+    ${currentMarkdown}
+
+    **USER INSTRUCTION (DIRECTOR MODE):**
+    "${instruction}"
+
+    **TASK:**
+    Regenerate the Markdown Spec. Update tokens, descriptions, and values to match the instruction.
+    `;
+
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-3-pro-preview",
+        contents: prompt,
+        config: {
+          systemInstruction: SPEC_SYSTEM_INSTRUCTION,
+          temperature: 0.7,
+          thinkingConfig: { thinkingBudget: 1024 }
+        }
+      });
+
+      return { markdown: response.text || currentMarkdown };
+
+    } catch (error) {
+      console.error("DesignAgent: Refinement Error:", error);
+      throw error;
+    }
+  }
+}
+
+// Export singleton
+export const designAgent = new DesignAgent();

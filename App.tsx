@@ -4,139 +4,57 @@ import JSZip from 'jszip';
 import { DESIGN_PRESETS } from './lib/design-presets';
 import { getStyleCartridge } from './lib/styles/registry';
 import { StyleCartridge } from './lib/styles/types';
-import { DesignPreset, GeneratedResult, HistoryItem, GenerationPhase } from './types';
-import { generateDesignSpec, generateArtifact, refineDesignSpec } from './services/geminiService';
+import { DesignPreset } from './types';
+
+// Stores
+import { useGenerationStore } from './store/useGenerationStore';
+import { useHistoryStore } from './store/useHistoryStore';
+
+// Components
 import { ConfigForm } from './components/ConfigForm';
 import { CodeDirector } from './components/CodeDirector';
 import { PreviewFrame } from './components/PreviewFrame';
 import { HistoryDrawer } from './components/HistoryDrawer';
 import { GenerationLoader } from './components/GenerationLoader';
 import { StyleInspectorModal } from './components/StyleInspectorModal';
-import { Palette, Zap, Search, Download, BookOpen, Play, ChevronRight, Hammer, Grid, ArrowLeft, LayoutTemplate, Menu, Eye } from 'lucide-react';
+import { Zap, Search, Download, BookOpen, Play, Grid, ArrowLeft, LayoutTemplate, Menu, Eye } from 'lucide-react';
 
 export default function App() {
-  // State
-  const [selectedStyle, setSelectedStyle] = useState<DesignPreset | null>(null);
-  const [context, setContext] = useState('');
-  const [fonts, setFonts] = useState('Inter');
-  
-  const [phase, setPhase] = useState<GenerationPhase>('idle');
-  const [result, setResult] = useState<GeneratedResult | null>(null);
-  const [viewMode, setViewMode] = useState<'browse' | 'inspect'>('browse');
+  // --- STORE CONSUMPTION ---
+  const { 
+    selectedStyle, 
+    setSelectedStyle, 
+    phase, 
+    result, 
+    viewMode, 
+    setViewMode, 
+    generateArtifact 
+  } = useGenerationStore();
 
+  const { fetchHistory } = useHistoryStore();
+
+  // --- LOCAL UI STATE ---
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
-  
-  // History State
-  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-
-  // Mobile Menu State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // Inspector Modal State
+  
+  // Inspector
   const [inspectorOpen, setInspectorOpen] = useState(false);
   const [inspectedCartridge, setInspectedCartridge] = useState<StyleCartridge | null>(null);
 
-  // Load History on Mount
+  // Initialize History on Mount
   useEffect(() => {
-    const saved = localStorage.getItem('dsf_history');
-    if (saved) {
-      try {
-        setHistory(JSON.parse(saved));
-      } catch (e) {
-        console.error("Failed to load history", e);
-      }
-    }
+    fetchHistory();
   }, []);
 
-  // Save History Helper
-  const saveToHistory = (newItem: HistoryItem) => {
-    const updated = [newItem, ...history].slice(0, 10); // Keep last 10
-    setHistory(updated);
-    localStorage.setItem('dsf_history', JSON.stringify(updated));
-  };
+  // --- ACTIONS ---
 
-  const clearHistory = () => {
-    setHistory([]);
-    localStorage.removeItem('dsf_history');
-  };
-
-  // Handle Inspection Open
   const handleInspect = (preset: DesignPreset, e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card selection
+    e.stopPropagation(); 
     const cartridge = getStyleCartridge(preset.id);
     setInspectedCartridge(cartridge);
     setInspectorOpen(true);
-  };
-
-  // Step 1: Generate Spec
-  const handleGenerateSpec = async (mode: 'tailored' | 'standard') => {
-    if (!selectedStyle) return;
-    
-    setPhase('spec');
-    setResult(null);
-    setViewMode('inspect'); // Switch to inspection view
-    
-    // Determine context based on mode
-    const effectiveContext = mode === 'standard' 
-      ? `A universal, general-purpose UI component library for ${selectedStyle.label}. Create a comprehensive system including Buttons, Inputs, Cards, and Navigation without assuming a specific product niche.` 
-      : context;
-
-    try {
-      const data = await generateDesignSpec(selectedStyle.label, effectiveContext, fonts);
-      setResult({ markdown: data.markdown, html: null });
-    } catch (error) {
-      console.error(error);
-      alert('Failed to generate design spec.');
-      setViewMode('browse'); // Revert if failed
-    } finally {
-      setPhase('idle');
-    }
-  };
-
-  // Step 2: Generate Artifact
-  const handleGenerateArtifact = async () => {
-    if (!result?.markdown) return;
-    
-    setPhase('artifact');
-    
-    try {
-      const data = await generateArtifact(result.markdown, fonts);
-      const newResult = { ...result, html: data.html };
-      setResult(newResult);
-      
-      // Save full result to history
-      if (selectedStyle) {
-        saveToHistory({
-          id: Date.now().toString(),
-          timestamp: Date.now(),
-          style: selectedStyle,
-          context,
-          result: newResult
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Failed to generate artifact.');
-    } finally {
-      setPhase('idle');
-    }
-  };
-
-  const handleRefine = async (instruction: string) => {
-    if (!result) return;
-    setPhase('refining');
-    try {
-      const refinedData = await refineDesignSpec(result.markdown, instruction);
-      // Invalidate HTML because spec changed
-      setResult({ markdown: refinedData.markdown, html: null });
-    } catch (error) {
-      console.error(error);
-      alert('Failed to refine design.');
-    } finally {
-      setPhase('idle');
-    }
   };
 
   const handleDownloadPackage = async () => {
@@ -160,13 +78,7 @@ export default function App() {
     URL.revokeObjectURL(url);
   };
 
-  const handleRestore = (item: HistoryItem) => {
-    setSelectedStyle(item.style);
-    setContext(item.context);
-    setResult(item.result);
-    setViewMode('inspect');
-  };
-
+  // --- FILTER LOGIC ---
   const categories = ['All', 'Modern/Tech', 'Retro', 'Minimal', 'Experimental'];
   
   const filteredPresets = useMemo(() => {
@@ -190,9 +102,6 @@ export default function App() {
       <HistoryDrawer 
         isOpen={isHistoryOpen} 
         onClose={() => setIsHistoryOpen(false)} 
-        history={history}
-        onSelect={handleRestore}
-        onClear={clearHistory}
       />
 
       {/* Inspector Modal (Visualizer Only) */}
@@ -208,27 +117,19 @@ export default function App() {
         />
       )}
 
-      {/* LEFT: THE OPERATOR CONSOLE (Sidebar / Mobile Drawer) */}
+      {/* LEFT: THE OPERATOR CONSOLE */}
       <ConfigForm 
-        selectedStyle={selectedStyle}
-        context={context}
-        setContext={setContext}
-        fonts={fonts}
-        setFonts={setFonts}
-        onGenerate={handleGenerateSpec}
-        isGenerating={phase !== 'idle'}
         onOpenHistory={() => setIsHistoryOpen(true)}
         isOpenMobile={isMobileMenuOpen}
         onCloseMobile={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* RIGHT: THE FACTORY FLOOR (Main Stage) */}
+      {/* RIGHT: THE FACTORY FLOOR */}
       <main className="flex-1 flex flex-col min-w-0 bg-kaolin-50 relative overflow-hidden transition-all duration-300">
         
         {/* Top Navigation Bar */}
         <div className="h-16 px-4 md:px-8 flex items-center justify-between border-b border-kaolin-200 bg-white/80 backdrop-blur-md z-20 shrink-0 sticky top-0">
           <div className="flex items-center gap-3">
-             {/* Mobile Menu Toggle */}
              <button 
                 onClick={() => setIsMobileMenuOpen(true)}
                 className="lg:hidden p-2 -ml-2 text-kaolin-600 hover:bg-kaolin-200 rounded-lg"
@@ -245,7 +146,7 @@ export default function App() {
                  <span className="hidden sm:inline">WAREHOUSE</span>
                </button>
              ) : (
-                <div className="w-4 h-4" /> /* Spacer if needed */
+                <div className="w-4 h-4" />
              )}
              
              <div className="h-6 w-px bg-kaolin-200 mx-2"></div>
@@ -334,7 +235,7 @@ export default function App() {
                         {selectedStyle?.id === preset.id ? <Zap className="w-5 h-5 fill-current" /> : <Grid className="w-5 h-5" />}
                      </div>
                      
-                     {/* INSPECT BUTTON (The "Eye") */}
+                     {/* INSPECT BUTTON */}
                      <button 
                         onClick={(e) => handleInspect(preset, e)}
                         className="p-2 rounded-full bg-kaolin-100 text-kaolin-400 hover:bg-resin-500 hover:text-white transition-all transform hover:scale-110 shadow-sm z-20"
@@ -362,26 +263,22 @@ export default function App() {
           </div>
 
           {/* VIEW: INSPECT (Result) */}
-          <div className={`absolute inset-0 p-4 md:p-8 overflow-hidden flex flex-col transition-all duration-500 ${viewMode === 'inspect' ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-10 z-0 pointer-events-none'}`}>
+          <div className={`absolute inset-0 p-4 md:p-8 overflow-y-auto xl:overflow-hidden flex flex-col transition-all duration-500 ${viewMode === 'inspect' ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-10 z-0 pointer-events-none'}`}>
             {result ? (
-               <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-8 h-full">
+               <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-8 xl:h-full pb-20 xl:pb-0 shrink-0">
                   
                   {/* Spec Column */}
-                  <div className="flex flex-col h-[500px] xl:h-full bg-white rounded-3xl shadow-clay-panel overflow-hidden border border-kaolin-100 transition-all duration-500">
+                  <div className="flex flex-col h-[500px] xl:h-full bg-white rounded-3xl shadow-clay-panel overflow-hidden border border-kaolin-100 transition-all duration-500 shrink-0">
                     <div className="p-3 bg-kaolin-50 border-b border-kaolin-100 flex items-center gap-2 text-kaolin-500 text-xs font-bold uppercase tracking-wider">
                        <BookOpen className="w-4 h-4" /> Specification
                     </div>
                     <div className="flex-1 overflow-hidden relative">
-                       <CodeDirector 
-                          result={result} 
-                          onRefine={handleRefine}
-                          isRefining={phase === 'refining'}
-                       />
+                       <CodeDirector />
                     </div>
                   </div>
 
                   {/* Artifact Column */}
-                  <div className="flex flex-col h-[600px] xl:h-full bg-kaolin-200/50 rounded-3xl shadow-clay-pressed overflow-hidden p-2 border border-kaolin-200 mb-20 xl:mb-0 transition-all duration-500 delay-100">
+                  <div className="flex flex-col h-[600px] xl:h-full bg-kaolin-200/50 rounded-3xl shadow-clay-pressed overflow-hidden p-2 border border-kaolin-200 xl:mb-0 transition-all duration-500 delay-100 shrink-0">
                      {result.html ? (
                         <PreviewFrame htmlContent={result.html} />
                      ) : (
@@ -394,7 +291,7 @@ export default function App() {
                             The architectural blueprints are complete. Initialize the render engine to see the artifact.
                           </p>
                           <button
-                            onClick={handleGenerateArtifact}
+                            onClick={() => generateArtifact()}
                             className="px-8 py-3 bg-resin-500 text-white text-sm font-bold rounded-xl shadow-clay-btn-primary hover:-translate-y-1 active:scale-95 transition-all flex items-center gap-2"
                           >
                             <Play className="w-4 h-4 fill-current" />

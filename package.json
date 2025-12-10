@@ -14,8 +14,8 @@
     "react-dom": "^19.2.1",
     "react": "^19.2.1",
     "jszip": "3.10.1",
-    "process": "0.11.10",
-    "buffer": "latest"
+    "dexie": "3.2.4",
+    "zustand": "4.5.2"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

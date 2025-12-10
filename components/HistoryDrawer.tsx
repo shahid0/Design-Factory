@@ -1,22 +1,26 @@
+
 import React from 'react';
-import { HistoryItem } from '../types';
+import { useHistoryStore } from '../store/useHistoryStore';
+import { useGenerationStore } from '../store/useGenerationStore';
 import { Clock, Trash2, ArrowRight } from 'lucide-react';
 
 interface HistoryDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  history: HistoryItem[];
-  onSelect: (item: HistoryItem) => void;
-  onClear: () => void;
 }
 
 export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({ 
   isOpen, 
-  onClose, 
-  history, 
-  onSelect, 
-  onClear 
+  onClose
 }) => {
+  const { items: history, clear: clearHistory } = useHistoryStore();
+  const { restoreSession } = useGenerationStore();
+
+  const handleRestore = (item: any) => {
+    restoreSession(item);
+    onClose();
+  };
+
   return (
     <>
       {/* Backdrop */}
@@ -56,7 +60,7 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
             history.map((item) => (
               <div 
                 key={item.id}
-                onClick={() => { onSelect(item); onClose(); }}
+                onClick={() => handleRestore(item)}
                 className="group p-4 rounded-2xl bg-white border border-kaolin-100 shadow-sm hover:shadow-clay-float hover:border-resin-200 hover:-translate-y-1 cursor-pointer transition-all duration-300"
               >
                 <div className="flex justify-between items-start mb-2">
@@ -77,7 +81,7 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
         {history.length > 0 && (
           <div className="p-4 border-t border-kaolin-200">
             <button 
-              onClick={onClear}
+              onClick={() => clearHistory()}
               className="w-full py-3 flex items-center justify-center gap-2 text-xs font-bold text-kiln-500 hover:text-white hover:bg-kiln-500 rounded-xl transition-all shadow-sm hover:shadow-md"
             >
               <Trash2 className="w-3 h-3" />

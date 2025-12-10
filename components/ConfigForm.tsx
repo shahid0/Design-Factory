@@ -1,35 +1,39 @@
 
 import React, { useState } from 'react';
-import { DesignPreset } from '../types';
+import { useGenerationStore } from '../store/useGenerationStore';
 import { Sparkles, FileText, DraftingCompass, History as HistoryIcon, Play, AlertCircle, X, Layers, Box } from 'lucide-react';
 import { FontPicker } from './FontPicker';
 
 interface ConfigFormProps {
-  selectedStyle: DesignPreset | null;
-  context: string;
-  setContext: (val: string) => void;
-  fonts: string;
-  setFonts: (val: string) => void;
-  onGenerate: (mode: 'tailored' | 'standard') => void;
-  isGenerating: boolean;
   onOpenHistory: () => void;
   isOpenMobile: boolean;
   onCloseMobile: () => void;
 }
 
 export const ConfigForm: React.FC<ConfigFormProps> = ({
-  selectedStyle,
-  context,
-  setContext,
-  fonts,
-  setFonts,
-  onGenerate,
-  isGenerating,
   onOpenHistory,
   isOpenMobile,
   onCloseMobile,
 }) => {
   const [mode, setMode] = useState<'tailored' | 'standard'>('tailored');
+  
+  // Connect to Store
+  const { 
+    selectedStyle, 
+    context, 
+    setContext, 
+    font, 
+    setFont, 
+    generateSpec, 
+    phase 
+  } = useGenerationStore();
+
+  const isGenerating = phase !== 'idle';
+
+  const handleGenerate = () => {
+    generateSpec(mode);
+    if (window.innerWidth < 1024) onCloseMobile();
+  };
 
   return (
     <>
@@ -76,7 +80,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
           </div>
 
           <div className="flex items-center justify-between">
-             <span className="text-[10px] uppercase font-bold text-kaolin-400 tracking-widest pl-1">v4.2 Architecture</span>
+             <span className="text-[10px] uppercase font-bold text-kaolin-400 tracking-widest pl-1">v5.0 Clean Arch</span>
              <button 
                onClick={() => {
                  onOpenHistory();
@@ -172,17 +176,14 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
           )}
 
           {/* Fonts Picker */}
-          <FontPicker selectedFont={fonts} onChange={setFonts} />
+          <FontPicker selectedFont={font} onChange={setFont} />
 
         </div>
 
         {/* 3. Action Footer */}
         <div className="p-6 bg-gradient-to-t from-white to-transparent">
           <button
-            onClick={() => {
-              onGenerate(mode);
-              if (window.innerWidth < 1024) onCloseMobile();
-            }}
+            onClick={handleGenerate}
             disabled={!selectedStyle || isGenerating || (mode === 'tailored' && !context)}
             className={`w-full py-4 rounded-2xl font-bold text-sm tracking-wide transition-all flex items-center justify-center gap-2 shadow-lg
               ${(!selectedStyle || (mode === 'tailored' && !context))
