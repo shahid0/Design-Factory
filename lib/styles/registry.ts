@@ -116,114 +116,40 @@ const DEFAULT_THEME: StylePreviewConfig = {
 
 const registry: Record<string, StyleCartridge> = {};
 
-// Initialize Registry with Defaults
-DESIGN_PRESETS.forEach(preset => {
-  registry[preset.id] = {
-    id: preset.id,
-    meta: preset,
-    previewConfig: DEFAULT_THEME 
-  };
-});
-
 // Register Implemented Cartridges
-registry['cyberpunk'] = cyberpunk;
-registry['neumorphism'] = neumorphism;
-registry['glassmorphism'] = glassmorphism;
-registry['claymorphism'] = claymorphism;
-registry['material3'] = material3;
-registry['ios17'] = ios17;
-registry['bento'] = bento;
-registry['linear'] = linear;
-registry['solar-punk'] = solarpunk;
-registry['holographic'] = holographic;
-registry['spatial'] = spatial;
-registry['aero'] = aero;
-registry['fluent'] = fluent;
-registry['skeuomorphic-redux'] = skeuomorphic;
-registry['hud'] = scifiHud;
-registry['anime-dreams'] = animeDreams;
-registry['industrial-futurism'] = industrialFuturism;
-registry['silicon-valley-minimal'] = siliconValleyMinimal;
-registry['8bit'] = eightBitPixel;
-registry['vaporwave'] = vaporwave;
-registry['bauhaus'] = bauhaus;
-registry['brutalism'] = neoBrutalism;
-registry['newsprint'] = newsprint;
-registry['y2k'] = y2k;
-registry['win95'] = win95;
-registry['terminal'] = dosTerminal;
-registry['popart'] = popArt;
-registry['art-deco'] = artDeco;
-registry['victorian'] = victorian;
-registry['synthwave'] = synthwave;
-registry['mid-century'] = midCentury;
-registry['teletext'] = teletext;
-registry['blueprint'] = blueprint;
-registry['steampunk-vintage'] = steampunkVintage;
-registry['vaporwave-90s'] = ninetiesVaporwave;
-registry['cheerful-kids'] = cheerfulKids;
-registry['classic-elegance'] = classicElegance;
-registry['arabesque-vibrance'] = arabesqueVibrance;
-registry['monochrome'] = monochrome;
-registry['swiss'] = swiss;
-registry['scandi'] = scandinavian;
-registry['zen'] = wabiSabi;
-registry['ink'] = eInk;
-registry['wireframe'] = loFiWireframe;
-registry['darkroom'] = darkroom;
-registry['lab'] = laboratory;
-registry['typography'] = kineticTypography;
-registry['luxury-min'] = highLuxury;
-registry['institutional'] = institutional;
-registry['architectural'] = architectural;
-registry['desert'] = desertModern;
-registry['polar'] = polar;
-registry['print'] = highEndPrint;
-registry['pastel-plains'] = pastelPlains;
-registry['arctic-mist'] = arcticMist;
-registry['golden-luxury'] = goldenLuxury;
-registry['rustic-earth'] = rusticEarth;
-registry['forest-zen'] = forestZen;
-registry['meditative-light'] = meditativeLight;
-registry['glitch'] = glitch;
-registry['antidesign'] = antiDesign;
-registry['maximalism'] = maximalism;
-registry['grunge'] = grunge;
-registry['organic'] = bioDigital;
-registry['psychedelic'] = psychedelic;
-registry['collage'] = collage;
-registry['deconstruct'] = deconstruct;
-registry['ascii'] = ascii;
-registry['dream'] = dreamcore;
-registry['frutiger'] = frutigerAero;
-registry['corporate'] = corporateMemphis;
-registry['abstract'] = abstractGeom;
-registry['noise'] = staticNoise;
-registry['rave'] = acidRave;
-registry['neon-future'] = neonFuture;
-registry['cyberpunk-city'] = cyberpunkCity;
-registry['geometricsplash'] = geometricSplash;
-registry['bold-street-art'] = boldStreetArt;
-registry['kaleidoscope'] = kaleidoscope;
-registry['digital-matrix'] = digitalMatrix;
-registry['galactic-space'] = galacticSpace;
-registry['psychedelic-dreams'] = psychedelicDreams;
-registry['retro-future-optimism'] = retroFutureOptimism;
-registry['electric-vibe'] = electricVibrance;
-registry['punk-chaos'] = punkChaos;
-registry['liquid-metal'] = liquidMetal;
-registry['cyber-sigil'] = cyberSigil;
-registry['risograph'] = risograph;
-registry['acid-graphix'] = acidGraphix;
-registry['neo-noir'] = neoNoir;
-registry['ethereal'] = ethereal;
+const register = (cartridge: StyleCartridge) => {
+  registry[cartridge.id] = cartridge;
+};
+
+// Batch Register
+[
+  cyberpunk, neumorphism, glassmorphism, claymorphism, material3, ios17, bento, linear, 
+  solarpunk, holographic, spatial, aero, fluent, skeuomorphic, scifiHud, animeDreams, 
+  industrialFuturism, siliconValleyMinimal, eightBitPixel, vaporwave, bauhaus, neoBrutalism, 
+  newsprint, y2k, win95, dosTerminal, popArt, artDeco, victorian, synthwave, midCentury, 
+  teletext, blueprint, steampunkVintage, ninetiesVaporwave, cheerfulKids, classicElegance, 
+  arabesqueVibrance, monochrome, swiss, scandinavian, wabiSabi, eInk, loFiWireframe, darkroom, 
+  laboratory, kineticTypography, highLuxury, institutional, architectural, desertModern, polar, 
+  highEndPrint, pastelPlains, arcticMist, goldenLuxury, rusticEarth, forestZen, meditativeLight, 
+  glitch, antiDesign, maximalism, grunge, bioDigital, psychedelic, collage, deconstruct, ascii, 
+  dreamcore, frutigerAero, corporateMemphis, abstractGeom, staticNoise, acidRave, neonFuture, 
+  cyberpunkCity, geometricSplash, boldStreetArt, kaleidoscope, digitalMatrix, galacticSpace, 
+  psychedelicDreams, retroFutureOptimism, electricVibrance, punkChaos, liquidMetal, cyberSigil, 
+  risograph, acidGraphix, neoNoir, ethereal
+].forEach(register);
 
 /**
  * Retrieves a Style Cartridge by ID.
  * Falls back to the first available style if not found.
  */
 export const getStyleCartridge = (id: string): StyleCartridge => {
-  return registry[id] || registry[DESIGN_PRESETS[0].id];
+  const cartridge = registry[id];
+  if (!cartridge) {
+    console.warn(`StyleCartridge not found for ID: ${id}. Falling back to default.`);
+    // Fallback to a known safe cartridge or the first one in the list
+    return registry['cyberpunk'] || Object.values(registry)[0];
+  }
+  return cartridge;
 };
 
 /**
