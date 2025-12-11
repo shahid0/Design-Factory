@@ -16,7 +16,8 @@ export interface ArtifactResult {
  * 
  * ARCHITECTURAL NOTE:
  * Uses Lazy Initialization for the GoogleGenAI client.
- * This prevents the app from crashing at startup if process.env is not immediately ready.
+ * Implements "Graceful Degradation" - if high-reasoning (Thinking) models fail,
+ * it falls back to standard inference to ensure system availability.
  */
 export class DesignAgent {
   private client: GoogleGenAI | null = null;
@@ -47,20 +48,38 @@ export class DesignAgent {
     `;
 
     try {
+      // Primary Attempt: High-Reasoning "Architect" Mode
+      // Increased budget to 8192 tokens to allow for deep architectural reasoning.
       const response = await ai.models.generateContent({
         model: "gemini-3-pro-preview",
         contents: prompt,
         config: {
           systemInstruction: SPEC_SYSTEM_INSTRUCTION,
           temperature: 0.7, 
-          thinkingConfig: { thinkingBudget: 2048 }
+          thinkingConfig: { thinkingBudget: 8192 } 
         }
       });
 
       return { markdown: response.text || "# Error: Could not generate spec." };
     } catch (error) {
-      console.error("DesignAgent: Spec Generation Error:", error);
-      throw error;
+      console.warn("DesignAgent: Thinking Model failed. Attempting Fallback.", error);
+      
+      // Fallback Attempt: Fast Inference (Resilience)
+      try {
+        const fallbackResponse = await ai.models.generateContent({
+          model: "gemini-3-pro-preview", // Still use Pro, but disable thinking
+          contents: prompt,
+          config: {
+            systemInstruction: SPEC_SYSTEM_INSTRUCTION,
+            temperature: 0.7,
+            // No thinkingConfig implies standard inference
+          }
+        });
+        return { markdown: fallbackResponse.text || "# Error: Fallback generation failed." };
+      } catch (fallbackError) {
+        console.error("DesignAgent: Critical Failure.", fallbackError);
+        throw fallbackError;
+      }
     }
   }
 
@@ -121,13 +140,15 @@ export class DesignAgent {
     `;
 
     try {
+      // Refinement now uses 4k budget to ensure complex instructions (e.g. "make it darker and more spacious") 
+      // are thought through carefully before applying token changes.
       const response = await ai.models.generateContent({
         model: "gemini-3-pro-preview",
         contents: prompt,
         config: {
           systemInstruction: SPEC_SYSTEM_INSTRUCTION,
           temperature: 0.7,
-          thinkingConfig: { thinkingBudget: 1024 }
+          thinkingConfig: { thinkingBudget: 4096 }
         }
       });
 
