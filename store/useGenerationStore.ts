@@ -52,8 +52,15 @@ export const useGenerationStore = create<GenerationState>((set, get) => ({
       ? `A universal, general-purpose UI component library for ${selectedStyle.label}. Create a comprehensive system including Buttons, Inputs, Cards, and Navigation without assuming a specific product niche.` 
       : context;
 
+    // Enriched style definition for better AI context
+    const enrichedStylePrompt = `
+      ${selectedStyle.label}
+      Keywords: ${selectedStyle.tags.join(', ')}
+      Description: ${selectedStyle.description}
+    `.trim();
+
     try {
-      const data = await designAgent.generateSpec(selectedStyle.label, effectiveContext, font);
+      const data = await designAgent.generateSpec(enrichedStylePrompt, effectiveContext, font);
       set({ 
         result: { markdown: data.markdown, html: null },
         phase: 'idle' 
