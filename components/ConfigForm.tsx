@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useGenerationStore } from '../store/useGenerationStore';
-import { Sparkles, FileText, DraftingCompass, History as HistoryIcon, Play, AlertCircle, X, Layers, Box } from 'lucide-react';
+import { Sparkles, FileText, DraftingCompass, History as HistoryIcon, Play, AlertCircle, X, Layers, Box, Zap } from 'lucide-react';
 import { FontPicker } from './FontPicker';
 
 interface ConfigFormProps {
@@ -24,6 +24,8 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
     setContext, 
     font, 
     setFont, 
+    riskBudget,
+    setRiskBudget,
     generateSpec, 
     phase 
   } = useGenerationStore();
@@ -33,6 +35,23 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
   const handleGenerate = () => {
     generateSpec(mode);
     if (window.innerWidth < 1024) onCloseMobile();
+  };
+
+  const getRiskLabel = (val: number) => {
+    switch(val) {
+      case 1: return "Safe / Corporate";
+      case 2: return "Standard / Clean";
+      case 3: return "Balanced (Default)";
+      case 4: return "Bold / Editorial";
+      case 5: return "Avant-Garde / Wild";
+      default: return "";
+    }
+  };
+
+  const getRiskColor = (val: number) => {
+    if (val <= 2) return 'bg-glaze-500';
+    if (val === 3) return 'bg-resin-500';
+    return 'bg-amber-500';
   };
 
   return (
@@ -174,6 +193,35 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
               </p>
             </div>
           )}
+
+          {/* Risk Budget Slider */}
+          <div className="space-y-3">
+             <div className="flex items-center justify-between">
+                <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
+                  <Zap className="w-3 h-3" />
+                  Risk Budget
+                </label>
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded text-white ${getRiskColor(riskBudget)}`}>
+                   {riskBudget} / 5
+                </span>
+             </div>
+             
+             <input 
+               type="range" 
+               min="1" 
+               max="5" 
+               step="1"
+               value={riskBudget}
+               onChange={(e) => setRiskBudget(parseInt(e.target.value))}
+               className="w-full h-2 bg-kaolin-200 rounded-lg appearance-none cursor-pointer accent-resin-500"
+             />
+             
+             <div className="flex justify-between text-[9px] font-bold text-kaolin-400 uppercase tracking-wider">
+               <span>Safe</span>
+               <span className="text-center">{getRiskLabel(riskBudget)}</span>
+               <span>Wild</span>
+             </div>
+          </div>
 
           {/* Fonts Picker */}
           <FontPicker selectedFont={font} onChange={setFont} />

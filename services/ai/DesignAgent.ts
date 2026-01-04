@@ -35,7 +35,7 @@ export class DesignAgent {
   /**
    * Generates a technical design specification based on a style and context.
    */
-  async generateSpec(style: string, context: string, fonts: string): Promise<SpecResult> {
+  async generateSpec(style: string, context: string, fonts: string, risk: number): Promise<SpecResult> {
     const ai = this.getClient();
     
     const prompt = `
@@ -43,6 +43,7 @@ export class DesignAgent {
     - Visual Style: "${style}"
     - App Context (Product Type): "${context}"
     - Font Preference: "${fonts}"
+    - Risk Budget (1-5): ${risk}
     
     Generate the Master Design Specification (Markdown).
     `;
@@ -56,6 +57,7 @@ export class DesignAgent {
         config: {
           systemInstruction: SPEC_SYSTEM_INSTRUCTION,
           temperature: 0.7, 
+          // @ts-ignore
           thinkingConfig: { thinkingBudget: 8192 } 
         }
       });
@@ -148,6 +150,7 @@ export class DesignAgent {
         config: {
           systemInstruction: SPEC_SYSTEM_INSTRUCTION,
           temperature: 0.7,
+          // @ts-ignore
           thinkingConfig: { thinkingBudget: 4096 }
         }
       });

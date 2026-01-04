@@ -9,6 +9,7 @@ interface GenerationState {
   selectedStyle: DesignPreset | null;
   context: string;
   font: string;
+  riskBudget: number;
   
   // Flow State
   phase: GenerationPhase;
@@ -19,6 +20,7 @@ interface GenerationState {
   setSelectedStyle: (style: DesignPreset) => void;
   setContext: (ctx: string) => void;
   setFont: (font: string) => void;
+  setRiskBudget: (val: number) => void;
   setViewMode: (mode: 'browse' | 'inspect') => void;
   
   // Async Processes
@@ -32,6 +34,7 @@ export const useGenerationStore = create<GenerationState>((set, get) => ({
   selectedStyle: null,
   context: '',
   font: 'Inter',
+  riskBudget: 3, // Default to balanced
   phase: 'idle',
   result: null,
   viewMode: 'browse',
@@ -39,10 +42,11 @@ export const useGenerationStore = create<GenerationState>((set, get) => ({
   setSelectedStyle: (style) => set({ selectedStyle: style }),
   setContext: (context) => set({ context }),
   setFont: (font) => set({ font }),
+  setRiskBudget: (riskBudget) => set({ riskBudget }),
   setViewMode: (viewMode) => set({ viewMode }),
 
   generateSpec: async (mode) => {
-    const { selectedStyle, context, font } = get();
+    const { selectedStyle, context, font, riskBudget } = get();
     
     if (!selectedStyle) return;
 
@@ -60,7 +64,7 @@ export const useGenerationStore = create<GenerationState>((set, get) => ({
     `.trim();
 
     try {
-      const data = await designAgent.generateSpec(enrichedStylePrompt, effectiveContext, font);
+      const data = await designAgent.generateSpec(enrichedStylePrompt, effectiveContext, font, riskBudget);
       set({ 
         result: { markdown: data.markdown, html: null },
         phase: 'idle' 
