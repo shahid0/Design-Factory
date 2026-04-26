@@ -64,7 +64,15 @@ export const useGenerationStore = create<GenerationState>((set, get) => ({
     `.trim();
 
     try {
-      const data = await designAgent.generateSpec(enrichedStylePrompt, effectiveContext, font, riskBudget);
+      // Pass the category to trigger motion-specific logic
+      const data = await designAgent.generateSpec(
+        enrichedStylePrompt, 
+        selectedStyle.category, 
+        effectiveContext, 
+        font, 
+        riskBudget
+      );
+      
       set({ 
         result: { markdown: data.markdown, html: null },
         phase: 'idle' 

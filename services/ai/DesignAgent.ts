@@ -1,5 +1,4 @@
-
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel } from "@google/genai";
 import { SPEC_SYSTEM_INSTRUCTION, ARTIFACT_SYSTEM_INSTRUCTION } from "./prompts";
 
 export interface SpecResult {
@@ -10,14 +9,18 @@ export interface ArtifactResult {
   html: string;
 }
 
+export interface PromptRequest {
+  contents: string;
+  systemInstruction: string;
+}
+
 /**
  * The Service Layer (The Brains)
  * Encapsulates all AI generation logic.
  * 
  * ARCHITECTURAL NOTE:
  * Uses Lazy Initialization for the GoogleGenAI client.
- * Implements "Graceful Degradation" - if high-reasoning (Thinking) models fail,
- * it falls back to standard inference to ensure system availability.
+ * Implements explicit prompt construction for traceability and testing.
  */
 export class DesignAgent {
   private client: GoogleGenAI | null = null;
@@ -33,14 +36,14 @@ export class DesignAgent {
   }
 
   /**
-   * Generates a technical design specification based on a style and context.
+   * Constructs the prompt payload for the spec generation.
+   * Now accepts 'category' to trigger specific motion-heavy instructions.
    */
-  async generateSpec(style: string, context: string, fonts: string, risk: number): Promise<SpecResult> {
-    const ai = this.getClient();
-    
-    const prompt = `
+  public constructSpecRequest(style: string, category: string, context: string, fonts: string, risk: number): PromptRequest {
+    const userContent = `
     **PROJECT BRIEF:**
     - Visual Style: "${style}"
+    - Style Category: "${category}"
     - App Context (Product Type): "${context}"
     - Font Preference: "${fonts}"
     - Risk Budget (1-5): ${risk}
@@ -48,17 +51,51 @@ export class DesignAgent {
     Generate the Master Design Specification (Markdown).
     `;
 
+    return {
+      contents: userContent,
+      systemInstruction: SPEC_SYSTEM_INSTRUCTION
+        .replace('[STYLE_NAME]', style)
+        .replace('[CATEGORY]', category)
+    };
+  }
+
+  /**
+   * Constructs the prompt payload for the refinement generation.
+   */
+  public constructRefineRequest(currentMarkdown: string, instruction: string): PromptRequest {
+    const prompt = `
+    **CURRENT SPEC:**
+    ${currentMarkdown}
+
+    **USER INSTRUCTION (DIRECTOR MODE):**
+    "${instruction}"
+
+    **TASK:**
+    Regenerate the Markdown Spec. Update tokens, descriptions, and values to match the instruction.
+    `;
+
+    return {
+      contents: prompt,
+      systemInstruction: SPEC_SYSTEM_INSTRUCTION
+    };
+  }
+
+  /**
+   * Generates a technical design specification based on a style and context.
+   */
+  async generateSpec(style: string, category: string, context: string, fonts: string, risk: number): Promise<SpecResult> {
+    const ai = this.getClient();
+    const req = this.constructSpecRequest(style, category, context, fonts, risk);
+
     try {
       // Primary Attempt: High-Reasoning "Architect" Mode
-      // Increased budget to 8192 tokens to allow for deep architectural reasoning.
       const response = await ai.models.generateContent({
-        model: "gemini-3-pro-preview",
-        contents: prompt,
+        model: "gemma-4-31b-it",
+        contents: req.contents,
         config: {
-          systemInstruction: SPEC_SYSTEM_INSTRUCTION,
-          temperature: 0.7, 
-          // @ts-ignore
-          thinkingConfig: { thinkingBudget: 8192 } 
+          systemInstruction: req.systemInstruction, 
+          temperature: 0.8, // Slightly higher creativity for motion design
+          thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH } 
         }
       });
 
@@ -69,12 +106,12 @@ export class DesignAgent {
       // Fallback Attempt: Fast Inference (Resilience)
       try {
         const fallbackResponse = await ai.models.generateContent({
-          model: "gemini-3-pro-preview", // Still use Pro, but disable thinking
-          contents: prompt,
+          model: "gemma-4-31b-it",
+          contents: req.contents,
           config: {
-            systemInstruction: SPEC_SYSTEM_INSTRUCTION,
-            temperature: 0.7,
-            // No thinkingConfig implies standard inference
+            systemInstruction: req.systemInstruction,
+            temperature: 0.8,
+            thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH }
           }
         });
         return { markdown: fallbackResponse.text || "# Error: Fallback generation failed." };
@@ -99,17 +136,20 @@ export class DesignAgent {
     "${selectedFont}"
     
     **INSTRUCTION:**
-    Generate the High-Fidelity HTML Artifact based on this spec.
+    Generate a **High-Fidelity Landing Page** based on this spec.
+    The page should be a "Real World" example of the design system applied to the specific product context described in the spec.
+    
     CRITICAL: You MUST include a Google Fonts <link> tag for '${selectedFont}' in the <head> and apply it to the body font-family.
     `;
 
     try {
       const response = await ai.models.generateContent({
-        model: "gemini-3-pro-preview",
+        model: "gemma-4-31b-it",
         contents: prompt,
         config: {
           systemInstruction: ARTIFACT_SYSTEM_INSTRUCTION,
           temperature: 0.5, 
+          thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH }
         }
       });
 
@@ -129,29 +169,16 @@ export class DesignAgent {
    */
   async refineSpec(currentMarkdown: string, instruction: string): Promise<SpecResult> {
     const ai = this.getClient();
-
-    const prompt = `
-    **CURRENT SPEC:**
-    ${currentMarkdown}
-
-    **USER INSTRUCTION (DIRECTOR MODE):**
-    "${instruction}"
-
-    **TASK:**
-    Regenerate the Markdown Spec. Update tokens, descriptions, and values to match the instruction.
-    `;
+    const req = this.constructRefineRequest(currentMarkdown, instruction);
 
     try {
-      // Refinement now uses 4k budget to ensure complex instructions (e.g. "make it darker and more spacious") 
-      // are thought through carefully before applying token changes.
       const response = await ai.models.generateContent({
-        model: "gemini-3-pro-preview",
-        contents: prompt,
+        model: "gemma-4-31b-it",
+        contents: req.contents,
         config: {
-          systemInstruction: SPEC_SYSTEM_INSTRUCTION,
+          systemInstruction: req.systemInstruction,
           temperature: 0.7,
-          // @ts-ignore
-          thinkingConfig: { thinkingBudget: 4096 }
+          thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH }
         }
       });
 

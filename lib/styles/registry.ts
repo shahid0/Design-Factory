@@ -95,6 +95,11 @@ import { acidGraphix } from './catalog/experimental/acid-graphix';
 import { neoNoir } from './catalog/experimental/neo-noir';
 import { ethereal } from './catalog/experimental/ethereal';
 
+// Animated
+import { kineticMotion } from './catalog/animated/kinetic-motion';
+import { fluidSimulation } from './catalog/animated/fluid-simulation';
+import { particleData } from './catalog/animated/particle-data';
+
 // Default "Kaolin" Base Theme (The Fallback/Placeholder)
 const DEFAULT_THEME: StylePreviewConfig = {
   theme: {
@@ -135,7 +140,8 @@ const register = (cartridge: StyleCartridge) => {
   dreamcore, frutigerAero, corporateMemphis, abstractGeom, staticNoise, acidRave, neonFuture, 
   cyberpunkCity, geometricSplash, boldStreetArt, kaleidoscope, digitalMatrix, galacticSpace, 
   psychedelicDreams, retroFutureOptimism, electricVibrance, punkChaos, liquidMetal, cyberSigil, 
-  risograph, acidGraphix, neoNoir, ethereal
+  risograph, acidGraphix, neoNoir, ethereal,
+  kineticMotion, fluidSimulation, particleData
 ].forEach(register);
 
 /**

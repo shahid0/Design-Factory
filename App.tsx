@@ -79,7 +79,7 @@ export default function App() {
   };
 
   // --- FILTER LOGIC ---
-  const categories = ['All', 'Modern/Tech', 'Retro', 'Minimal', 'Experimental'];
+  const categories = ['All', 'Modern/Tech', 'Retro', 'Minimal', 'Experimental', 'Animated'];
   
   const filteredPresets = useMemo(() => {
     return DESIGN_PRESETS.filter(p => {

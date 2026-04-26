@@ -100,4 +100,9 @@ export const DESIGN_PRESETS: DesignPreset[] = [
   { id: 'acid-graphix', label: 'Acid Graphix', description: 'Distorted type, chrome, anti-gravity layouts, rave culture.', category: 'Experimental', tags: ['Acid', 'Distorted', 'Trippy'] },
   { id: 'neo-noir', label: 'Neo-Noir', description: 'High contrast B&W, rain, shadows, venetian blinds, detective vibes.', category: 'Experimental', tags: ['Dark', 'Cinema', 'Mystery'] },
   { id: 'ethereal', label: 'Ethereal Angel', description: 'Soft lens flares, heavenly glows, delicate gradients, dreamlike.', category: 'Experimental', tags: ['Soft', 'Glow', 'Light'] },
+
+  // --- Animated ---
+  { id: 'kinetic-motion', label: 'Kinetic Motion', description: 'Constant movement, scrolling text, jittery elements, high energy.', category: 'Animated', tags: ['Motion', 'Type', 'Fast'] },
+  { id: 'fluid-simulation', label: 'Fluid Simulation', description: 'Morphing blobs, slow drifts, color cycling, organic flow.', category: 'Animated', tags: ['Fluid', 'Soft', 'Morph'] },
+  { id: 'particle-data', label: 'Particle Data', description: 'Floating nodes, twinkling grid points, data streams, technical.', category: 'Animated', tags: ['Data', 'Tech', 'Particles'] },
 ];

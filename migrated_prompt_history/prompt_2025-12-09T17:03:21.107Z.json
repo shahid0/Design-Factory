@@ -1,0 +1,173 @@
+[
+  {
+    "id": 459,
+    "author": "user",
+    "payload": {
+      "type": "text",
+      "text": "Implement the 'DOS Terminal' design preset by creating a new StyleCartridge for it and registering it in lib/styles/registry.ts.\n\nlevel: complete\ndetail: Full",
+      "files": [],
+      "fileUploads": [],
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765298896155
+  },
+  {
+    "id": 460,
+    "author": "model",
+    "payload": {
+      "type": "thinking",
+      "text": "**Developing the Terminal Style**\n\nI'm currently working on creating a new style cartridge in `lib/styles/catalog/retro/dos-terminal.ts` to implement the 'DOS Terminal' design. The goal is to make it look like an old MS-DOS or Unix terminal. This will require styling specific components and potentially injecting custom CSS rules to achieve the desired retro aesthetic.\n\n\n**Crafting the Terminal Aesthetic**\n\nI've been honing in on the specific visual elements for the \"DOS Terminal\" style. Right now, I'm focusing on color, font, and effects.  I've decided to go with a primarily green phosphor text (#00FF00) on black (#000000) background, with amber (#FFB000) as a secondary accent. I'm exploring monospace fonts like `VT323` and `Courier New` to achieve that classic pixelated look. Next steps are implementing a blinking cursor, scanlines, and experimenting with box-drawing characters and flat shadows for a true TUI feel. I am also working on inverting colors for \"selected\" states.\n\n\n**Fine-Tuning Color and Fonts**\n\nI'm continuing to refine the color scheme, settling on the primary green (#00FF00) for text and a slightly darker green (#00CC00) for secondary text elements. I've also decided to use `#000000` for the background, though I might use a slightly darker shade, like `#111`, for panels. For the font, I've prioritized `'Perfect DOS VGA 437'`, followed by `VT323` and monospace fonts. The focus is ensuring the DOS aesthetic is preserved.\n\n\n**Refining the Retro Visuals**\n\nI'm now focusing on integrating the scanline effect using the linear-gradient approach for that classic CRT look.  Additionally, I am working on how to create large ASCII-style text using a pixelated font for the primary display.  I've decided to prioritize `'Perfect DOS VGA 437'` for the font, and I'm updating the `dos-terminal.ts` file in `lib/styles/catalog/retro` with these refinements.  The style cartridge currently sets colors, fonts and border-radii; and this will be modified to support a large hero section.\n\n\n**Implementing Hover Effects and Registry**\n\nI've been working on refining the CSS, adding a text-shadow effect for a subtle glow. I've implemented a blinking cursor using an animation and styled containers with a classic TUI border. Hover states are now inverted, with a white background and black text. Additionally, I need to add the new style to the registry and I've confirmed that the ID is 'terminal' and the label is 'DOS Terminal'. Now to start writing the code.\n\n\n",
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765298896155,
+    "doneTimestamp": 1765298916657
+  },
+  {
+    "id": 461,
+    "author": "model",
+    "payload": {
+      "type": "text",
+      "text": "To implement the **DOS Terminal** preset, I will create a new style cartridge that mimics the classic MS-DOS text-mode interface. This includes a green phosphor aesthetic, scanline effects, blinking block cursors, and ASCII-style borders. I will then register this new cartridge in the main registry.\n\nHere are the changes:\n\n",
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765298916657,
+    "doneTimestamp": 1765298916709
+  },
+  {
+    "id": 462,
+    "author": "model",
+    "payload": {
+      "type": "generationTable",
+      "entries": [
+        {
+          "path": "lib/styles/catalog/retro/dos-terminal.ts",
+          "generationType": 1,
+          "isDone": true,
+          "description": "Create new StyleCartridge for DOS Terminal aesthetic"
+        },
+        {
+          "path": "lib/styles/registry.ts",
+          "generationType": 1,
+          "isDone": true,
+          "description": "Register the DOS Terminal style cartridge"
+        }
+      ]
+    },
+    "createdTimestamp": 1765298916710,
+    "doneTimestamp": 1765298941387
+  },
+  {
+    "id": 464,
+    "author": "user",
+    "payload": {
+      "type": "text",
+      "text": "Implement the 'Pop Art' design preset by creating a new StyleCartridge for it and registering it in lib/styles/registry.ts.\n\nlevel: complete\ndetail: Full",
+      "files": [],
+      "fileUploads": [],
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765299165078
+  },
+  {
+    "id": 465,
+    "author": "model",
+    "payload": {
+      "type": "thinking",
+      "text": "**Crafting 'Pop Art'**\n\nI'm now focused on the 'Pop Art' design preset. The initial step involves constructing a `StyleCartridge` specifically tailored to achieve the bold, comic-book aesthetic. After its completion, I'll integrate it into the `lib/styles/registry.ts` file.\n\n\n**Designing Pop Art Theme**\n\nI'm currently delving into the specifics of the Pop Art theme. I'm focusing on incorporating halftone patterns, high-contrast visuals, and the vibrant primary colors CMYK: cyan, magenta, yellow, and black.  I'm exploring bold comic fonts like 'Bangers' and thinking through shapes such as explosive bursts.  I've already started mapping color variables: background, text, accent, and borders in the `pop-art.ts` file, and I'm looking at integrating this into a cartridge.\n\n\n**Integrating the Theme**\n\nI've just finished the `popArt` cartridge! I've included a `previewConfig` demonstrating the theme's appearance, which uses the \"Bangers\" font. I've mapped color variables for the background, text, accent, and borders. Now I am planning to incorporate halftone pattern backgrounds and explore the \"Pow!\" and \"Zap!\" style badges, with thick, black borders.\n\n**Implementing CSS Classes**\n\nI've just added several CSS classes: `pop-btn-primary`, `pop-btn-secondary`, `pop-input`, and `pop-badge`, providing the foundational styling for buttons, input fields, and badges in the Pop Art theme. I also integrated the 'Bangers' and 'Comic Neue' fonts from Google Fonts.  I'm now implementing a halftone pattern with radial gradients for the background, and adding comic panel lines using a pseudo-element.\n\n\n**Styling Comic Elements**\n\nI'm presently building upon the CSS for the Pop Art theme. I'm focusing on features such as thick, black borders, and heavy shadows, and I'm adding `z-index` to the panel borders to ensure they're on top. My goal is to capture the essence of comic panels, and I'm currently working on hover effects to give panels a 3D effect. I'm excited by how the text shadows are looking.\n\n\n**Finalizing Hero Styling**\n\nI'm presently focused on the hero text style. I've included the core styling: black outlines, text shadow, white background, black border, and box shadow. I'm now exploring speech bubble integration, including black and white tail elements, to give the text box a complete comic book feel. I am excited about the impact of these changes.\n\n\n**Polishing Button Styles**\n\nI'm refining button styles in the Pop Art theme. I've focused on the primary button, establishing its vibrant red background and bold, comic-style lettering. I've incorporated thick black borders, a prominent text shadow, and a noticeable box shadow, emphasizing a 3D effect. The hover states are also updated, changing to a yellow background with a corresponding color shift to maintain the vivid aesthetic.\n\n\n**Updating Button Aesthetics**\n\nI've just refined the secondary button and navigation styling. I've updated the background to white with black text, a bold border, and speech bubble-like rounded corners. Added a box shadow to create a 3D effect. The hover state now flips to a blue background and white text. I also styled a `pop-nav` class, with a white background, black border, and box shadow to go along.\n\n\n**Adding Navigation Styles**\n\nI've just styled the navigation links. I've used a bold font weight, added black borders between links, and emphasized hover effects with an underline. The text shadow I am playing with, as well as the text color. I'm focusing on the input fields now, emphasizing border thickness and the overall comic style.\n\n\n**Adjusting Component Styles**\n\nI'm currently working on adjustments to component styles for the Pop Art theme. I've been focusing on integrating black backgrounds, white text, and thick black borders to the `ds-stats` class. I've also added a yellow strip. I'm excited by how the initial implementation of the table container is looking!\n\n\n**Finalizing Table Design**\n\nI'm presently finishing the table container style. I've added a solid black border and a prominent white background with a heavy black shadow to the container.  I've ensured the table headers use the \"Bangers\" font and white text on a black background. I'm focusing on the hover state now, planning to make a magenta background with white text. I've also incorporated the status pill styling.\n\n\n**Adding Card Emphasis**\n\nI've just added some comic-style emphasis to popular cards. I've designed a burst-shaped label with \"Bangers\" font and white text, set at an angle with a thick black border. I've also added a text shadow to the title, ensuring the label stands out.\n\n\n**Defining Element Styles**\n\nI'm currently focused on defining the specific styles for various elements within the Pop Art theme. I've designed the `ds-card button`, removing rounded corners and applying the \"Bangers\" font at a larger size.  I've then developed the `pop-badge` class, giving it a burst shape, the \"Bangers\" font, and a drop shadow effect.  I've wrapped up by establishing a solid black background for the footer.\n\n\n**Refining Footer Styling**\n\nI'm currently finalizing the footer. I've added a solid black border, and implemented a radial gradient background that creates a halftone effect.  I've adjusted the text to use 'Comic Neue', ensuring the font weight is bold. I've added some additional margin, and applied some style to a small header.\n\n\n",
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765299165078,
+    "doneTimestamp": 1765299203717
+  },
+  {
+    "id": 466,
+    "author": "model",
+    "payload": {
+      "type": "text",
+      "text": "To implement the **Pop Art** preset, I will create a new style cartridge that emphasizes high-contrast comic book aesthetics, halftone patterns, and vibrant primary colors (CMYK). I will then register this new cartridge in the main registry.\n\nHere are the changes:\n\n# Updated files:\n\n## lib/styles/catalog/retro/pop-art.ts\n\nCreate new StyleCartridge for Pop Art aesthetic.\n\n## lib/styles/registry.ts\n\nRegister the Pop Art style cartridge.\n\n",
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765299203717,
+    "doneTimestamp": 1765299203769
+  },
+  {
+    "id": 467,
+    "author": "model",
+    "payload": {
+      "type": "generationTable",
+      "entries": [
+        {
+          "path": "lib/styles/catalog/retro/pop-art.ts",
+          "generationType": 1,
+          "isDone": true,
+          "description": "Create new StyleCartridge for Pop Art aesthetic"
+        },
+        {
+          "path": "lib/styles/registry.ts",
+          "generationType": 1,
+          "isDone": true,
+          "description": "Register Pop Art style cartridge"
+        }
+      ]
+    },
+    "createdTimestamp": 1765299203822,
+    "doneTimestamp": 1765299226616
+  },
+  {
+    "id": 469,
+    "author": "user",
+    "payload": {
+      "type": "text",
+      "text": "Implement the 'Art Deco' design preset by creating a new StyleCartridge for it and registering it in lib/styles/registry.ts.\n\nlevel: complete\ndetail: Full",
+      "files": [],
+      "fileUploads": [],
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765299705116
+  },
+  {
+    "id": 470,
+    "author": "model",
+    "payload": {
+      "type": "thinking",
+      "text": "**Implementing Art Deco Design**\n\nI'm currently working on creating a new file, `lib/styles/catalog/retro/art-deco.ts`, to implement the Art Deco design preset. My focus is on achieving the key elements of the style: gold, black, geometric patterns, ornate fonts, and a luxurious overall feel. I aim to encapsulate all these characteristics within the `StyleCartridge` interface.\n\n\n**Integrating Art Deco Elements**\n\nI've registered the `artDeco` cartridge in `lib/styles/registry.ts`. Now, I'm defining the `artDeco` object within the new file. I'm focusing on the `previewConfig` section, which is where I'll set the theme variables for gold, black, and the specific Art Deco fonts. Next up, I'll be injecting the CSS, importing those fonts and applying background patterns, gold borders, and gradient styles for the hero title to capture the luxurious essence.\n\n\n**Enhancing the Aesthetic**\n\nI'm now diving into the CSS details of the Art Deco style, focusing on background patterns, borders, and button styling. The goal is to create a true Art Deco feel. I plan to use a repeating geometric pattern for the background, like shells or diamonds, possibly with CSS gradients or SVG data URIs. For borders, I am thinking of either a double (thick-thin) border or one with corner flourishes. Buttons will potentially be diamond-shaped or elegantly rectangular with gold outlines.\n\n\n",
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765299705116,
+    "doneTimestamp": 1765299720775
+  },
+  {
+    "id": 471,
+    "author": "model",
+    "payload": {
+      "type": "text",
+      "text": "To implement the **Art Deco** preset, I will create a new style cartridge that embodies the luxury, symmetry, and geometric richness of the Roaring Twenties. This includes a palette of gold and onyx, sunburst motifs, and elegant typography. I will then register this cartridge in the main registry.\n\nHere are the changes:\n\n# Updated files:\n\n## lib/styles/catalog/retro/art-deco.ts\n\nCreate new StyleCartridge for Art Deco aesthetic.\n\n```typescript\nimport { StyleCartridge } from '../../types';\nimport { DESIGN_PRESETS } from '../../../design-presets';\n\nconst meta = DESIGN_PRESETS.find(p => p.id === 'art-deco')!;\n\nexport const artDeco: StyleCartridge = {\n  id: 'art-deco',\n  meta,\n  previewConfig: {\n    theme: {\n      '--bg-layer-1': '#0F0F0F', // Onyx Black\n      '--bg-layer-2': '#1A1A1A', // Charcoal\n      '--text-primary': '#E5D3B3', // Champagne\n      '--text-secondary': '#A69B8D', // Muted Gold\n      '--accent-color': '#D4AF37', // Metallic Gold\n      '--border-radius': '2px', // Sharp but slightly softened\n      '--font-display': '\"Limelight\", \"Poiret One\", cursive',\n    },\n    elementClasses: {\n      stage: 'deco-stage',\n      navbar: 'deco-nav',\n      container: 'deco-panel',\n      buttonPrimary: 'deco-btn-primary',\n      buttonSecondary: 'deco-btn-secondary',\n      input: 'deco-input',\n      badge: 'deco-badge'\n    },\n    injectCss: `\n      @import url('https://fonts.googleapis.com/css2?family=Limelight&family=Poiret+One&family=Josefin+Sans:wght@300;400;600&display=swap');\n\n      /* --- ART DECO ENGINE --- */\n\n      /* 1. THE GREAT GATSBY BACKGROUND */\n      .deco-stage {\n        background-color: #0F0F0F;\n        color: var(--text-primary);\n        font-family: 'Josefin Sans', sans-serif;\n        overflow-x: hidden;\n      }\n\n      /* Fan Pattern Overlay */\n      .ds-deco-layer::before {\n        content: \"\";\n        position: fixed;\n        inset: 0;\n        background-color: #0F0F0F;\n        opacity: 0.1;\n        background-image: \n          radial-gradient(circle at 100% 150%, #D4AF37 24%, #0F0F0F 25%, #0F0F0F 28%, #D4AF37 29%, #D4AF37 36%, #0F0F0F 36%, #0F0F0F 40%, transparent 40%, transparent),\n          radial-gradient(circle at 0    150%, #D4AF37 24%, #0F0F0F 25%, #0F0F0F 28%, #D4AF37 29%, #D4AF37 36%, #0F0F0F 36%, #0F0F0F 40%, transparent 40%, transparent),\n          radial-gradient(circle at 50%  100%, #D4AF37 10%, #0F0F0F 11%, #0F0F0F 23%, #D4AF37 24%, #D4AF37 30%, #0F0F0F 31%, #0F0F0F 43%, #D4AF37 44%, #D4AF37 50%, #0F0F0F 51%, #0F0F0F 63%, #D4AF37 64%, #D4AF37 71%, transparent 71%, transparent),\n          radial-gradient(circle at 100% 50%, #D4AF37 5%, #0F0F0F 6%, #0F0F0F 15%, #D4AF37 16%, #D4AF37 20%, #0F0F0F 21%, #0F0F0F 30%, #D4AF37 31%, #D4AF37 35%, #0F0F0F 36%, #0F0F0F 45%, #D4AF37 46%, #D4AF37 49%, transparent 50%, transparent),\n          radial-gradient(circle at 0    50%, #D4AF37 5%, #0F0F0F 6%, #0F0F0F 15%, #D4AF37 16%, #D4AF37 20%, #0F0F0F 21%, #0F0F0F 30%, #D4AF37 31%, #D4AF37 35%, #0F0F0F 36%, #0F0F0F 45%, #D4AF37 46%, #D4AF37 49%, transparent 50%, transparent);\n        background-size: 100px 50px;\n        z-index: -1;\n        opacity: 0.08;\n      }\n      \n      /* Gold Grain */\n      .ds-deco-layer::after {\n        content: \"\";\n        position: fixed;\n        inset: 0;\n        background-image: url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E\");\n        z-index: -1;\n        pointer-events: none;\n      }\n\n      /* 2. FRAMES (The Deco Border) */\n      .deco-panel, .ds-panel, .ds-card, .deco-nav {\n        background: linear-gradient(135deg, #1A1A1A 0%, #0F0F0F 100%);\n        border: 1px solid #D4AF37;\n        box-shadow: \n          0 0 0 4px #0F0F0F, \n          0 0 0 5px #D4AF37,\n          0 10px 20px rgba(0,0,0,0.5);\n        border-radius: 0;\n        position: relative;\n        margin: 10px; /* Space for double border */\n        transition: transform 0.3s ease;\n      }\n      \n      /* Corner Flourishes */\n      .deco-panel::after, .ds-panel::after, .ds-card::after {\n        content: \"\";\n        position: absolute;\n        inset: 4px;\n        border: 1px solid rgba(212, 175, 55, 0.3);\n        pointer-events: none;\n      }\n      \n      .ds-panel:hover, .ds-card:hover {\n        transform: translateY(-5px);\n        box-shadow: \n          0 0 0 4px #0F0F0F, \n          0 0 0 6px #FCEEAC, /* Brighter Gold */\n          0 15px 30px rgba(0,0,0,0.6);\n      }\n\n      /* 3. TYPOGRAPHY (Opulence) */\n      .ds-hero-title {\n        font-family: 'Limelight', cursive;\n        font-weight: 400;\n        font-size: 4.5rem;\n        line-height: 1.1;\n        color: #D4AF37;\n        text-transform: uppercase;\n        letter-spacing: 2px;\n        background: linear-gradient(to bottom, #FCEEAC 0%, #D4AF37 50%, #996515 100%);\n        -webkit-background-clip: text;\n        -webkit-text-fill-color: transparent;\n        text-shadow: 0 4px 10px rgba(0,0,0,0.5);\n      }\n      .ds-hero-title span {\n        font-family: 'Poiret One', cursive;\n        font-weight: 900;\n        color: #E5D3B3;\n        background: none;\n        -webkit-text-fill-color: initial;\n        text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);\n      }\n      .ds-hero-text {\n        font-family: 'Josefin Sans', sans-serif;\n        font-weight: 300;\n        font-size: 1.2rem;\n        letter-spacing: 1px;\n        color: #A69B8D;\n        border-top: 1px solid #D4AF37;\n        border-bottom: 1px solid #D4AF37;\n        padding: 20px 0;\n        margin-top: 20px;\n        max-width: 600px;\n      }\n      \n      /* Section Titles */\n      .ds-section-title {\n        font-family: 'Limelight', cursive;\n        color: #D4AF37 !important;\n        letter-spacing: 2px;\n        text-align: center;\n        width: 100%;\n        border-bottom: 2px solid #D4AF37;\n        padding-bottom: 10px;\n        margin-bottom: 30px;\n      }\n\n      /* 4. BUTTONS (Geometric Lux) */\n      .deco-btn-primary, .ds-btn-primary {\n        background: #000 !important;\n        color: #D4AF37 !important;\n        font-family: 'Poiret One', cursive !important;\n        font-weight: 900 !important;\n        text-transform: uppercase;\n        letter-spacing: 3px;\n        border: 1px solid #D4AF37 !important;\n        padding: 12px 40px !important;\n        position: relative;\n        overflow: visible;\n        transition: all 0.3s ease !important;\n        box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.1);\n      }\n      /* Sunburst ends for button */\n      .deco-btn-primary::before, .deco-btn-primary::after,\n      .ds-btn-primary::before, .ds-btn-primary::after {\n        content: \"◆\";\n        position: absolute;\n        top: 50%;\n        transform: translateY(-50%);\n        color: #D4AF37;\n        font-size: 10px;\n      }\n      .deco-btn-primary::before, .ds-btn-primary::before { left: 10px; }\n      .deco-btn-primary::after, .ds-btn-primary::after { right: 10px; }\n\n      .deco-btn-primary:hover, .ds-btn-primary:hover {\n        background: #D4AF37 !important;\n        color: #000 !important;\n        box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);\n      }\n      .deco-btn-primary:hover::before, .deco-btn-primary:hover::after,\n      .ds-btn-primary:hover::before, .ds-btn-primary:hover::after {\n        color: #000;\n      }\n\n      .deco-btn-secondary, .ds-btn-secondary, .ds-btn-ghost {\n        background: transparent !important;\n        color: #A69B8D !important;\n        border: 1px solid #555 !important;\n        font-family: 'Josefin Sans', sans-serif !important;\n        text-transform: uppercase;\n        letter-spacing: 2px;\n      }\n      .deco-btn-secondary:hover, .ds-btn-secondary:hover, .ds-btn-ghost:hover {\n        border-color: #D4AF37 !important;\n        color: #D4AF37 !important;\n      }\n\n      /* 5. NAVIGATION (Frieze) */\n      .deco-nav, .ds-navbar {\n        background: #0F0F0F;\n        border-bottom: 3px double #D4AF37;\n        margin: 0 !important;\n        width: 100% !important;\n        padding: 20px 40px;\n        box-shadow: none !important; /* Reset deco panel shadow */\n        border-left: none;\n        border-right: none;\n        border-top: none;\n      }\n      .ds-logo {\n        font-family: 'Limelight', cursive;\n        font-size: 2rem;\n        background: linear-gradient(to right, #D4AF37, #FCEEAC, #D4AF37);\n        -webkit-background-clip: text;\n        -webkit-text-fill-color: transparent;\n      }\n      .ds-nav-links span {\n        font-family: 'Poiret One', cursive;\n        font-weight: 900;\n        letter-spacing: 2px;\n        text-transform: uppercase;\n        color: #A69B8D;\n      }\n      .ds-nav-links span:hover {\n        color: #D4AF37;\n        text-decoration: underline;\n        text-underline-offset: 5px;\n        text-decoration-thickness: 1px;\n      }\n\n      /* 6. INPUTS (Ticket Booth) */\n      .deco-input, .ds-input {\n        background: #000 !important;\n        border: 1px solid #D4AF37 !important;\n        border-radius: 0 !important;\n        color: #D4AF37 !important;\n        font-family: 'Josefin Sans', sans-serif !important;\n        letter-spacing: 1px;\n        padding-left: 40px !important;\n        height: 50px;\n      }\n      .ds-input:focus {\n        box-shadow: 0 0 15px rgba(212, 175, 55, 0.2) !important;\n        background: #111 !important;\n      }\n      .ds-input-decorator {\n        background: transparent !important;\n        color: #D4AF37;\n        border: 1px solid #D4AF37;\n        transform: rotate(45deg);\n        width: 10px !important; height: 10px !important;\n        border-radius: 0 !important;\n        left: 15px !important;\n      }\n\n      /* 7. STATS (Sunburst Metrics) */\n      .ds-stats {\n        background: transparent !important;\n        border: none !important;\n        border-top: 1px solid #D4AF37;\n        border-bottom: 1px solid #D4AF37;\n        position: relative;\n      }\n      .ds-stats::before {\n         content: \"\";\n         position: absolute;\n         top: 2px; bottom: 2px; left: 0; right: 0;\n         border-top: 1px solid #555;\n         border-bottom: 1px solid #555;\n         pointer-events: none;\n      }\n      .ds-stats > div > div {\n        background: transparent;\n        border-right: 1px solid #D4AF37;\n        padding: 20px;\n        box-shadow: none; /* remove deco panel default */\n        border-left: none; border-top: none; border-bottom: none;\n      }\n      .ds-stats > div > div:last-child {\n        border-right: none;\n      }\n      .ds-stats .text-3xl {\n        font-family: 'Poiret One', cursive;\n        color: #FCEEAC;\n        font-weight: 900;\n        text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);\n      }\n      .ds-stats span:first-child {\n        color: #A69B8D;\n        font-family: 'Josefin Sans', sans-serif;\n        letter-spacing: 2px;\n        text-transform: uppercase;\n        font-size: 0.8rem;\n      }\n\n      /* 8. TABLE (The Guest List) */\n      .ds-table-container {\n        border: 1px solid #D4AF37 !important;\n        background: #0A0A0A !important;\n      }\n      .ds-table-container > div {\n        border-bottom: 1px solid #333 !important;\n      }\n      .ds-table-container > div:first-child {\n        background: linear-gradient(to right, #0F0F0F, #1A1A1A);\n        border-bottom: 2px solid #D4AF37 !important;\n        color: #D4AF37;\n        font-family: 'Limelight', cursive;\n        letter-spacing: 1px;\n      }\n      .ds-table-container > div:not(:first-child):hover {\n        background: rgba(212, 175, 55, 0.1) !important;\n      }\n      /* Status */\n      .ds-table-container span {\n        background: transparent !important;\n        border: 1px solid #D4AF37;\n        color: #D4AF37 !important;\n        font-family: 'Poiret One', cursive;\n        font-weight: 900;\n        padding: 4px 12px;\n        border-radius: 0;\n      }\n\n      /* 9. PRICING CARDS (Menu) */\n      .ds-card {\n        padding: 40px !important;\n        background: #0A0A0A !important;\n      }\n      /* Popular */\n      .ds-card:nth-child(2) {\n        border: 2px solid #D4AF37 !important;\n        box-shadow: \n          0 0 0 4px #0F0F0F, \n          0 0 0 6px #D4AF37,\n          0 20px 40px rgba(0,0,0,0.8) !important;\n        transform: scale(1.05);\n        z-index: 10;\n        background: #111 !important;\n      }\n      .ds-card:nth-child(2) .ds-card-title {\n        color: #FCEEAC;\n      }\n      .ds-card:nth-child(2) .absolute {\n        background: #D4AF37;\n        color: #000;\n        font-family: 'Limelight', cursive;\n        text-transform: uppercase;\n        padding: 5px 20px;\n        top: -15px;\n        right: 50%;\n        transform: translateX(50%);\n        border: 2px solid #000;\n      }\n      \n      .ds-card button {\n         border-radius: 0 !important;\n      }\n\n      /* 10. BADGE */\n      .deco-badge, .ds-badge {\n        background: transparent !important;\n        color: #D4AF37 !important;\n        border: 1px solid #D4AF37;\n        font-family: 'Poiret One', cursive;\n        font-weight: 900;\n        letter-spacing: 1px;\n        padding: 4px 12px;\n        box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.2);\n      }\n\n      /* 11. FOOTER */\n      .ds-footer {\n        background: #080808 !important;\n        border-top: 1px solid #D4AF37 !important;\n        margin-top: 80px;\n        position: relative;\n      }\n      .ds-footer::before {\n         /* Top decorative line */\n         content: \"\";\n         position: absolute;\n         top: 4px; left: 0; right: 0;\n         border-top: 1px solid #333;\n      }\n      .ds-footer h4 {\n         font-family: 'Limelight', cursive;\n         color: #D4AF37 !important;\n      }\n    `\n  }\n};\n```\n\n## lib/styles/registry.ts\n\nRegister the new Art Deco cartridge.\n\n```typescript\nimport { DESIGN_PRESETS } from '../design-presets';\nimport { StyleCartridge, StylePreviewConfig } from './types';\n\n// Import Cartridges\nimport { cyberpunk } from './catalog/modern/cyberpunk';\nimport { neumorphism } from './catalog/modern/neumorphism';\nimport { glassmorphism } from './catalog/modern/glassmorphism';\nimport { claymorphism } from './catalog/modern/claymorphism';\nimport { material3 } from './catalog/modern/material3';\nimport { ios17 } from './catalog/modern/ios17';\nimport { bento } from './catalog/modern/bento';\nimport { linear } from './catalog/modern/linear';\nimport { solarpunk } from './catalog/modern/solarpunk';\nimport { holographic } from './catalog/modern/holographic';\nimport { spatial } from './catalog/modern/spatial';\nimport { aero } from './catalog/modern/aero';\nimport { fluent } from './catalog/modern/fluent';\nimport { skeuomorphic } from './catalog/modern/skeuomorphic';\nimport { scifiHud } from './catalog/modern/scifi-hud';\nimport { animeDreams } from './catalog/modern/anime-dreams';\nimport { industrialFuturism } from './catalog/modern/industrial-futurism';\nimport { siliconValleyMinimal } from './catalog/modern/silicon-valley-minimal';\nimport { eightBitPixel } from './catalog/retro/8bit-pixel';\nimport { vaporwave } from './catalog/retro/vaporwave';\nimport { bauhaus } from './catalog/retro/bauhaus';\nimport { neoBrutalism } from './catalog/retro/neo-brutalism';\nimport { newsprint } from './catalog/retro/newsprint';\nimport { y2k } from './catalog/retro/y2k';\nimport { win95 } from './catalog/retro/win95';\nimport { dosTerminal } from './catalog/retro/dos-terminal';\nimport { popArt } from './catalog/retro/pop-art';\nimport { artDeco } from './catalog/retro/art-deco';\n\n// Default \"Kaolin\" Base Theme (The Fallback/Placeholder)\nconst DEFAULT_THEME: StylePreviewConfig = {\n  theme: {\n    '--bg-layer-1': '#F4F6F9', // kaolin-100\n    '--bg-layer-2': '#FFFFFF',\n    '--text-primary': '#334155', // kaolin-800\n    '--text-secondary': '#94A0B2', // kaolin-500\n    '--accent-color': '#4F7AF6', // resin-500\n    '--border-radius': '16px',\n    '--font-display': '\"Inter\", sans-serif',\n  },\n  elementClasses: {\n    container: 'shadow-clay-panel',\n    buttonPrimary: 'shadow-clay-btn-primary hover:-translate-y-0.5 transition-transform',\n    buttonSecondary: 'hover:bg-kaolin-200 transition-colors',\n    input: 'shadow-inner'\n  }\n};\n\nconst registry: Record<string, StyleCartridge> = {};\n\n// Initialize Registry with Defaults\nDESIGN_PRESETS.forEach(preset => {\n  registry[preset.id] = {\n    id: preset.id,\n    meta: preset,\n    previewConfig: DEFAULT_THEME \n  };\n});\n\n// Register Implemented Cartridges\nregistry['cyberpunk'] = cyberpunk;\nregistry['neumorphism'] = neumorphism;\nregistry['glassmorphism'] = glassmorphism;\nregistry['claymorphism'] = claymorphism;\nregistry['material3'] = material3;\nregistry['ios17'] = ios17;\nregistry['bento'] = bento;\nregistry['linear'] = linear;\nregistry['solar-punk'] = solarpunk;\nregistry['holographic'] = holographic;\nregistry['spatial'] = spatial;\nregistry['aero'] = aero;\nregistry['fluent'] = fluent;\nregistry['skeuomorphic-redux'] = skeuomorphic;\nregistry['hud'] = scifiHud;\nregistry['anime-dreams'] = animeDreams;\nregistry['industrial-futurism'] = industrialFuturism;\nregistry['silicon-valley-minimal'] = siliconValleyMinimal;\nregistry['8bit'] = eightBitPixel;\nregistry['vaporwave'] = vaporwave;\nregistry['bauhaus'] = bauhaus;\nregistry['brutalism'] = neoBrutalism;\nregistry['newsprint'] = newsprint;\nregistry['y2k'] = y2k;\nregistry['win95'] = win95;\nregistry['terminal'] = dosTerminal;\nregistry['popart'] = popArt;\nregistry['art-deco'] = artDeco;\n\n/**\n * Retrieves a Style Cartridge by ID.\n * Falls back to the first available style if not found.\n */\nexport const getStyleCartridge = (id: string): StyleCartridge => {\n  return registry[id] || registry[DESIGN_PRESETS[0].id];\n};\n\n/**\n * Returns all registered cartridges.\n */\nexport const getAllCartridges = (): StyleCartridge[] => {\n  return Object.values(registry);\n};\n```\n\n",
+      "cMarkNode": {}
+    },
+    "createdTimestamp": 1765299720775,
+    "doneTimestamp": 1765299720775
+  },
+  {
+    "id": 472,
+    "author": "model",
+    "payload": {
+      "type": "generationTable",
+      "entries": [
+        {
+          "path": "lib/styles/catalog/retro/art-deco.ts",
+          "generationType": 1,
+          "isDone": true,
+          "description": "Create new StyleCartridge for Art Deco aesthetic"
+        },
+        {
+          "path": "lib/styles/registry.ts",
+          "generationType": 1,
+          "isDone": true,
+          "description": "Register Art Deco style cartridge"
+        }
+      ]
+    },
+    "createdTimestamp": 1765299762088,
+    "doneTimestamp": 1765299792411
+  }
+]

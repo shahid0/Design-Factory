@@ -3,7 +3,7 @@ export interface DesignPreset {
   id: string;
   label: string;
   description: string;
-  category: 'Modern/Tech' | 'Retro' | 'Minimal' | 'Experimental';
+  category: 'Modern/Tech' | 'Retro' | 'Minimal' | 'Experimental' | 'Animated';
   tags: string[];
 }
 
