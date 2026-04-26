@@ -1,6 +1,33 @@
 # Design Factory
 
-A high-fidelity, motion-driven UI design specification and artifact generator powered by Google's Generative AI. Design Factory transforms creative concepts and abstract styles into cinematic web layouts and immediately usable HTML/Tailwind artifacts.
+A high-fidelity, motion-driven UI design specification and artifact generator powered by Google's Generative AI. 
+
+## Table of Contents
+- [The Problem](#-the-problem)
+- [What It Does](#-what-it-does)
+- [How It Works](#-how-it-works)
+- [Screenshots](#-screenshots)
+- [Getting Started](#-getting-started)
+- [Customizing the AI (Developer Guide)](#-customizing-the-ai-developer-guide)
+- [License](#-license)
+
+## 🚨 The Problem
+
+Designing and prototyping modern web interfaces is often a fragmented process. Designers create visual specifications in tools like Figma, which developers must painstakingly translate into code. This handoff can be slow, leaving room for misinterpretation of stylistic intent (such as spatial rhythm, motion, and typography weight). Furthermore, exploring diverse aesthetic variations rapidly requires significant manual effort, stalling creative exploration.
+
+## ✨ What It Does
+
+Design Factory bridges the gap between abstract creative concepts and functional frontend code. It acts as an automated design agency and development pair. You give it a brief (a style and context), and it will:
+1. **Generate a Master Design Specification:** A rigorous Markdown document outlining a cohesive design system (colors, typography, grid, interaction states).
+2. **Generate a Functional Artifact:** A high-fidelity, responsive HTML landing page that implements the design system perfectly using Tailwind CSS.
+3. **Apply Director-Level Refinements:** Allow you to iterate on the design using natural language (e.g., "Make it moodier", "Add more white space"), continuously updating both the spec and the coded artifact.
+
+## ⚙️ How It Works
+
+1. **Concept Intake:** You provide the application context (e.g., "Fintech Dashboard"), visual style intent (e.g., "Cyberpunk"), font preferences, and a "risk budget" for creative deviation.
+2. **Architectural AI Prompting:** The `DesignAgent` queries Google's Generative AI (Gemini models) with a high-cognitive prompt to craft a comprehensive, cohesive aesthetic system.
+3. **Translation to Code:** A specialized artifact-generation prompt takes that spec and outputs pristine HTML/Tailwind CSS, including dynamic Google Font integration.
+4. **State & Refinement:** The application maintains the design state, allowing rapid revisions. When refined, the AI updates the spec, which triggers a regeneration of the coded artifact.
 
 ## 📸 Screenshots
 
@@ -12,7 +39,7 @@ A high-fidelity, motion-driven UI design specification and artifact generator po
 
 ## 🚀 Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. This guide assumes you have basic familiarity with the terminal but doesn't require prior knowledge of the project's architecture.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -24,27 +51,23 @@ You will need the following installed on your machine:
 ### Installation
 
 1. **Clone the repository:**
-   Download the project code to your local machine.
    ```bash
    git clone https://github.com/shahid0/Design-Factory.git
    cd Design-Factory
    ```
 
 2. **Install dependencies:**
-   Install all the required libraries to run the project.
    ```bash
    npm install
    ```
 
 3. **Set up Environment Variables:**
-   The AI agent relies on an API key to communicate with Google's GenAI models. 
-   Create a new file named `.env` in the root directory of the project, and add your API key like this:
+   Create a new file named `.env` in the root directory of the project, and add your Google AI Studio API key:
    ```env
    API_KEY=your_google_ai_studio_api_key_here
    ```
 
 4. **Start the development server:**
-   Launch the app locally!
    ```bash
    npm run dev
    ```
@@ -54,47 +77,20 @@ You will need the following installed on your machine:
 
 ## 🛠️ Customizing the AI (Developer Guide)
 
-If you are a developer looking to tweak the AI's behavior, update its strict system instructions, or change the underlying LLM models, here is exactly where you need to look:
+If you are a developer looking to tweak the AI's behavior, update its strict system instructions, or change the underlying LLM models:
 
 ### 1. Updating the Prompts
 All system instructions and prompt templates have been centralized into a single file to make them easy to maintain.
 - **File to Edit:** `services/ai/prompts.ts`
-- **What you'll find here:** 
-  You will see two main exports: `SPEC_SYSTEM_INSTRUCTION` (which heavily guides the AI on how to write the cinematic design system spec) and `ARTIFACT_SYSTEM_INSTRUCTION` (which tells the AI how to generate the final HTML/Tailwind artifacts). You can modify these markdown strings to adjust the AI's output format, stylistic constraints, and specific behaviors.
+- **What you'll find here:** You will see `SPEC_SYSTEM_INSTRUCTION` (guides spec generation) and `ARTIFACT_SYSTEM_INSTRUCTION` (guides HTML/Tailwind output). Modify these to adjust the AI's structural format or stylistic constraints.
 
 ### 2. Changing the AI Model
 The core execution logic, API interactions, and model selections are handled by the `DesignAgent`.
 - **File to Edit:** `services/ai/DesignAgent.ts`
-- **What you'll find here:** 
-  Look for the `generateContent` calls (e.g., `ai.models.generateContent({...})`). Under the `model` property, you can change the active model (for example, switching from `gemma-4-31b-it` or `gemini-3.1-pro-preview` to another model). 
-  *Note:* You can also tweak other generation configurations here, such as `temperature` and `thinkingConfig` (set to `ThinkingLevel.HIGH`).
+- **What you'll find here:** Look for the `generateContent` block. You can change the active model (e.g., `gemini-3.1-pro-preview`) and configure reasoning parameters like `thinkingConfig` (`ThinkingLevel.HIGH`).
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License.
-
-```text
-MIT License
-
-Copyright (c) 2026
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
