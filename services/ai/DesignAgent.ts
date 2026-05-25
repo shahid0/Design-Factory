@@ -39,7 +39,14 @@ export class DesignAgent {
    * Constructs the prompt payload for the spec generation.
    * Now accepts 'category' to trigger specific motion-heavy instructions.
    */
-  public constructSpecRequest(style: string, category: string, context: string, fonts: string, risk: number): PromptRequest {
+  public constructSpecRequest(
+    style: string, 
+    category: string, 
+    context: string, 
+    fonts: string, 
+    risk: number,
+    customizations?: { color?: string, material?: string, size?: string, embellishments?: string }
+  ): PromptRequest {
     const userContent = `
     **PROJECT BRIEF:**
     - Visual Style: "${style}"
@@ -48,6 +55,12 @@ export class DesignAgent {
     - Font Preference: "${fonts}"
     - Risk Budget (1-5): ${risk}
     
+    **PRODUCT CUSTOMIZATIONS (Overrides):**
+    - Color Override: ${customizations?.color || "None (Use default style)"}
+    - Material/Texture: ${customizations?.material || "None (Use default style)"}
+    - Size/Density: ${customizations?.size || "None (Use default style)"}
+    - Embellishments: ${customizations?.embellishments || "None (Use default style)"}
+
     Generate the Master Design Specification (Markdown).
     `;
 
@@ -83,14 +96,21 @@ export class DesignAgent {
   /**
    * Generates a technical design specification based on a style and context.
    */
-  async generateSpec(style: string, category: string, context: string, fonts: string, risk: number): Promise<SpecResult> {
+  async generateSpec(
+    style: string, 
+    category: string, 
+    context: string, 
+    fonts: string, 
+    risk: number,
+    customizations?: { color?: string, material?: string, size?: string, embellishments?: string }
+  ): Promise<SpecResult> {
     const ai = this.getClient();
-    const req = this.constructSpecRequest(style, category, context, fonts, risk);
+    const req = this.constructSpecRequest(style, category, context, fonts, risk, customizations);
 
     try {
       // Primary Attempt: High-Reasoning "Architect" Mode
       const response = await ai.models.generateContent({
-        model: "gemma-4-31b-it",
+        model: "gemini-3.5-flash",
         contents: req.contents,
         config: {
           systemInstruction: req.systemInstruction, 
@@ -106,7 +126,7 @@ export class DesignAgent {
       // Fallback Attempt: Fast Inference (Resilience)
       try {
         const fallbackResponse = await ai.models.generateContent({
-          model: "gemma-4-31b-it",
+          model: "gemini-3.5-flash",
           contents: req.contents,
           config: {
             systemInstruction: req.systemInstruction,
@@ -144,7 +164,7 @@ export class DesignAgent {
 
     try {
       const response = await ai.models.generateContent({
-        model: "gemma-4-31b-it",
+        model: "gemini-3.5-flash",
         contents: prompt,
         config: {
           systemInstruction: ARTIFACT_SYSTEM_INSTRUCTION,
@@ -173,7 +193,7 @@ export class DesignAgent {
 
     try {
       const response = await ai.models.generateContent({
-        model: "gemma-4-31b-it",
+        model: "gemini-3.5-flash",
         contents: req.contents,
         config: {
           systemInstruction: req.systemInstruction,
@@ -187,6 +207,72 @@ export class DesignAgent {
     } catch (error) {
       console.error("DesignAgent: Refinement Error:", error);
       throw error;
+    }
+  }
+
+  /**
+   * AI Matchmaker: Suggests the best design preset based on user goals.
+   */
+  async suggestStyle(
+    audience: string,
+    appType: string,
+    goal: string,
+    availablePresets: { id: string, label: string, description: string }[],
+    suggestCustomizations: boolean = false
+  ): Promise<{ presetId: string, reason: string, fonts?: string, customColor?: string, customMaterial?: string, customSize?: string, customEmbellishments?: string }> {
+    const ai = this.getClient();
+    const customInstruction = suggestCustomizations ? `
+Additionally, suggest specific product customisation settings and fonts that best fit this.
+Return these additional keys in the JSON:
+"fonts": "suggested standard Google fonts to use (e.g. 'Inter, serif')",
+"customColor": "a specific hex color or color tone",
+"customMaterial": "a specific UI material feel (e.g. 'frosted glass', 'matte plastic')",
+"customSize": "sizing feel (e.g. 'compact', 'spacious')",
+"customEmbellishments": "specific visual embellishments (e.g. 'neon glows', 'subtle shadows')"
+` : '';
+
+    const prompt = `
+You are an expert Design Matchmaker.
+Based on the following product requirements, select the BEST fitting design style from the provided list.
+
+REQUIREMENTS:
+- Target Audience: ${audience || 'General public'}
+- App/Product Type: ${appType || 'Software application'}
+- End Goal / Theme: ${goal || 'Standard functional UI'}
+
+AVAILABLE STYLES:
+${availablePresets.map(p => `- ${p.id}: ${p.label} (${p.description})`).join('\n')}
+${customInstruction}
+Return a raw JSON object (NO markdown formatting, NO \`\`\`json tags) with the keys:
+"presetId": "the id of the matched style"
+"reason": "a short 1-sentence explanation why"
+${suggestCustomizations ? `"fonts": "...",\n"customColor": "...",\n"customMaterial": "...",\n"customSize": "...",\n"customEmbellishments": "..."` : ''}
+    `;
+
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: prompt,
+        config: {
+          temperature: 0.1,    
+          responseMimeType: "application/json"
+        }
+      });
+
+      const text = response.text || "{}";
+      const cleaned = text.replace(/\`\`\`json/g, '').replace(/\`\`\`/g, '');
+      const data = JSON.parse(cleaned);
+      
+      // Fallback if AI hallucinates an ID
+      const validIds = availablePresets.map(p => p.id);
+      if (!validIds.includes(data.presetId)) {
+        data.presetId = validIds[0];
+      }
+      return data;
+    } catch (error) {
+      console.error("DesignAgent: Suggest Style Error:", error);
+      // Fallback
+      return { presetId: availablePresets[0].id, reason: "Default selection due to error." };
     }
   }
 }

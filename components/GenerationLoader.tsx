@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Wand2 } from 'lucide-react';
 import { GenerationPhase } from '../types';
 
 interface GenerationLoaderProps {
-  phase: GenerationPhase;
+  phase: GenerationPhase | 'suggesting_style';
 }
 
 const SPEC_STEPS = [
@@ -27,6 +27,13 @@ const REFINE_STEPS = [
   "Remolding the clay...",
   "Adjusting token glaze...",
   "Regenerating Spec..."
+];
+
+const MATCHMAKER_STEPS = [
+  "Analyzing product constraints...",
+  "Comparing target demographics...",
+  "Evaluating aesthetic harmony...",
+  "Finding perfect design match..."
 ];
 
 export const GenerationLoader: React.FC<GenerationLoaderProps> = ({ phase }) => {
@@ -60,6 +67,9 @@ export const GenerationLoader: React.FC<GenerationLoaderProps> = ({ phase }) => 
   } else if (phase === 'refining') {
     steps = REFINE_STEPS;
     title = "Refining Clay";
+  } else if (phase === 'suggesting_style') {
+    steps = MATCHMAKER_STEPS;
+    title = "Consulting AI Matchmaker";
   }
 
   const currentStep = steps[Math.min(stepIndex, steps.length - 1)];
@@ -71,7 +81,11 @@ export const GenerationLoader: React.FC<GenerationLoaderProps> = ({ phase }) => 
         
         <div className="relative mb-8">
           <div className="absolute inset-0 bg-resin-200 blur-xl opacity-50 animate-pulse rounded-full"></div>
-          <Loader2 className="w-14 h-14 text-resin-500 animate-spin relative z-10" />
+          {phase === 'suggesting_style' ? (
+             <Wand2 className="w-14 h-14 text-resin-500 animate-bounce relative z-10" />
+          ) : (
+             <Loader2 className="w-14 h-14 text-resin-500 animate-spin relative z-10" />
+          )}
         </div>
 
         <h3 className="text-2xl font-extrabold text-kaolin-900 mb-3 tracking-tight">{title}</h3>

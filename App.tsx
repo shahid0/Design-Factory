@@ -17,6 +17,7 @@ import { PreviewFrame } from './components/PreviewFrame';
 import { HistoryDrawer } from './components/HistoryDrawer';
 import { GenerationLoader } from './components/GenerationLoader';
 import { StyleInspectorModal } from './components/StyleInspectorModal';
+import { ProductCatalog } from './components/ProductCatalog';
 import { Zap, Search, Download, BookOpen, Play, Grid, ArrowLeft, LayoutTemplate, Menu, Eye } from 'lucide-react';
 
 export default function App() {
@@ -152,12 +153,19 @@ export default function App() {
              <div className="h-6 w-px bg-kaolin-200 mx-2"></div>
 
              <h1 className="text-lg md:text-xl font-extrabold text-kaolin-900 tracking-tight truncate max-w-[200px] md:max-w-none flex items-center gap-2">
-               {viewMode === 'browse' ? (
+               {viewMode === 'browse' && (
                  <>
                    <Grid className="w-5 h-5 text-kaolin-400" />
                    <span>Material Warehouse</span>
                  </>
-               ) : (
+               )}
+               {viewMode === 'catalog' && (
+                 <>
+                   <LayoutTemplate className="w-5 h-5 text-kaolin-400" />
+                   <span>Product Catalog</span>
+                 </>
+               )}
+               {viewMode === 'inspect' && (
                  <>
                    <Zap className="w-5 h-5 text-resin-500" />
                    <span>Fabrication Chamber</span>
@@ -167,6 +175,21 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-3">
+             <div className="hidden sm:flex bg-kaolin-100 p-1 rounded-xl">
+               <button 
+                 onClick={() => setViewMode('browse')} 
+                 className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${viewMode === 'browse' || viewMode === 'inspect' ? 'bg-white shadow-sm text-kaolin-800' : 'text-kaolin-500 hover:text-kaolin-700'} flex items-center gap-1.5`}
+               >
+                 <Grid className="w-3.5 h-3.5" /> Materials
+               </button>
+               <button 
+                 onClick={() => setViewMode('catalog')} 
+                 className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${viewMode === 'catalog' ? 'bg-white shadow-sm text-kaolin-800' : 'text-kaolin-500 hover:text-kaolin-700'} flex items-center gap-1.5`}
+               >
+                 <LayoutTemplate className="w-3.5 h-3.5" /> Blueprints
+               </button>
+             </div>
+
              {viewMode === 'inspect' && result && (
                 <button 
                   onClick={handleDownloadPackage}
@@ -182,6 +205,13 @@ export default function App() {
         {/* Content Area */}
         <div className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 scroll-smooth relative">
           
+          {/* VIEW: CATALOG (Product Templates) */}
+          <div className={`transition-all duration-500 ease-out absolute inset-0 ${viewMode === 'catalog' ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-95 z-0 pointer-events-none'}`}>
+             <ProductCatalog onBlueprintSelected={() => {
+                if (window.innerWidth < 1024) setIsMobileMenuOpen(true);
+             }} />
+          </div>
+
           {/* VIEW: BROWSE (Grid) */}
           <div className={`transition-all duration-500 ease-out absolute inset-0 p-4 md:p-8 overflow-y-auto custom-scrollbar ${viewMode === 'browse' ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-95 z-0 pointer-events-none'}`}>
              

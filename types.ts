@@ -23,6 +23,10 @@ export interface HistoryItem {
   timestamp: number;
   style: DesignPreset;
   context: string;
+  customColor?: string;
+  customMaterial?: string;
+  customSize?: string;
+  customEmbellishments?: string;
   result: GeneratedResult;
 }
 

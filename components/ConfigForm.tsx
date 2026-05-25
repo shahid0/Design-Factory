@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useGenerationStore } from '../store/useGenerationStore';
-import { Sparkles, FileText, DraftingCompass, History as HistoryIcon, Play, AlertCircle, X, Layers, Box, Zap } from 'lucide-react';
+import { Sparkles, FileText, DraftingCompass, History as HistoryIcon, Play, AlertCircle, X, Layers, Box, Zap, Palette, Maximize, Settings, Wand2, ChevronDown } from 'lucide-react';
 import { FontPicker } from './FontPicker';
 
 interface ConfigFormProps {
@@ -16,6 +16,9 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
   onCloseMobile,
 }) => {
   const [mode, setMode] = useState<'tailored' | 'standard'>('tailored');
+  const [showCustomizations, setShowCustomizations] = useState(false);
+  const [showMatchmaker, setShowMatchmaker] = useState(false);
+  const [suggestCustomizations, setSuggestCustomizations] = useState(true);
   
   // Connect to Store
   const { 
@@ -26,11 +29,27 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
     setFont, 
     riskBudget,
     setRiskBudget,
+    customColor,
+    setCustomColor,
+    customMaterial,
+    setCustomMaterial,
+    customSize,
+    setCustomSize,
+    customEmbellishments,
+    setCustomEmbellishments,
+    targetAudience,
+    setTargetAudience,
+    platformType,
+    setPlatformType,
+    coreFeatures,
+    setCoreFeatures,
+    suggestStyleWithAI,
     generateSpec, 
     phase 
   } = useGenerationStore();
 
   const isGenerating = phase !== 'idle';
+  const isMatchmaking = phase === 'suggesting_style';
 
   const handleGenerate = () => {
     generateSpec(mode);
@@ -119,31 +138,123 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
           
           {/* Selected Style Indicator */}
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-resin-500" />
-              Raw Material
-            </label>
-            <div className={`p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden group
-              ${selectedStyle 
-                ? 'bg-gradient-to-br from-white to-kaolin-50 border-resin-200 shadow-clay-float' 
-                : 'bg-kaolin-50 border-dashed border-kaolin-300'
-              }
-            `}>
-              {selectedStyle ? (
-                <>
-                  <div className="font-bold text-kaolin-900 text-sm mb-1">{selectedStyle.label}</div>
-                  <div className="text-xs text-kaolin-500 leading-snug">{selectedStyle.description}</div>
-                  <div className="absolute top-2 right-2">
-                     <div className="w-2 h-2 rounded-full bg-resin-500 shadow-[0_0_8px_rgba(79,122,246,0.6)] animate-pulse"></div>
-                  </div>
-                </>
-              ) : (
-                <div className="text-xs text-kaolin-400 text-center py-4 flex flex-col items-center gap-2">
-                  <AlertCircle className="w-5 h-5 opacity-30" />
-                  <span>Select a preset from the grid</span>
-                </div>
-              )}
+            <div className="flex items-center justify-between">
+              <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
+                <Sparkles className="w-3 h-3 text-resin-500" />
+                Raw Material
+              </label>
+              <button 
+                onClick={() => setShowMatchmaker(!showMatchmaker)}
+                className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded transition-colors ${showMatchmaker ? 'bg-resin-100 text-resin-600' : 'bg-kaolin-100 text-kaolin-500 hover:bg-kaolin-200'}`}
+              >
+                AI Matchmaker
+              </button>
             </div>
+            
+            {showMatchmaker ? (
+              <div className="p-4 bg-gradient-to-br from-resin-50 to-white rounded-2xl border border-resin-200 space-y-4 animate-in fade-in slide-in-from-top-2">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-resin-600 uppercase tracking-widest flex items-center gap-1.5">
+                    Target Audience
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Gen Z gamers"
+                    value={targetAudience}
+                    onChange={(e) => setTargetAudience(e.target.value)}
+                    className="w-full p-2 text-xs rounded-lg border border-resin-200 bg-white focus:outline-none focus:border-resin-400 focus:ring-1 focus:ring-resin-200"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-resin-600 uppercase tracking-widest flex items-center gap-1.5">
+                    Platform Type
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. iOS App, Web Dashboard"
+                    value={platformType}
+                    onChange={(e) => setPlatformType(e.target.value)}
+                    className="w-full p-2 text-xs rounded-lg border border-resin-200 bg-white focus:outline-none focus:border-resin-400 focus:ring-1 focus:ring-resin-200"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-resin-600 uppercase tracking-widest flex items-center gap-1.5">
+                    Core Features / Vibe
+                  </label>
+                  <textarea
+                    placeholder="e.g. Fast, energetic, dark mode..."
+                    value={coreFeatures}
+                    onChange={(e) => setCoreFeatures(e.target.value)}
+                    className="w-full p-2 text-xs rounded-lg border border-resin-200 bg-white focus:outline-none focus:border-resin-400 focus:ring-1 focus:ring-resin-200 resize-none h-16"
+                  />
+                </div>
+                <div className="flex items-center gap-2 pb-2">
+                  <input
+                    type="checkbox"
+                    id="suggestCustomizations"
+                    checked={suggestCustomizations}
+                    onChange={(e) => setSuggestCustomizations(e.target.checked)}
+                    className="w-4 h-4 rounded border-resin-300 text-resin-600 focus:ring-resin-500 cursor-pointer"
+                  />
+                  <label htmlFor="suggestCustomizations" className="text-xs text-resin-700 font-medium cursor-pointer select-none">
+                    Also configure customizations & fonts
+                  </label>
+                </div>
+                <button
+                  onClick={() => {
+                    suggestStyleWithAI(suggestCustomizations);
+                    if (suggestCustomizations) {
+                      setShowCustomizations(true);
+                    }
+                    if (window.innerWidth < 1024) onCloseMobile();
+                  }}
+                  disabled={isMatchmaking || (!targetAudience && !platformType && !coreFeatures)}
+                  className={`w-full py-2.5 rounded-xl font-bold text-xs tracking-wide transition-all flex items-center justify-center gap-2
+                    ${(!targetAudience && !platformType && !coreFeatures)
+                      ? 'bg-resin-100/50 text-resin-300 cursor-not-allowed'
+                      : 'bg-resin-500 text-white hover:bg-resin-400 hover:shadow-lg hover:shadow-resin-500/20 active:scale-95'
+                    }
+                  `}
+                >
+                  {isMatchmaking ? (
+                    <>
+                      <svg className="animate-spin h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      FINDING STYLE...
+                    </>
+                  ) : (
+                    <>
+                      <Wand2 className="w-3.5 h-3.5" />
+                      SUGGEST MATCH
+                    </>
+                  )}
+                </button>
+              </div>
+            ) : (
+              <div className={`p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden group
+                ${selectedStyle 
+                  ? 'bg-gradient-to-br from-white to-kaolin-50 border-resin-200 shadow-clay-float' 
+                  : 'bg-kaolin-50 border-dashed border-kaolin-300'
+                }
+              `}>
+                {selectedStyle ? (
+                  <>
+                    <div className="font-bold text-kaolin-900 text-sm mb-1">{selectedStyle.label}</div>
+                    <div className="text-xs text-kaolin-500 leading-snug">{selectedStyle.description}</div>
+                    <div className="absolute top-2 right-2">
+                       <div className="w-2 h-2 rounded-full bg-resin-500 shadow-[0_0_8px_rgba(79,122,246,0.6)] animate-pulse"></div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-xs text-kaolin-400 text-center py-4 flex flex-col items-center gap-2">
+                    <AlertCircle className="w-5 h-5 opacity-30" />
+                    <span>Select a preset from the grid</span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Mode Selection */}
@@ -221,6 +332,73 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({
                <span className="text-center">{getRiskLabel(riskBudget)}</span>
                <span>Wild</span>
              </div>
+          </div>
+
+          {/* Product Customizations (Optional) */}
+          <div className="space-y-3">
+            <button 
+              onClick={() => setShowCustomizations(!showCustomizations)}
+              className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-kaolin-100 transition-colors border border-kaolin-200"
+            >
+              <div className="flex items-center gap-2">
+                <Settings className="w-4 h-4 text-kaolin-500" />
+                <span className="text-xs font-bold text-kaolin-700">Product Customizations</span>
+              </div>
+              <ChevronDown className={`w-4 h-4 text-kaolin-400 transition-transform ${showCustomizations ? 'rotate-180' : ''}`} />
+            </button>
+            
+            {showCustomizations && (
+              <div className="p-4 bg-kaolin-50 rounded-xl space-y-4 border border-kaolin-100 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
+                    <Palette className="w-3 h-3" /> Color Override
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Neon Pink primary"
+                    value={customColor}
+                    onChange={(e) => setCustomColor(e.target.value)}
+                    className="w-full p-2 text-xs rounded-lg border border-kaolin-200 bg-white focus:outline-none focus:border-resin-300 focus:ring-1 focus:ring-resin-100"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
+                    <Box className="w-3 h-3" /> Material / Texture
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Matte glass, brushed metal"
+                    value={customMaterial}
+                    onChange={(e) => setCustomMaterial(e.target.value)}
+                    className="w-full p-2 text-xs rounded-lg border border-kaolin-200 bg-white focus:outline-none focus:border-resin-300 focus:ring-1 focus:ring-resin-100"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
+                    <Maximize className="w-3 h-3" /> Size / Density
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Spacious, compact"
+                    value={customSize}
+                    onChange={(e) => setCustomSize(e.target.value)}
+                    className="w-full p-2 text-xs rounded-lg border border-kaolin-200 bg-white focus:outline-none focus:border-resin-300 focus:ring-1 focus:ring-resin-100"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-kaolin-500 uppercase tracking-widest flex items-center gap-1.5">
+                    <Wand2 className="w-3 h-3" /> Embellishments
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Glowing drop shadows"
+                    value={customEmbellishments}
+                    onChange={(e) => setCustomEmbellishments(e.target.value)}
+                    className="w-full p-2 text-xs rounded-lg border border-kaolin-200 bg-white focus:outline-none focus:border-resin-300 focus:ring-1 focus:ring-resin-100"
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Fonts Picker */}
